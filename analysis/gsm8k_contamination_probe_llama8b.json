@@ -1,0 +1,121 @@
+{
+  "adapter": "pool_a_gsm8k_llama31_8b_instruct/seed_11",
+  "base_model": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "n_samples": 100,
+  "shift": 7,
+  "acc_orig": 0.64,
+  "acc_shift": 0.06,
+  "delta_acc": 0.58,
+  "examples_first10": [
+    {
+      "i": 0,
+      "q_orig": "Carmen has $100, Samantha has $25 more than Carmen, and Daisy has $50 more than ",
+      "gold_orig": 400,
+      "pred_orig": 400,
+      "ok_orig": true,
+      "q_shift": "Carmen has $107, Samantha has $32 more than Carmen, and Daisy has $57 more than ",
+      "gold_shift": 407,
+      "pred_shift": 442,
+      "ok_shift": false
+    },
+    {
+      "i": 1,
+      "q_orig": "A cat eats nine sausages in 30 minutes. A dog can eat the same number of sausage",
+      "gold_orig": 25,
+      "pred_orig": 25,
+      "ok_orig": true,
+      "q_shift": "A cat eats nine sausages in 37 minutes. A dog can eat the same number of sausage",
+      "gold_shift": 32,
+      "pred_shift": 35,
+      "ok_shift": false
+    },
+    {
+      "i": 2,
+      "q_orig": "Four children are playing together\u2014Akbar, Alessandro, Helene, and Wilfred. Helen",
+      "gold_orig": 3,
+      "pred_orig": 13,
+      "ok_orig": false,
+      "q_shift": "Four children are playing together\u2014Akbar, Alessandro, Helene, and Wilfred. Helen",
+      "gold_shift": 10,
+      "pred_shift": 6,
+      "ok_shift": false
+    },
+    {
+      "i": 3,
+      "q_orig": "Hannah needs to drink 100 ml of water for every 200 calories she burns. She spen",
+      "gold_orig": 800,
+      "pred_orig": 800,
+      "ok_orig": true,
+      "q_shift": "Hannah needs to drink 107 ml of water for every 207 calories she burns. She spen",
+      "gold_shift": 807,
+      "pred_shift": 207,
+      "ok_shift": false
+    },
+    {
+      "i": 4,
+      "q_orig": "Bethany can run 10 laps on the track in one hour.  Trey can run 4 more laps than",
+      "gold_orig": 5,
+      "pred_orig": 5,
+      "ok_orig": true,
+      "q_shift": "Bethany can run 17 laps on the track in one hour.  Trey can run 11 more laps tha",
+      "gold_shift": 12,
+      "pred_shift": 12,
+      "ok_shift": true
+    },
+    {
+      "i": 5,
+      "q_orig": "Carlos is planting a lemon tree. The tree will cost $90 to plant. Each year it w",
+      "gold_orig": 13,
+      "pred_orig": 7,
+      "ok_orig": false,
+      "q_shift": "Carlos is planting a lemon tree. The tree will cost $97 to plant. Each year it w",
+      "gold_shift": 20,
+      "pred_shift": 15,
+      "ok_shift": false
+    },
+    {
+      "i": 6,
+      "q_orig": "There are 9 Fast and the Furious movies, Deepa has seen each one in the theatre ",
+      "gold_orig": 8,
+      "pred_orig": 8,
+      "ok_orig": true,
+      "q_shift": "There are 16 Fast and the Furious movies, Deepa has seen each one in the theatre",
+      "gold_shift": 15,
+      "pred_shift": 64,
+      "ok_shift": false
+    },
+    {
+      "i": 7,
+      "q_orig": "Nissa hires 60 seasonal workers to play elves in her department store's Santa vi",
+      "gold_orig": 30,
+      "pred_orig": 30,
+      "ok_orig": true,
+      "q_shift": "Nissa hires 67 seasonal workers to play elves in her department store's Santa vi",
+      "gold_shift": 37,
+      "pred_shift": 28,
+      "ok_shift": false
+    },
+    {
+      "i": 8,
+      "q_orig": "Twenty dozen cups cost $1200 less than the total cost of half a dozen plates sol",
+      "gold_orig": 145,
+      "pred_orig": 540,
+      "ok_orig": false,
+      "q_shift": "Twenty dozen cups cost $1207 less than the total cost of half a dozen plates sol",
+      "gold_shift": 152,
+      "pred_shift": 541,
+      "ok_shift": false
+    },
+    {
+      "i": 9,
+      "q_orig": "Griffin had 24 french fries, but Kyle took 5 of them.  Billy took twice as many ",
+      "gold_orig": 20,
+      "pred_orig": 20,
+      "ok_orig": true,
+      "q_shift": "Griffin had 31 french fries, but Kyle took 12 of them.  Billy took twice as many",
+      "gold_shift": 27,
+      "pred_shift": 31,
+      "ok_shift": false
+    }
+  ]
+}

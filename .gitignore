@@ -1,42 +1,56 @@
-# Build artifacts
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
 *.egg-info/
-.pytest_cache/
+.venv/
+venv/
+
+# Generated training/eval artifacts (large, reproducible from configs+code)
+sweep_runs/
+cluster_runs/
+collected_adapters/
+ensemble_cache/
+merged_adapters/
+experiments/results/
+*.npy
+*.safetensors
+*.bin
+
+# Pool manifests and result JSONs are kept (small, paper-relevant)
+# but uncomment below to exclude them from public mirror if needed:
+# pools/
+# ensemble_results/
+# analysis/*.json
+
+# Logs and monitoring
+logs/
+*.log
 
 # Editor / OS
 .vscode/
 .idea/
 .DS_Store
-*.swp
-*.swo
 
-# Latex auxiliary (keep .pdf and .tex only)
+# Project memory / runtime state (oh-my-claudecode + similar)
+.omc/
+.claude/
+.notepad.md
+
+# Secrets — never commit
+.env
+*.secret
+*.token
+.hf_token
+hf_token
+hosts_*.csv.local
+
+# LaTeX build artifacts
 paper/*.aux
 paper/*.log
 paper/*.out
 paper/*.toc
 paper/*.bbl
 paper/*.blg
-paper/*.fdb_latexmk
-paper/*.fls
-paper/*.synctex.gz
-
-# Local artifacts that should NOT be in the anonymous release
-hosts_wol.csv
-collected_adapters/
-distilled_adapters/
-sweep_runs/
-cluster_runs/
-local_runs/
-experiments/
-logs/
-ensemble_cache/
-ensemble_cache_ood/
-.omc/
-
-# Submission ZIP (don't recursively include itself)
-adapter_frontier_submission.zip
+paper/_build/
