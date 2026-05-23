@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "pool_id": "smoke_2seed_mnli_bert",
+  "pool_name": "smoke_2seed_mnli_bert",
+  "pool_type": "seed_only",
+  "task": "mnli",
+  "base_model": "bert-base-uncased",
+  "n_adapters": 2,
+  "created_at_utc": "2026-04-21T12:59:43.262526+00:00",
+  "adapters": [
+    {
+      "adapter_id": "seed=11__seed=11__smoke_2seed_mnli_bert__seed_11",
+      "path": "./collected_adapters/smoke_2seed_mnli_bert/seed=11/seed=11/smoke_2seed_mnli_bert/seed_11",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {
+        "model": "bert-base-uncased",
+        "dataset": "nyu-mll/glue",
+        "dataset_config": "mnli",
+        "train_split": "train",
+        "eval_split": "validation_matched",
+        "text_field_a": "premise",
+        "text_field_b": "hypothesis",
+        "label_field": "label",
+        "metric": "accuracy",
+        "num_labels": 3,
+        "peft_method": "lora",
+        "total_params_m": 109.5,
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.0,
+        "lr": 0.0003,
+        "num_epochs": 1.0,
+        "batch_size": 32,
+        "seq_length": 128,
+        "train_samples": 2000,
+        "eval_samples": 500,
+        "train_loss": 1.111815,
+        "eval_loss": 1.09329,
+        "eval_accuracy": 0.368,
+        "train_runtime_s": 6.27,
+        "train_samples_per_sec": 319.0,
+        "seed": 11,
+        "cuda_available": true,
+        "device_name": "NVIDIA GeForce RTX 3060",
+        "fp16": true
+      },
+      "provenance_from_metrics": {
+        "schema_version": 1,
+        "timestamp_utc": "2026-04-21T12:59:35.290953+00:00",
+        "hostname": "js-306-000-DT281",
+        "git_sha": "unknown",
+        "git_dirty": false,
+        "config_hash": "cd42acb0b80a5f134b592ab46d5bd35e431c501d74aedf7187c3bfdcb0dc8521",
+        "python_version": "3.12.3",
+        "platform": "Linux-6.17.0-20-generic-x86_64-with-glibc2.39",
+        "torch_version": "2.10.0+cu128",
+        "transformers_version": "5.3.0",
+        "peft_version": "0.18.1",
+        "datasets_version": "4.8.2",
+        "numpy_version": "2.3.5",
+        "cuda_visible_devices": null
+      }
+    },
+    {
+      "adapter_id": "seed=21__seed=21__smoke_2seed_mnli_bert__seed_21",
+      "path": "./collected_adapters/smoke_2seed_mnli_bert/seed=21/seed=21/smoke_2seed_mnli_bert/seed_21",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {
+        "model": "bert-base-uncased",
+        "dataset": "nyu-mll/glue",
+        "dataset_config": "mnli",
+        "train_split": "train",
+        "eval_split": "validation_matched",
+        "text_field_a": "premise",
+        "text_field_b": "hypothesis",
+        "label_field": "label",
+        "metric": "accuracy",
+        "num_labels": 3,
+        "peft_method": "lora",
+        "total_params_m": 109.5,
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.0,
+        "lr": 0.0003,
+        "num_epochs": 1.0,
+        "batch_size": 32,
+        "seq_length": 128,
+        "train_samples": 2000,
+        "eval_samples": 500,
+        "train_loss": 1.106924,
+        "eval_loss": 1.096731,
+        "eval_accuracy": 0.378,
+        "train_runtime_s": 6.43,
+        "train_samples_per_sec": 310.9,
+        "seed": 21,
+        "cuda_available": true,
+        "device_name": "NVIDIA GeForce RTX 3060",
+        "fp16": true
+      },
+      "provenance_from_metrics": {
+        "schema_version": 1,
+        "timestamp_utc": "2026-04-21T12:59:35.538116+00:00",
+        "hostname": "js-306-001-DT281",
+        "git_sha": "unknown",
+        "git_dirty": false,
+        "config_hash": "aea5ef1fca4b8192b14bf6f7714357ec6eb450d1264d04ee3308911f00b45b92",
+        "python_version": "3.12.3",
+        "platform": "Linux-6.17.0-20-generic-x86_64-with-glibc2.39",
+        "torch_version": "2.10.0+cu128",
+        "transformers_version": "5.3.0",
+        "peft_version": "0.18.1",
+        "datasets_version": "4.8.2",
+        "numpy_version": "2.3.5",
+        "cuda_visible_devices": null
+      }
+    }
+  ],
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-21T12:59:43.276491+00:00",
+    "hostname": "anon-host",
+    "git_sha": "d8fff631278603f103eaa26a09554faeb2172be1",
+    "git_dirty": true,
+    "config_hash": "98169bff476b23e427fa0392782ec140e352188464c927715be7ce6e1e13ac4d",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-60-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

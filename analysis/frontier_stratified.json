@@ -1,0 +1,106 @@
+{
+  "ALL": {
+    "accuracy__best_of_n": {
+      "n_rows": 96,
+      "n_pools": 24,
+      "r2_lopo": -1.1391705098102327,
+      "r2_in_sample": 0.37219288525822625
+    },
+    "accuracy__n_rank": {
+      "n_rows": 71,
+      "n_pools": 18,
+      "r2_lopo": 0.2723699377802392,
+      "r2_in_sample": 0.7348434825358416
+    },
+    "ece__best_of_n": {
+      "n_rows": 96,
+      "n_pools": 24,
+      "r2_lopo": 0.17917720019037064,
+      "r2_in_sample": 0.5957447263388151
+    },
+    "ece__n_rank": {
+      "n_rows": 72,
+      "n_pools": 18,
+      "r2_lopo": 0.028747581735704686,
+      "r2_in_sample": 0.7405797554680474
+    }
+  },
+  "encoder_bertfam": {
+    "accuracy__best_of_n": {
+      "n_rows": 76,
+      "n_pools": 19,
+      "r2_lopo": -32.16286862937202,
+      "r2_in_sample": 0.6249416148152221
+    },
+    "accuracy__n_rank": {
+      "n_rows": 55,
+      "n_pools": 14,
+      "r2_lopo": 0.5283938870524094,
+      "r2_in_sample": 0.7929617311089587
+    },
+    "ece__best_of_n": {
+      "n_rows": 76,
+      "n_pools": 19,
+      "r2_lopo": -2.3272298994514276,
+      "r2_in_sample": 0.6506527106935605
+    },
+    "ece__n_rank": {
+      "n_rows": 56,
+      "n_pools": 14,
+      "r2_lopo": 0.5266510099874393,
+      "r2_in_sample": 0.8010026583610004
+    }
+  },
+  "decoder": {
+    "accuracy__best_of_n": {
+      "n_rows": 16,
+      "n_pools": 4,
+      "r2_lopo": null,
+      "r2_in_sample": 0.7258372414011255
+    },
+    "accuracy__n_rank": {
+      "n_rows": 16,
+      "n_pools": 4,
+      "r2_lopo": null,
+      "r2_in_sample": 0.940588169434714
+    },
+    "ece__best_of_n": {
+      "n_rows": 16,
+      "n_pools": 4,
+      "r2_lopo": null,
+      "r2_in_sample": 0.6926772909062884
+    },
+    "ece__n_rank": {
+      "n_rows": 16,
+      "n_pools": 4,
+      "r2_lopo": null,
+      "r2_in_sample": 0.8913541843094637
+    }
+  },
+  "encoder_bertfam+encoder_deberta": {
+    "accuracy__best_of_n": {
+      "n_rows": 80,
+      "n_pools": 20,
+      "r2_lopo": -15.89438127221716,
+      "r2_in_sample": 0.38810510973092505
+    },
+    "accuracy__n_rank": {
+      "n_rows": 55,
+      "n_pools": 14,
+      "r2_lopo": 0.5283938870524094,
+      "r2_in_sample": 0.7929617311089587
+    },
+    "ece__best_of_n": {
+      "n_rows": 80,
+      "n_pools": 20,
+      "r2_lopo": -2.067222409634579,
+      "r2_in_sample": 0.612116088511935
+    },
+    "ece__n_rank": {
+      "n_rows": 56,
+      "n_pools": 14,
+      "r2_lopo": 0.5266510099874393,
+      "r2_in_sample": 0.8010026583610004
+    }
+  }
+}

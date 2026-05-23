@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "metric": "ece",
+  "ensemble": {
+    "result_path": "./ensemble_results/pool_c_mnli_qwen25_05b_method_mixed.json",
+    "pool_id": "pool_c_mnli_qwen25_05b_method_mixed",
+    "pool_type": "method_mixed",
+    "method": "logit_avg",
+    "n_adapters": 20,
+    "accuracy_test": 0.8530310748853795,
+    "ece_test": 0.03557805014822595
+  },
+  "baseline": {
+    "kind": "best_of_n",
+    "result_path": "./ensemble_results/pool_c_mnli_qwen25_05b_method_mixed.json",
+    "pool_id": "pool_c_mnli_qwen25_05b_method_mixed",
+    "method": "best_single",
+    "accuracy_test": 0.8380030565461029,
+    "ece_test": 0.06195104465275714
+  },
+  "n_test": 3926,
+  "ece_diff": 0.026372988500038802,
+  "ci_low": 0.01771108834163089,
+  "ci_high": 0.03384530250394886,
+  "sign_flip_p": 0.0001999600079984003,
+  "holm_adjusted_p_singleton": 0.0001999600079984003,
+  "stats_backend": "compute_match.local_ece",
+  "n_boot": 5000,
+  "seed": 0,
+  "adjudication": "supported",
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-24T18:42:17.988716+00:00",
+    "hostname": "anon-host",
+    "git_sha": "03b203ab354cb563e2a5698b917d62406841ee69",
+    "git_dirty": true,
+    "config_hash": "f94f6ea00dfff6ec0e133ee52099f79449eadeccf38a126427e6a8e1aa089a32",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

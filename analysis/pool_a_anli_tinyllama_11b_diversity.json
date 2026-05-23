@@ -1,0 +1,38 @@
+{
+  "pool_name": "pool_a_anli_tinyllama_11b",
+  "n_adapters": 15,
+  "hyperparameter_entropy": {
+    "seed": 2.70805020110221,
+    "peft_method": -0.0,
+    "lora_r": -0.0,
+    "lora_alpha": -0.0,
+    "lr": 0.0
+  },
+  "prediction_space": {
+    "disagreement_rate": 0.23726190476190473,
+    "logit_correlation": 0.8459629395777014,
+    "ensemble_entropy": 0.6771689057350159
+  },
+  "parameter_space": {
+    "compatible_pairs": 105,
+    "mean_cosine_distance_lora_A": 1.0009008760591747,
+    "mean_cosine_distance_lora_B": 0.9988693644142975,
+    "mean_frobenius_distance": 30.739023571922665
+  },
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-24T11:48:17.434047+00:00",
+    "hostname": "anon-host",
+    "git_sha": "03b203ab354cb563e2a5698b917d62406841ee69",
+    "git_dirty": true,
+    "config_hash": "1873e19d1614e3825b80e8e2e77907ecb0493e7d1961f4ad8701dacff1de86e2",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

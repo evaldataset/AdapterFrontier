@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "metric": "ece",
+  "ensemble": {
+    "result_path": "./ensemble_results/pool_a_agnews_qwen25_05b.json",
+    "pool_id": "pool_a_agnews_qwen25_05b",
+    "pool_type": "seed_only",
+    "method": "majority_vote",
+    "n_adapters": 17,
+    "accuracy_test": 0.9414473684210526,
+    "ece_test": 0.03949303405572756
+  },
+  "baseline": {
+    "kind": "best_of_n",
+    "result_path": "./ensemble_results/pool_a_agnews_qwen25_05b.json",
+    "pool_id": "pool_a_agnews_qwen25_05b",
+    "method": "best_single",
+    "accuracy_test": 0.937828947368421,
+    "ece_test": 0.03266571693514522
+  },
+  "n_test": 3040,
+  "ece_diff": -0.006827299562700964,
+  "ci_low": -0.011859367363149133,
+  "ci_high": -0.0016322653932531429,
+  "sign_flip_p": 0.006798640271945611,
+  "holm_adjusted_p_singleton": 0.006798640271945611,
+  "stats_backend": "compute_match.local_ece",
+  "n_boot": 5000,
+  "seed": 0,
+  "adjudication": "reversed",
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-28T08:09:15.924493+00:00",
+    "hostname": "anon-host",
+    "git_sha": "56c4ebbc22acc5b2ea76f3ae4782c839024931e9",
+    "git_dirty": true,
+    "config_hash": "2a563926258f91396e155f9273fb06d72fcaed5d9903b6972ca1d61acb4f2002",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

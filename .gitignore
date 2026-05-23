@@ -1,0 +1,42 @@
+# Build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Latex auxiliary (keep .pdf and .tex only)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.synctex.gz
+
+# Local artifacts that should NOT be in the anonymous release
+hosts_wol.csv
+collected_adapters/
+distilled_adapters/
+sweep_runs/
+cluster_runs/
+local_runs/
+experiments/
+logs/
+ensemble_cache/
+ensemble_cache_ood/
+.omc/
+
+# Submission ZIP (don't recursively include itself)
+adapter_frontier_submission.zip

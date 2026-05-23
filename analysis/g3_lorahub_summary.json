@@ -1,0 +1,82 @@
+[
+  {
+    "pool": "pool_a_hellaswag_bert",
+    "learned_weight_acc": 0.373,
+    "best_single_acc": 0.358,
+    "greedy_soup_acc": 0.358,
+    "delta_lw_minus_gs": 0.015000000000000013,
+    "delta_lw_minus_bs": 0.015000000000000013
+  },
+  {
+    "pool": "pool_a_hellaswag_bertlarge",
+    "learned_weight_acc": 0.38,
+    "best_single_acc": 0.3735,
+    "greedy_soup_acc": 0.3805,
+    "delta_lw_minus_gs": -0.0005000000000000004,
+    "delta_lw_minus_bs": 0.006500000000000006
+  },
+  {
+    "pool": "pool_a_hellaswag_deberta",
+    "learned_weight_acc": 0.426,
+    "best_single_acc": 0.4125,
+    "greedy_soup_acc": 0.452,
+    "delta_lw_minus_gs": -0.026000000000000023,
+    "delta_lw_minus_bs": 0.013500000000000012
+  },
+  {
+    "pool": "pool_a_hellaswag_roberta",
+    "learned_weight_acc": 0.4835,
+    "best_single_acc": 0.4935,
+    "greedy_soup_acc": 0.5615,
+    "delta_lw_minus_gs": -0.07800000000000001,
+    "delta_lw_minus_bs": -0.010000000000000009
+  },
+  {
+    "pool": "pool_b_hellaswag_bert",
+    "learned_weight_acc": 0.3715,
+    "best_single_acc": 0.3475,
+    "greedy_soup_acc": 0.3575,
+    "delta_lw_minus_gs": 0.014000000000000012,
+    "delta_lw_minus_bs": 0.02400000000000002
+  },
+  {
+    "pool": "pool_b_hellaswag_deberta",
+    "learned_weight_acc": 0.439,
+    "best_single_acc": 0.439,
+    "greedy_soup_acc": 0.4295,
+    "delta_lw_minus_gs": 0.009500000000000008,
+    "delta_lw_minus_bs": 0.0
+  },
+  {
+    "pool": "pool_b_hellaswag_roberta",
+    "learned_weight_acc": 0.508,
+    "best_single_acc": 0.508,
+    "greedy_soup_acc": 0.522,
+    "delta_lw_minus_gs": -0.014000000000000012,
+    "delta_lw_minus_bs": 0.0
+  },
+  {
+    "pool": "pool_c_hellaswag_bert",
+    "learned_weight_acc": 0.3725,
+    "best_single_acc": 0.362,
+    "greedy_soup_acc": 0.362,
+    "delta_lw_minus_gs": 0.01050000000000001,
+    "delta_lw_minus_bs": 0.01050000000000001
+  },
+  {
+    "pool": "pool_c_hellaswag_deberta",
+    "learned_weight_acc": 0.709,
+    "best_single_acc": 0.709,
+    "greedy_soup_acc": 0.745,
+    "delta_lw_minus_gs": -0.03600000000000003,
+    "delta_lw_minus_bs": 0.0
+  },
+  {
+    "pool": "pool_c_hellaswag_roberta",
+    "learned_weight_acc": 0.5375,
+    "best_single_acc": 0.518,
+    "greedy_soup_acc": 0.561,
+    "delta_lw_minus_gs": -0.023500000000000076,
+    "delta_lw_minus_bs": 0.019499999999999962
+  }
+]

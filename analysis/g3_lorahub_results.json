@@ -1,0 +1,22 @@
+[
+  {
+    "pool_id": "pool_a_mnli_qwen25_05b",
+    "error": "splits missing"
+  },
+  {
+    "pool_id": "pool_a_mnli_bert",
+    "error": "splits missing"
+  },
+  {
+    "pool_id": "pool_a_mnli_roberta_base",
+    "error": "splits missing"
+  },
+  {
+    "pool_id": "pool_a_mnli_bert_large",
+    "error": "splits missing"
+  },
+  {
+    "pool_id": "pool_a_mnli_tinyllama_11b",
+    "error": "splits missing"
+  }
+]

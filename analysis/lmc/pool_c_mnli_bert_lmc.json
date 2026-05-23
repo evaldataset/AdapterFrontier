@@ -1,0 +1,251 @@
+{
+  "pool_id": "pool_c_mnli_bert_method_mixed",
+  "task": "mnli",
+  "base_model": "bert-base-uncased",
+  "n_pairs": 5,
+  "alphas": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "n_eval": 1000,
+  "pairs": [
+    {
+      "adapter_a": "peft=dora_seed=21__peft=dora_seed=21__pool_c_mnli_bert__dora_seed_21",
+      "adapter_b": "peft=rslora_seed=41__peft=rslora_seed=41__pool_c_mnli_bert__rslora_seed_41",
+      "path": [
+        {
+          "loss": 1.9618817749023438,
+          "acc": 0.404,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 4.4
+        },
+        {
+          "loss": 2.378759994506836,
+          "acc": 0.385,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 2.1531125869750976,
+          "acc": 0.395,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.0972194595336915,
+          "acc": 0.585,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 0.6251123809814453,
+          "acc": 0.754,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.1
+        }
+      ],
+      "barrier": 0.41687821960449223,
+      "endpoints_max": 1.9618817749023438
+    },
+    {
+      "adapter_a": "peft=dora_seed=21__peft=dora_seed=21__pool_c_mnli_bert__dora_seed_21",
+      "adapter_b": "peft=pissa_seed=21__peft=pissa_seed=21__pool_c_mnli_bert__pissa_seed_21",
+      "path": [
+        {
+          "loss": 0.7671672019958496,
+          "acc": 0.694,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.43546342086792,
+          "acc": 0.501,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.2
+        },
+        {
+          "loss": 1.6368488883972168,
+          "acc": 0.457,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.0175737457275391,
+          "acc": 0.608,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.3
+        },
+        {
+          "loss": 0.6251123809814453,
+          "acc": 0.754,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.1
+        }
+      ],
+      "barrier": 0.8696816864013671,
+      "endpoints_max": 0.7671672019958496
+    },
+    {
+      "adapter_a": "peft=pissa_seed=41__peft=pissa_seed=41__pool_c_mnli_bert__pissa_seed_41",
+      "adapter_b": "peft=rslora_seed=11__peft=rslora_seed=11__pool_c_mnli_bert__rslora_seed_11",
+      "path": [
+        {
+          "loss": 2.086056427001953,
+          "acc": 0.392,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 2.4200893783569337,
+          "acc": 0.371,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 2.2498162841796874,
+          "acc": 0.379,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.4868364028930665,
+          "acc": 0.466,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 0.7539597072601318,
+          "acc": 0.671,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.1
+        }
+      ],
+      "barrier": 0.3340329513549807,
+      "endpoints_max": 2.086056427001953
+    },
+    {
+      "adapter_a": "peft=dora_seed=11__peft=dora_seed=11__pool_c_mnli_bert__dora_seed_11",
+      "adapter_b": "peft=rslora_seed=41__peft=rslora_seed=41__pool_c_mnli_bert__rslora_seed_41",
+      "path": [
+        {
+          "loss": 1.9618817749023438,
+          "acc": 0.404,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 2.3422818908691405,
+          "acc": 0.385,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 2.145577980041504,
+          "acc": 0.393,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.1541276321411134,
+          "acc": 0.561,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 0.6408051700592041,
+          "acc": 0.733,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.1
+        }
+      ],
+      "barrier": 0.3804001159667967,
+      "endpoints_max": 1.9618817749023438
+    },
+    {
+      "adapter_a": "peft=dora_seed=21__peft=dora_seed=21__pool_c_mnli_bert__dora_seed_21",
+      "adapter_b": "peft=lora_seed=31__peft=lora_seed=31__pool_c_mnli_bert__lora_seed_31",
+      "path": [
+        {
+          "loss": 0.6470628452301025,
+          "acc": 0.736,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.1188067932128907,
+          "acc": 0.574,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.670252582550049,
+          "acc": 0.436,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 1.0552779617309571,
+          "acc": 0.595,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.1
+        },
+        {
+          "loss": 0.6251123809814453,
+          "acc": 0.754,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.1
+        }
+      ],
+      "barrier": 1.0231897373199463,
+      "endpoints_max": 0.6470628452301025
+    }
+  ],
+  "barrier_mean": 0.6048365421295165,
+  "barrier_std": 0.2843226939735612,
+  "barrier_max": 1.0231897373199463,
+  "barrier_min": 0.3340329513549807,
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-28T12:01:21.362504+00:00",
+    "hostname": "anon-host",
+    "git_sha": "2d2eca5bd2670e6558140a29294757422ebf10e3",
+    "git_dirty": true,
+    "config_hash": "ee821f5788a799fdf3d885d3f1ecf232425f528f1f8cd8716f2340da051c6c47",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": "0"
+  }
+}

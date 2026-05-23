@@ -1,0 +1,33 @@
+{
+  "pool_id": "pool_a_gsm8k_llama31_8b_instruct",
+  "base_model": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+  "n_adapters": 8,
+  "n_requests_per_batch": 32,
+  "max_lora_rank": 16,
+  "single_lora_median_s": 0.0724310060031712,
+  "single_lora_p10_s": 0.07187474267557263,
+  "single_lora_p90_s": 0.07270429143682122,
+  "multi_lora_median_s": 0.07730200281366706,
+  "multi_lora_p10_s": 0.0750250949524343,
+  "multi_lora_p90_s": 0.0774043864570558,
+  "multi_over_single_ratio": 1.0672501609363618,
+  "single_throughput_req_per_s": 441.7997452444463,
+  "multi_throughput_req_per_s": 413.9608138890597,
+  "n_trials": 3,
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-05-21T16:05:25.568533+00:00",
+    "hostname": "anon-host",
+    "git_sha": "39f652e7c7264796cfc283b5cca8985eaf957fe3",
+    "git_dirty": true,
+    "config_hash": "c2de7d45bff809d7bebf179385f6373a44d5bac7cbfae13fd4b0fc0b2ea64684",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": "0"
+  }
+}

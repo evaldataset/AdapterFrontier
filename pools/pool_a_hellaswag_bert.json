@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "pool_id": "pool_a_hellaswag_bert",
+  "pool_name": "pool_a_hellaswag_bert",
+  "pool_type": "unknown",
+  "task": null,
+  "base_model": "bert-base-uncased",
+  "n_adapters": 19,
+  "created_at_utc": "2026-04-29T06:02:32.823843+00:00",
+  "adapters": [
+    {
+      "adapter_id": "seed=101__seed=101__pool_a_hellaswag_bert__seed_101",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=101/seed=101/pool_a_hellaswag_bert/seed_101",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 101,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 101,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=11__seed=11__pool_a_hellaswag_bert__seed_11",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=11/seed=11/pool_a_hellaswag_bert/seed_11",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=111__seed=111__pool_a_hellaswag_bert__seed_111",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=111/seed=111/pool_a_hellaswag_bert/seed_111",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 111,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 111,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=121__seed=121__pool_a_hellaswag_bert__seed_121",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=121/seed=121/pool_a_hellaswag_bert/seed_121",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 121,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 121,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=131__seed=131__pool_a_hellaswag_bert__seed_131",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=131/seed=131/pool_a_hellaswag_bert/seed_131",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 131,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 131,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=141__seed=141__pool_a_hellaswag_bert__seed_141",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=141/seed=141/pool_a_hellaswag_bert/seed_141",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 141,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 141,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=151__seed=151__pool_a_hellaswag_bert__seed_151",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=151/seed=151/pool_a_hellaswag_bert/seed_151",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 151,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 151,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=171__seed=171__pool_a_hellaswag_bert__seed_171",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=171/seed=171/pool_a_hellaswag_bert/seed_171",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 171,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 171,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=181__seed=181__pool_a_hellaswag_bert__seed_181",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=181/seed=181/pool_a_hellaswag_bert/seed_181",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 181,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 181,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=191__seed=191__pool_a_hellaswag_bert__seed_191",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=191/seed=191/pool_a_hellaswag_bert/seed_191",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 191,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 191,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=201__seed=201__pool_a_hellaswag_bert__seed_201",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=201/seed=201/pool_a_hellaswag_bert/seed_201",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 201,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 201,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=21__seed=21__pool_a_hellaswag_bert__seed_21",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=21/seed=21/pool_a_hellaswag_bert/seed_21",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=31__seed=31__pool_a_hellaswag_bert__seed_31",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=31/seed=31/pool_a_hellaswag_bert/seed_31",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=41__seed=41__pool_a_hellaswag_bert__seed_41",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=41/seed=41/pool_a_hellaswag_bert/seed_41",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=51__seed=51__pool_a_hellaswag_bert__seed_51",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=51/seed=51/pool_a_hellaswag_bert/seed_51",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=61__seed=61__pool_a_hellaswag_bert__seed_61",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=61/seed=61/pool_a_hellaswag_bert/seed_61",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 61,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 61,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=71__seed=71__pool_a_hellaswag_bert__seed_71",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=71/seed=71/pool_a_hellaswag_bert/seed_71",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 71,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 71,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=81__seed=81__pool_a_hellaswag_bert__seed_81",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=81/seed=81/pool_a_hellaswag_bert/seed_81",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 81,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 81,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed=91__seed=91__pool_a_hellaswag_bert__seed_91",
+      "path": "./collected_adapters/pool_a_hellaswag_bert/seed=91/seed=91/pool_a_hellaswag_bert/seed_91",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 91,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 91,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    }
+  ],
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-29T06:02:32.840018+00:00",
+    "hostname": "anon-host",
+    "git_sha": "39f652e7c7264796cfc283b5cca8985eaf957fe3",
+    "git_dirty": true,
+    "config_hash": "177e2e79bd7fc18bca62ca01a6b7d7567d837a5c16eabf4349a3414c371477ed",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

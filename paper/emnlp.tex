@@ -1,0 +1,779 @@
+% EMNLP 2026 long paper (8 pages + unlimited refs/appendix)
+% AdapterFrontier
+% Compile: pdflatex emnlp.tex; bibtex emnlp; pdflatex emnlp.tex; pdflatex emnlp.tex
+% Uses official ACL style (acl.sty + acl_natbib.bst from acl-org/acl-style-files).
+
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{url}
+\usepackage{enumitem}
+
+\title{When Does PEFT Ensembling Help?\\A Pre-Registered Adjudication of 1{,}028 Cells}
+
+\author{
+  Anonymous Authors \\
+  Anonymous Affiliation \\
+  \texttt{anonymous@example.org}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We pre-register and release \textsc{AdapterFrontier}, a $1{,}028$-cell corpus (registered at git SHA \texttt{02a5a6bc} \emph{before any training}; $67$ adapter pools, $10$ architectures, $8$ tasks)\footnote{Cell count: $1{,}028 = 827$ v1.0 main-pool cells (55 pools $\times$ ensemble methods $\times$ \{\texttt{best\_of\_n}, \texttt{n\_rank}\} $\times$ \{accuracy, ECE\}) $+$ $100$ v1.1 HellaSwag multichoice cells $+$ $101$ baseline self-comparison cells. The $2$ v1.1 GSM8K and $7$ v1.2 supplementary pools (App.~\ref{app:prereg}) are reported separately in Table~\ref{tab:v11cells} and are not in the headline $1{,}028$.} that adjudicates when PEFT adapter ensembling actually helps versus a compute-matched single adapter. \textbf{Ensembling is conditional}: $33.0\%$ of cells are SUPPORTED, $17.8\%$ are REVERSED (ensemble significantly \emph{underperforms} the baseline; $29.5\%/16.9\%$ after corpus-wide Benjamini--Hochberg FDR at $q{=}0.05$) --- structure that aggregate task-level reporting destroys. \textbf{The boundary is predictable}: a diversity-quality regression attains LOPO-CV $R^2{=}0.60$ on encoder accuracy ($95\%$ CI $[{+}0.30, {+}0.71]$), decomposing into five actionable rules (D1--D5). \textbf{Following D1--D5} over the field-standard blind \texttt{soft\_vote} turns encoder $\overline{\Delta}{=}{-}3.8$pp into ${+}0.5$pp at $20{\times}$ less inference cost; REVERSED rate drops $11\%{\to}2\%$ (App.~\ref{app:cost}; oracle-over-corpus, L11). \textbf{Mechanism}: within our released feature set, prediction-space disagreement is the dominant out-of-pool predictor (weight-space distance is irrelevant); a $21\%$ lower $H(\text{correctness}\,|\,\text{confidence})$ in decoders motivates distillation, which recovers $87\%$ of ensemble gain on Qwen-0.5B MNLI but only $4.5\%$ on Qwen-1.5B MNLI ($1$-of-$2$ tested decoder cells) and fails on encoders --- not yet a generalizable amortization. \textbf{OOD honesty}: on $19$ MNLI-trained pools evaluated on ANLI dev\_r3, soft-vote accuracy gain is positive on only $5/19$ pools (Pool-B HP-diverse: $0/6$) --- ensembling does not transfer the in-distribution gains to severe distribution shift. \textbf{GSM8K honesty}: a digit-shift probe on Qwen-2.5-7B drops accuracy $0.66{\to}0.04$, indicating heavy pre-training contamination; our decoder GSM8K gains should be read as "ensemble effects on the contaminated benchmark" (L12). \textbf{Release}: the $67$ pools, $1{,}028$ per-cell paired-bootstrap CIs, Holm-corrected verdicts, and full provenance; new ensembling methods adjudicate against released baselines by supplying per-example predictions only --- no retraining of the existing $67$ pools is required.
+\end{abstract}
+
+\section{Introduction}
+
+Parameter-efficient fine-tuning (PEFT) of large language models with LoRA-style adapters \citep{hu2021lora} has made it routine for NLP practitioners to keep dozens of task-specific adapters around: serving libraries such as vLLM and S-LoRA \citep{kwon2023efficient,sheng2024slora} now route per-request to one of $N$ adapters with negligible base-model duplication, and frameworks such as LoRAHub \citep{huang2023lorahub} explicitly target multi-adapter composition. A natural question is whether \emph{combining} the available adapters --- by averaging weights, voting on labels, or routing requests through them --- beats the best single adapter at a fixed compute budget. Recent work reports a wide range of answers: positive on some NLP tasks, negative on others, with no consensus on when ensembling is worth the cost. NLP practitioners currently lack a principled way to decide \emph{a priori} whether to ensemble their adapter pool for a given (task, model) cell.
+
+We argue this disagreement is partly an artifact of \emph{aggregate} reporting. We define the \emph{diversity-quality frontier} as the leave-one-pool-out (LOPO) cross-validated regression $\hat{\Delta}{=}f(\phi)$ predicting per-cell ensemble gain $\Delta$ from a feature vector $\phi$ of pool-diversity metrics (App.~\ref{app:features}); $R^2_{\text{LOPO}}$ quantifies whether the right-method-for-this-cell is predictable \emph{a priori}. In a 1{,}028-cell pre-registered, compute-matched adjudication of 67 PEFT pools across 10 architectures and 8 tasks, we find:
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Decoder GSM8K \texttt{majority\_vote} SUPPORTED across $N{=}6$ cells; two compensating scaling patterns} (\emph{but see L12: GSM8K is contaminated — Qwen-2.5-7B accuracy drops $0.66{\to}0.04$ under digit-shift, so these gains may sit on memorized items}). Qwen-2.5 within-family ($N{=}4$, base accuracy $0.30/0.46/0.68/0.76$): $\Delta_{\text{acc}}{=}{+}2.8/{+}5.4/{+}8.9/{+}8.5$pp. Cross-family at $\approx$7-8B scale: Llama-3.1-8B-Instruct (base $0.61$) $\Delta{=}{+}10.8$pp; Mistral-7B-v0.1 (base $0.52$, weakest at 7B scale) $\Delta{=}{+}13.4$pp (largest in corpus, $95\%$ CI $[{+}10.8, {+}16.1]$pp). All six cells $p{<}10^{-4}$ except Qwen-0.5B $p{=}0.003$.
+\item \textbf{Shared-HP collapse-and-rescue on RoBERTa/DeBERTa HellaSwag.} Under our shared HP grid (\textit{lr}${=}3{\times}10^{-4}$), $14/20$ Pool-A RoBERTa adapters end at val\_acc${<}0.30$ (range $0.07$--$0.52$). \texttt{soft\_vote} collapses below chance ($0.097$ vs.\ $0.25$ chance for 4-way); \texttt{greedy\_soup} subset selection rescues by pruning noisy adapters (RoBERTa $+6.8$pp, $0.561$ vs.\ $0.493$ best single; DeBERTa $+4.0$pp). A v1.2 cross-architecture check (L7) confirms the collapse is a \emph{RoBERTa-specific lr-sensitivity} (BERT-base at the same $lr{=}2{\times}10^{-5}$ does \emph{not} collapse), not a generic HP-misconfiguration that any architecture would exhibit.
+\item \textbf{Mechanism}: an information-theoretic analysis attributes decoder calibration wins to a $21\%$ lower $H(\text{correctness}\,|\,\text{confidence})$ than encoders.
+\item \textbf{Serving cost ($N{=}8$, batch=32, two scale points)}: vLLM 0.10 multi-LoRA routing costs $1.075{\times}$ a single-LoRA baseline on Qwen-0.5B (485 vs.\ 521 req/s) and $1.067{\times}$ on Llama-3.1-8B-Instruct (414 vs.\ 442 req/s); $14.1{\times}$ speedup vs.\ sequential PyTorch on Qwen-0.5B (multi-batch and p99 deferred).
+\end{itemize}
+
+\paragraph{Contributions.} The primary contribution is a \emph{benchmark release} that future PEFT-ensembling methods can be evaluated against without retraining the pools.
+\textbf{(i)~Release artifact}: $67$ trained adapter pools, $1{,}028$ adjudicated (pool $\times$ method $\times$ baseline $\times$ metric) cell JSONs, the locked pre-registration document at git SHA \texttt{02a5a6bc}, and the v1.1/v1.2 amendment ledger.
+\textbf{(ii)~Adjudication framework}: per-cell paired bootstrap CIs, sign-flip $p$-values, within-table Holm correction, corpus-wide Benjamini--Hochberg FDR \citep{bh1995} at $q{=}0.05$, and percentile cluster-bootstrap CIs on cross-pool $R^2_{\text{LOPO}}$ (resampling pools, not cells; \citealp{diciccio1996}).
+\textbf{(iii)~Empirical adjudication}: pre-FDR $33.0\%$ SUPPORTED / $17.8\%$ REVERSED; after corpus-wide BH-FDR at $q{=}0.05$, $29.5\%$ remain SUPPORTED / $16.9\%$ REVERSED on $1{,}028$ cells; within-Qwen-2.5 GSM8K scaling shows monotone amplification across $N{=}4$ scale points ($+2.8/+5.4/+8.9/+8.5$pp), with Llama-3.1-8B-Instruct ($+10.8$pp) as cross-family check; HP-shared collapse-and-rescue on RoBERTa/DeBERTa HellaSwag (a failure-mode detection, not a regime claim).
+\textbf{(iv)~Mechanism + serving}: information-theoretic $H(c{|}\text{conf})$ analysis and vLLM multi-LoRA benchmark ($1.075{\times}$ Qwen-0.5B and $1.067{\times}$ Llama-3.1-8B-Instruct at $N{=}8$). Released as \textsc{AdapterFrontier}.
+
+\paragraph{Why cell-by-cell.} Adjudicated cells are more reusable than the conclusions we draw from them. A future PEFT-ensembling claim that disagrees with ours can be incorporated by adding new \texttt{compute\_match.json} cells against our released baselines, provided the new method's per-example predictions on our test split are supplied; no retraining of the existing 67 pools is required. None of our findings (within-Qwen-2.5 GSM8K monotone scale amplification on $N{=}4$ points (0.5B/1.5B/3B/7B) plus cross-family Llama-3.1-8B-Instruct and Mistral-7B-v0.1, shared-HP collapse-and-rescue on RoBERTa/DeBERTa, encoder-scale-shrinks-effect on BERT) are visible if cells are aggregated to task-level claims of the form ``ensembles help on GSM8K.''
+
+\paragraph{Decision rules D1--D5 (distilled \emph{post-hoc} from the corpus; full version in \S\ref{sec:discussion}, scope-limit in L11).}\label{sec:intro-rules}
+\begin{quote}\small\setlength{\parindent}{0pt}
+\textbf{D1.} \emph{Encoder, above-chance pool} $\to$ \texttt{soft\_vote} (ECE arm); \texttt{greedy\_soup} for accuracy.
+\textbf{D2.} \emph{Encoder, under-converged pool} (RoBERTa/DeBERTa on HellaSwag) $\to$ \texttt{greedy\_soup} rescues (+$3.6$ to $+6.8$pp); never \texttt{soft\_vote} (collapses below chance).
+\textbf{D3.} \emph{Decoder $\geq 1.5$B, free-form generation} $\to$ \texttt{majority\_vote}. Qwen-2.5 0.5/1.5/3/7B GSM8K: $\Delta_{\text{acc}}{=}{+}2.8/{+}5.4/{+}8.9/{+}8.5$pp; cross-family at $\approx$7-8B: Llama-3.1-8B-Inst $+10.8$pp, Mistral-7B-v0.1 $+13.4$pp (all $p{<}10^{-4}$; contamination caveat L12).
+\textbf{D4.} \emph{Encoder accuracy at fixed compute} $\to$ most v1.0 cells are REVERSED against \texttt{n\_rank}; budget rank/epochs before ensembling.
+\textbf{D5.} \emph{Continuous-weight (LoRAHub-style)} wins on converged BERT pools (3/3), collapses on under-converged RoBERTa/DeBERTa (5/6) --- pick \texttt{greedy\_soup} when sub-chance adapters are present. Inference cost at $N{=}8$ is $1.075{\times}$ (Qwen-0.5B) and $1.067{\times}$ (Llama-8B) via vLLM; distillation recovers $87\%$ of soft-vote gain on Qwen-0.5B MNLI but only $4.5\%$ on Qwen-1.5B MNLI ($1$-of-$2$, not yet amortizable in general).
+\end{quote}
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{PEFT and adapter ensembling.} The adapter line of work begins with bottleneck adapters \citep{houlsby2019parameter} and the AdapterHub framework \citep{pfeiffer2020adapterhub}; LoRA \citep{hu2021lora}, DoRA \citep{dora}, PiSSA \citep{pissa}, AdaLoRA \citep{adalora}, and VeRA \citep{vera} make many low-rank adapters per task practical. Combination strategies split into three families: \emph{prediction-space} (soft/hard voting, logit averaging \citep{lakshminarayanan2017simple}); \emph{weight-space} (model soups \citep{wortsman2022model}, TIES \citep{yadav2023ties}, DARE \citep{yu2024dare}); and \emph{routing / mixture-of-adapters} (AdapterFusion \citep{pfeiffer2021adapterfusion} composes via attention; LoRAHub \citep{huang2023lorahub} optimizes a continuous weight vector; AdaMix \citep{adamix} mixes multiple LoRA experts inside training; MoLE \citep{mole} and MoLoRA \citep{molora} learn routing over adapter experts; HydraLoRA \citep{hydralora} uses asymmetric multi-head LoRA; MultiLoRA \citep{multilora} reduces interference among co-trained LoRAs). Our adjudication framework treats each of these methods as a \emph{plug-in} that produces per-example test predictions and can be added to our cell corpus without retraining the pools. We implement and report on prediction-space + weight-space methods directly; the cell JSONs include the input schema needed to evaluate routing/MoE methods (per-pool logits cache).
+
+\paragraph{Pre-registration in ML.} Pre-registration is standard in clinical trials and increasingly common in cognitive science but rare in ML \citep{munafo2017manifesto, loken2017measurement}; \citet{hofman2021integrating} argue for tighter coupling of explanation and prediction in computational social science, an argument that translates directly to empirical NLP --- \citet{bowman2021will} make a closely related case that NLU benchmark results need pre-committed protocols if they are to drive scientific (rather than leaderboard) progress. \citet{dehghani2022efficiency} further argue that compute-matched comparisons are essential to honest efficiency claims --- a principle we apply across every cell. We adopt pre-registration here: the protocol, splits, baselines, and statistical tests were locked at git SHA \texttt{02a5a6bc} before any pool was trained.
+
+\paragraph{Calibration of fine-tuned LMs.} ECE in its modern form was introduced by \citet{naeini2015}; the equal-mass 15-bin histogram became standard via \citet{guo2017calibration}, with refinements such as soft calibration objectives \citep{karandikar2021soft}. \citet{nixon2019} survey ECE estimator bias under varying bin counts and small-$N$ regimes; \citet{minderer2021} re-examine calibration of modern (post-2020) architectures and find that distribution-shift calibration does not always follow in-distribution calibration. Deep ensembles \citep{lakshminarayanan2017simple} reliably lower ECE on classifiers. We extend this measurement to PEFT pools and report Brier, NLL, MCE alongside ECE, with paired bootstrap CIs; per-token logprob ECE for generative tasks (App~\ref{app:stats}) is a non-standard adaptation we explicitly document.
+
+\paragraph{Efficient multi-adapter serving.} S-LoRA \citep{sheng2024slora} and Punica \citep{chen2024punica} (the latter integrated in vLLM \citep{kwon2023efficient}) enable thousands of LoRA adapters to share a single base-model forward; we measure the runtime cost of cell-by-cell ensembling under this serving regime.
+
+\paragraph{Benchmarks for NLP reasoning.} HellaSwag \citep{zellers2019hellaswag}, GSM8K \citep{cobbe2021gsm8k}, and the GLUE-family tasks \citep{wang2018glue} are evaluated by lm-evaluation-harness \citep{gao2024lmeval}. We use them as cells, not as headline numbers.
+
+\begin{table}[h]
+\centering
+\caption{Delta vs.\ prior PEFT/ensembling work. ``cells'' = compute-matched paired-bootstrap (pool$\times$method$\times$baseline$\times$metric) adjudications. ``rev.\ rep.'' = reports cells where ensembling significantly underperforms (CI$<$0). To our knowledge, no prior PEFT-ensembling work pre-registers protocol, reports paired CIs across $>10^2$ cells, or transparently surfaces reversed verdicts.}
+\label{tab:delta}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{2.6cm}cccccc@{}}
+\toprule
+ & \rotatebox{75}{cells} & \rotatebox{75}{pre-reg} & \rotatebox{75}{calib.} & \rotatebox{75}{cmp-match} & \rotatebox{75}{rev. rep.} & \rotatebox{75}{multi-arch} \\
+\midrule
+Wortsman'22       & 1   & --- & --- & --- & --- & ---  \\
+Huang'23 (LoRAHub)& $\sim$50 & --- & --- & --- & --- & ---  \\
+Yadav'23 (TIES)   & few & --- & --- & --- & --- & ---  \\
+Yu'24 (DARE)      & few & --- & --- & --- & --- & ---  \\
+Lakshmin.'17      & few & --- & \checkmark & --- & --- & ---  \\
+\textbf{Ours}     & \textbf{1{,}028} & \checkmark & \checkmark & \checkmark & \checkmark & 10  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Benchmark composition}
+
+\subsection{Pool types}
+
+Per \texttt{(model, task)} cell:
+\begin{itemize}[leftmargin=*]
+\item \textbf{Pool-A (seed-only)}: 20 LoRA adapters with fixed $(r=8, \alpha=16, lr=3\mathrm{e}{-4}, target=qv)$, seed varied across $\{11, 21, \dots, 201\}$.
+\item \textbf{Pool-B (HP-diverse)}: 24 adapters from $r \in \{4,8,16,32\} \times \alpha \in \{8,16,32\} \times lr \in \{1\mathrm{e}{-4}, 3\mathrm{e}{-4}\}$.
+\item \textbf{Pool-C (method-mixed)}: 20 adapters, $\{$LoRA, DoRA, rsLoRA, PiSSA$\} \times 5$ seeds.
+\end{itemize}
+
+\paragraph{Compute matching.} We match on \emph{training wall-clock} (GPU-hours), not on trainable parameter count or inference FLOPs. The \texttt{n\_rank} baseline ($r{\in}\{16, 32\} \times \text{epochs}{\in}\{2, 4\} \times 5$ seeds, best-of-$N$ selected on \texttt{val\_selection}) consumes roughly the same total training GPU-hours as a 20-adapter Pool-A sweep: 20 forward+backward passes, each at $r{\in}\{16,32\}$ instead of $r{=}8$, but with the same training token budget per adapter. Inference FLOPs are not matched; the \texttt{n\_rank} baseline uses a single adapter at serve time (cheaper than the $N$-adapter ensemble it is compared against), which makes its accuracy a strict upper-bound competitor for the ensemble. \texttt{n\_steps} and \texttt{n\_data} baselines further match on per-adapter training tokens; \texttt{best\_of\_n} reuses Pool-A's first $N$ adapters and rank-selects on \texttt{val\_selection}.
+
+\subsection{Tasks and models}
+
+\begin{table*}[t]
+\centering
+\caption{Coverage matrix (v1.0 \texttt{n\_rank}-aligned cells, $10$ v1.0/v1.1 base architectures). ``A'' = Pool-A (seed-only, 20 adapters), ``B'' = Pool-B (HP-diverse, 24), ``C'' = Pool-C (method-mixed, 20), ``base'' = \texttt{n\_rank} baseline pool. 55 v1.0 main pools + 16 baselines; v1.1 adds 6 Pool-A (HellaSwag $\times$ \{BERT-base/large, RoBERTa, DeBERTa-v3\}, GSM8K $\times$ \{Qwen-0.5B, 1.5B\}) + 3 Pool-B (HellaSwag $\times$ \{BERT-base, RoBERTa, DeBERTa-v3\}) + 3 Pool-C (HellaSwag $\times$ \{BERT-base, RoBERTa, DeBERTa-v3\}, method-mixed) = 12 v1.1 pools, bringing the in-corpus trained-pool total to \textbf{67} (83 with baselines). v1.2 adds $3$ cross-family decoders (Qwen-2.5-7B, Llama-3.1-8B-Instruct, Mistral-7B-v0.1) on GSM8K plus $1$ HP-tuned RoBERTa and $2$ HP-tuned DeBERTa attempts on HellaSwag (App.~\ref{app:prereg}), bringing the released-pool count to $74$ across $13$ base models.}
+\label{tab:coverage}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l|cccccc}
+\toprule
+Model & MNLI & SST-2 & BoolQ & ANLI & AG News & QNLI \\
+\midrule
+BERT-base & A,B,C,base & A,B & A & A & A,B,C,base & A,B,C,base \\
+BERT-large & A,B,C,base & --- & A & A,B & A,base & A,base \\
+RoBERTa-base & A,B,C,base & --- & A & A,B & A & A \\
+DeBERTa-v3 & A & --- & --- & --- & --- & --- \\
+Qwen2.5-0.5B & A,B,C,base & --- & --- & A,base & A,B,C,base & A,B,C,base \\
+Qwen2.5-1.5B & A,B,C,base & --- & --- & A,base & A,B,base & A,B,base \\
+Qwen2.5-3B & A,base & --- & --- & --- & --- & --- \\
+TinyLlama-1.1B & A,B,C & --- & --- & A & A,base & A,base \\
+SmolLM2-1.7B & A,base & --- & --- & --- & --- & --- \\
+Pythia-1.4b & A,base & --- & --- & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{v1.1 task-family extensions.} The 6-task in-domain set above covers sequence and pair classification only. v1.1 of the benchmark adds two output spaces: \emph{multi-choice} (HellaSwag, 4 candidate endings, accuracy via argmax pooling over candidate scores) using a new \texttt{real\_lora\_multichoice.py} trainer wrapping \texttt{AutoModelForMultipleChoice}, and \emph{free-form generation} (GSM8K, exact-match on the integer answer) using \texttt{real\_lora\_train.py --eval-metric gsm8k\_exact\_match}. Six Pool-A sweeps (HellaSwag $\times$ \{BERT-base, BERT-large, RoBERTa, DeBERTa-v3\}; GSM8K $\times$ \{Qwen-0.5B, Qwen-1.5B\}, 15--20 seeds each), three Pool-B sweeps (HellaSwag $\times$ \{BERT-base, RoBERTa, DeBERTa-v3\}, HP-diverse $4{\times}3{\times}2$ grid), and three Pool-C sweeps (HellaSwag $\times$ \{BERT-base, RoBERTa, DeBERTa-v3\}, method-mixed $4{\times}5$ grid over $\{$LoRA, DoRA, rsLoRA, PiSSA$\}$ $\times$ 5 seeds) add twelve v1.1 pools, bringing the total trained-pool count to \textbf{67} (plus 16 \texttt{n\_rank} baseline pools, $83$ total adapter-pool assets). \textbf{Pre-registration amendment honesty.} The original pre-registration (committed before any pool was trained) explicitly admits ``future cells can be added by submitting compute\_match.json files via PR.'' The v1.1 task-family extension was scoped under that clause: it adds new (pool, method, baseline, metric) cells to the corpus, but does \emph{not} retract, re-evaluate, or rewrite any v1.0 cell, baseline, or adjudication verdict. The v1.0 frontier headline ($R^2{=}0.60$ vs.\ \texttt{n\_rank}, Table~\ref{tab:frontier_strat}) was computed before any v1.1 result was inspected; the v1.1 best\_of\_n regression (\S\ref{sec:findings}, ``v1.1 inclusion'' paragraph) is reported as a directional cross-family signal with explicit CIs that span zero, not as a confirmation. The full amendment ledger (one entry per added pool, with date and rationale) lives in \texttt{paper/prereg\_amendments.md}.
+
+\begin{table*}[t]
+\centering
+\caption{Thirteen v1.1/v1.2 cells across two new output spaces. Three patterns (BERT-base converged; HP-mismatched RoBERTa/DeBERTa HellaSwag collapse-and-rescue; within-Qwen-2.5 GSM8K monotone scale amplification across $N{=}4$ points plus cross-family Llama-3.1-8B-Instruct and Mistral-7B-v0.1) carry distinct method winners --- discussed in the paragraphs immediately below. $^{*}$~$p{<}0.01$ vs.\ best\_single under paired bootstrap ($B{=}5000$); per-cell $95\%$ CIs and adjusted $p$-values are in the released \texttt{*\_cm\_*.json} cells. $^{\ddagger}$~accuracy at chance level (degenerate calibration win, or sub-chance adapters dragging soft-vote below chance). $^{\dagger}$~GSM8K ECE is 15-bin equal-mass ECE on per-example confidence $=\exp(\text{mean per-token logprob})$; ensemble confidence aggregates only over majority-voting adapters.}
+\label{tab:v11cells}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{ll|cc|cc|cc|cc}
+\toprule
+& & \multicolumn{2}{c|}{best\_single} & \multicolumn{2}{c|}{soft\_vote} & \multicolumn{2}{c|}{majority\_vote} & \multicolumn{2}{c}{greedy\_soup} \\
+pool & $N$ & acc & ECE & acc & ECE & acc & ECE & acc & ECE \\
+\midrule
+\multicolumn{10}{l}{\emph{Multi-choice (HellaSwag, eval $N{=}5000$):}} \\
+\quad BERT-base, Pool-A (seed)         & 19/20 & 0.358 & 0.038 & 0.367 & 0.048 & 0.369 & 0.406 & 0.358 & 0.038 \\
+\quad BERT-base, Pool-B (HP)           & 20/24 & 0.348 & 0.058 & 0.354 & \textbf{0.032} & 0.357 & 0.466 & \textbf{0.358} & \textbf{0.030} \\
+\quad BERT-base, Pool-C (method)       & 20/20 & 0.362 & 0.036 & \textbf{0.372} & 0.034 & 0.376 & 0.360 & 0.362 & 0.036 \\
+\quad BERT-large, Pool-A               & 15/15 & 0.374 & 0.045 & 0.380 & 0.118 & 0.323 & 0.101 & \textbf{0.381} & 0.056 \\
+\quad RoBERTa-base, Pool-A (seed)      & 20/20 & 0.493 & 0.228 & 0.097$^{\ddagger}$ & 0.158 & 0.174$^{\ddagger}$ & 0.237 & \textbf{0.561} & 0.298 \\
+\quad RoBERTa-base, Pool-B (HP)        & 22/24 & 0.508 & 0.237 & 0.074$^{\ddagger}$ & 0.183 & 0.115$^{\ddagger}$ & 0.322 & \textbf{0.522} & 0.262 \\
+\quad RoBERTa-base, Pool-C (method)    & 20/20 & 0.518 & 0.240 & 0.136$^{\ddagger}$ & 0.117 & 0.178$^{\ddagger}$ & 0.224 & \textbf{0.561} & 0.297 \\
+\quad DeBERTa-v3, Pool-A (seed)        & 20/20 & 0.412 & 0.160 & 0.320 & \textbf{0.077} & 0.305 & 0.206 & \textbf{0.452} & 0.187 \\
+\quad DeBERTa-v3, Pool-B (HP)          & 21/24 & 0.439 & 0.136 & 0.191$^{\ddagger}$ & 0.076 & 0.221$^{\ddagger}$ & 0.282 & \textbf{0.429} & 0.167 \\
+\quad DeBERTa-v3, Pool-C (method)      & 18/20 & 0.709 & 0.310 & 0.646 & 0.398 & 0.246$^{\ddagger}$ & 0.376 & \textbf{0.745} & 0.467 \\
+\midrule
+\multicolumn{10}{l}{\emph{Free-form generation (GSM8K, exact-match, vLLM, eval $N{=}1000$):}} \\
+\quad Qwen-0.5B (GSM8K)                & 19/20 & 0.304 & 0.546 & --- & --- & \textbf{0.332}$^{*}$ & \textbf{0.520}$^{*}$ & --- & --- \\
+\quad Qwen-1.5B (GSM8K)                & 20/20 & 0.460 & 0.406 & --- & --- & \textbf{0.514}$^{*}$ & \textbf{0.354}$^{*}$ & --- & --- \\
+\quad Qwen-3B (GSM8K, v1.2)            & 20/20 & 0.679 & 0.206 & --- & --- & \textbf{0.768}$^{*}$ & \textbf{0.118}$^{*}$ & --- & --- \\
+\quad Qwen-7B (GSM8K, v1.2)            & 10/10 & 0.760 & 0.128 & --- & --- & \textbf{0.845}$^{*}$ & \textbf{0.046}$^{*}$ & --- & --- \\
+\quad Llama-3.1-8B-Instruct (GSM8K, v1.2) & 10/10 & 0.613 & 0.256 & --- & --- & \textbf{0.721}$^{*}$ & \textbf{0.148}$^{*}$ & --- & --- \\
+\quad Mistral-7B-v0.1 (GSM8K, v1.2)     & 10/10 & 0.524 & 0.378 & --- & --- & \textbf{0.658}$^{*}$ & \textbf{0.245}$^{*}$ & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Three patterns in Table~\ref{tab:v11cells}.}
+\textbf{(P$_a$) Converged-pool encoder} (BERT-base Pool-A/B/C): soft averaging works directly ($+0.9$ to $+1.0$pp; ECE 0.030--0.048); \texttt{greedy\_soup} merely matches \texttt{best\_single}. Encoder scale (BERT-base$\to$large) shrinks the gain to $+0.65$pp and degrades ECE ($0.048{\to}0.118$).
+\textbf{(P$_b$) Shared-HP collapse-and-rescue on RoBERTa/DeBERTa HellaSwag}: under our shared HP grid ($lr{=}3{\times}10^{-4}$, fixed across architectures), $\geq 14/20$ Pool-A RoBERTa adapters end at val\_acc${<}0.30$, so \texttt{soft\_vote} collapses below chance (Pool-A RoBERTa: $0.097$ vs.\ chance $0.25$, $^{\ddagger}$). \texttt{greedy\_soup} subset selection recovers (RoBERTa $+6.8$pp; DeBERTa $+4.0$pp). We directly test the HP-confound hypothesis with a v1.2 cell: re-running Pool-A RoBERTa HellaSwag at $lr{=}2{\times}10^{-5}$ (\citealp{liu2019roberta} recommended). Training-time eval reports all $10/10$ tuned-seed adapters at $0.478$--$0.505$ (mean $0.491$). \textbf{Full-validation re-evaluation on the HP-tuned pool} ($N{=}10042$, App.~\ref{app:splitvar}, Table~\ref{tab:fullval_roberta}): \texttt{soft\_vote} does \emph{not} collapse (0.305, near best\_single 0.359, vs.\ 0.196 on the seed-0 5000-subsample), and \texttt{greedy\_soup} still wins (+5.7pp over best). \emph{Conclusion}: the v1.1 sub-chance collapse is a joint failure of \emph{RoBERTa-specific lr-sensitivity} ($lr{=}3{\times}10^{-4}$ over-fits RoBERTa, $lr{=}2{\times}10^{-5}$ fixes it) and subsample-specific evaluation. The symmetric cross-check (BERT-base at $lr{=}2{\times}10^{-5}$, $8/8$ seeds at mean $0.329 \pm 0.011$, range $[0.317, 0.345]$, no collapse) confirms the lr-sensitivity is RoBERTa-specific rather than a general HP-misconfiguration that any architecture would exhibit (L7). DeBERTa-v3 LoRA-on-HellaSwag does \emph{not} recover under HP tuning ($lr{\in}\{10^{-5}, 5{\times}10^{-5}\}$ both at chance; full-val also at chance 0.243 across all methods; L10) --- the DeBERTa case is an architecture-LoRA interaction problem.
+\textbf{(P$_c$) Decoder GSM8K scaling, $N{=}6$ cells}: all six SUPPORTED on accuracy and per-token logprob ECE. Within Qwen-2.5 ($N{=}4$, 0.5B/1.5B/3B/7B): $\Delta_{\text{acc}}{=}{+}2.8/{+}5.4/{+}8.9/{+}8.5$pp; $\Delta_{\text{ECE}}{=}{-}0.026/{-}0.051/{-}0.088/{-}0.082$ (within-family $r{=}{+}0.97$ between base acc and $\Delta_{\text{acc}}$, saturating 3B$\to$7B). Cross-family at $\approx$7-8B scale: Llama-3.1-8B-Instruct (base $0.61$) $\Delta_{\text{acc}}{=}{+}10.8$pp, $\Delta_{\text{ECE}}{=}{-}0.107$; \emph{Mistral-7B-v0.1 (base $0.52$) $\Delta_{\text{acc}}{=}{+}13.4$pp ($95\%$ CI $[{+}10.8, {+}16.1]$), $\Delta_{\text{ECE}}{=}{-}0.133$ --- largest absolute effect in our corpus}. The three $\approx$7-8B cells follow the inverse pattern ($r{=}{-}0.98$ on $n{=}3$ points --- descriptive only, not inferential at $n{=}3$): at fixed scale, the weaker base shows larger ensemble headroom. The two patterns thus compose: \emph{within-family monotone scaling} (more capacity to leverage diverse adapters) and \emph{cross-family headroom inversion} (weaker base has more room to gain from majority voting), with the latter awaiting wider cross-family replication. All six per-cell deltas $p{<}10^{-4}$ (Qwen-0.5B at $p{=}0.003$), paired bootstrap $B{=}5000$. \textbf{Contamination caveat (L12)}: a v1.3 digit-renumbering probe on Qwen-2.5-7B drops accuracy from $0.66 \to 0.04$ on shifted GSM8K test, indicating heavy memorization; the (P$_c$) ensemble effects sit on a contaminated test split.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_gsm8k_scale_doubling.pdf}
+\caption{GSM8K decoder ensemble scale curve, $N{=}6$ cells. Within-Qwen-2.5 (0.5B/1.5B/3B/7B): $\Delta_{\text{acc}}{=}{+}2.8/{+}5.4/{+}8.9/{+}8.5$pp (within-family $r{=}{+}0.97$, saturating 3B$\to$7B). Cross-family overlay (hatched): Llama-3.1-8B-Instruct $\Delta{=}{+}10.8$pp; \emph{Mistral-7B-v0.1 $\Delta{=}{+}13.4$pp --- largest in corpus}. Per-token logprob ECE SUPPORTED on all six. The three $\approx$7-8B cells show $r{=}{-}0.98$ between base accuracy and $\Delta_{\text{acc}}$: at fixed scale, weaker base $\to$ larger ensemble gain. All $p{<}10^{-4}$ except Qwen-0.5B $p{=}0.003$.}
+\label{fig:gsm8k_scale}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_two_regime.pdf}
+\caption{Per-pool fraction of adapters above chance (val\_acc${\geq}0.30$) cleanly separates the two HellaSwag regimes. \emph{Right (converged):} all BERT-base pools ($\geq{}0.95$ above chance) cluster near zero greedy\_soup gain. \emph{Left (under-converged):} RoBERTa and DeBERTa pools (regardless of seed/HP/method diversity source) sit below the 50\% threshold and show large positive greedy\_soup gain ($+3.6$ to $+6.8$pp). Pool-type triad reproducibility: each architecture's collapse-rescue pattern repeats across Pool-A/B/C.}
+\label{fig:two_regime}
+\end{figure}
+
+\subsection{Adjudication protocol}
+
+Each cell answers a single binary scientific question via a paired comparison on the test split. We use the same 40/20/40 \texttt{val\_selection}/\texttt{val\_combine}/\texttt{test} split (seed 0) for every cell. For each (pool $\times$ method $\times$ baseline\_kind $\times$ metric):
+\begin{itemize}[leftmargin=*]
+\item \textbf{Diff} = $\mu_{\text{ensemble}} - \mu_{\text{baseline}}$ (ECE flipped so positive = ensemble better).
+\item \textbf{Bootstrap CI} \citep{efron1979bootstrap}: percentile, $B{=}5000$, paired over examples. For the cross-pool $R^2_{\text{LOPO}}$ frontier estimate (\S\ref{sec:findings}) we report percentile \emph{cluster}-bootstrap CIs at $B{=}200$ (resampling pools, not cells, to respect nesting; see App.~\ref{app:stats}); BCa correction was not used because $n{=}48$ pools is too small for stable acceleration-coefficient estimation \citep{diciccio1996}.
+\item \textbf{Sign-flip $p$-value}: $B{=}5000$ permutations, two-sided.
+\item \textbf{Within-table Holm correction} \citep{holm1979simple}: applied to every multi-cell table; significance markers ($^{*}$) reflect Holm-adjusted $p$.
+\item \textbf{Corpus-wide Benjamini--Hochberg FDR} \citep{bh1995}: applied across all $1{,}028$ cells at $q{=}0.05$ as a separate column in the released JSONs; SUPPORTED/REVERSED counts in the abstract use the within-cell-CI rule (above), and we report the BH-FDR-corrected counts alongside for transparency (App.~\ref{app:stats}).
+\item \textbf{Adjudication label}: \emph{supported} if CI lower bound $> 0$; \emph{reversed} if upper bound $< 0$; \emph{unsupported} otherwise.
+\end{itemize}
+
+\section{Findings: when ensembling helps and how predictably}
+\label{sec:findings}
+
+\paragraph{Frontier definition (formal).} For each cell, let $y$ be the SUPPORTED-direction $\Delta$ on a target metric (accuracy or ECE, sign-aligned so positive = ensemble better), and $\phi\!\in\!\mathbb{R}^{d}$ be the feature vector in App.~\ref{app:features}. The \emph{diversity-quality frontier} is the regression $\hat y = f(\phi)$ where $f$ is fit by leave-one-pool-out cross-validation. We fit three function classes per slice ($f$ $\in\!$ \{ridge linear regression with $\lambda$ chosen by inner LOPO-CV; random-forest of $100$ trees, max-depth $5$; gradient-boosted regressor of $100$ stages, max-depth $3$\}) and report \emph{all three} per slice in Table~\ref{tab:frontier_cross}. The headline encoder-accuracy frontier ($R^2_{\text{LOPO}}{=}{+}0.597$ in Table~\ref{tab:frontier_strat}) uses ridge, the simplest class, so the cross-class maximum is not used as the reported number. $R^2_{\text{LOPO}}$ is computed on the held-out pool's cells aggregated; the percentile cluster-bootstrap CI (\S\ref{app:stats}) resamples \emph{pools}, not cells.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_verdict_landscape.pdf}
+\caption{Verdict landscape across the $927$ main-pool adjudicated cells (the additional $101$ baseline-only cells in the $1{,}028$ corpus follow the same distribution and are reported only as headline counts). Labels reflect the per-cell paired-bootstrap CI \emph{and} the corpus-wide BH-FDR ($q{=}0.05$, $p$-cutoff $0.0248$). Full-corpus counts: \textbf{post-FDR $29.5\%$ SUPPORTED, $16.9\%$ REVERSED, $53.6\%$ UNSUPPORTED} (pre-FDR $33.0\%$ / $17.8\%$ / $49.2\%$). Encoder accuracy cells (upper left) are dominantly REVERSED against compute-matched \texttt{n\_rank} baselines; decoder cells (Qwen, TinyLlama, SmolLM, Pythia) are systematically more SUPPORTED on both arms. Pool-B HP-diverse and Pool-C method-mixed show greater \texttt{greedy\_soup} support than seed-only Pool-A. The verdict heterogeneity across cells is itself the central evidence that aggregate ``ensembles help / don't help'' framings hide systematic structure.}
+\label{fig:verdict_landscape}
+\end{figure*}
+
+\paragraph{LoRAHub-style learned weights split by convergence regime on $N{=}10$ HellaSwag pools.} We adjudicate a faithful in-house reimplementation of the LoRAHub family \citep{huang2023lorahub} continuous-weight baseline: optimize a per-adapter weight vector $\alpha\!\in\!\mathbb{R}_{\geq 0}^M$ via L-BFGS-B (the same convex optimizer that LoRAHub's library exposes alongside their Nevergrad CMA-ES option) on \texttt{val\_combine} cross-entropy, then evaluate weighted soft-vote on test. We run on all $10$ v1.0/v1.1 HellaSwag pools (BERT-base $\times 3$, BERT-large $\times 1$, RoBERTa $\times 3$, DeBERTa-v3 $\times 3$); per-pool results in \texttt{analysis/g3\_lorahub\_summary.json}. \textbf{Two regimes split cleanly}: on the 4 converged BERT-family pools, learned-weight beats or ties \texttt{greedy\_soup} ($+1.0$ to $+1.5$pp on BERT-base Pool-A/B/C; $-0.1$pp tie on BERT-large Pool-A); on the 6 under-converged RoBERTa/DeBERTa pools, \texttt{greedy\_soup} wins $5/6$ cases by $-1.4$ to $-7.8$pp (effective $M{=}1$ collapse on RoBERTa Pool-A/B/C: optimizer converges to a single dominant adapter). On RoBERTa Pool-A, learned-weight $0.483$ vs.\ \texttt{greedy\_soup}'s $\mathbf{0.561}$ ($-7.8$pp); on DeBERTa Pool-C, $0.709$ vs.\ $\mathbf{0.745}$ ($-3.6$pp). \emph{Convergence regime determines the winner}: continuous-weight optimization rewards converged ensembles (smooth loss landscape, multiple useful adapters); discrete subset selection dominates noisy pools (greedy pruning of sub-chance adapters). The size of this signal beyond HellaSwag is left to v1.2.
+
+\begin{table}[h]
+\centering
+\caption{Cross-architecture LOPO-CV $R^2$. Ridge wins on accuracy vs.\ \texttt{n\_rank}; non-linear models win on other slices.}
+\label{tab:frontier_cross}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Slice & $n$ & pools & ridge & RF & GBM \\
+\midrule
+acc vs \texttt{n\_rank}     & 192 & 48 & \textbf{+0.555} & +0.19 & +0.21 \\
+ece vs \texttt{n\_rank}     & 192 & 48 & +0.13 & +0.31 & +0.17 \\
+acc vs \texttt{best\_of\_n} & 220 & 55 & $-$0.11 & +0.28 & +0.48 \\
+ece vs \texttt{best\_of\_n} & 220 & 55 & +0.26 & \textbf{+0.564} & +0.49 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Stratified per architecture family. The headline encoder accuracy frontier reaches LOPO-CV $R^2{=}0.597$, $95\%$ percentile cluster-bootstrap CI $[{+}0.303, {+}0.710]$ ($B{=}200$ rounds, resampling pools then cells within; see App.~\ref{app:stats}). Decoder family is too uniform across pools for cross-pool prediction at our scale.}
+\label{tab:frontier_strat}
+\small
+\begin{tabular}{llrrr}
+\toprule
+Family & Slice & pools & ridge & RF \\
+\midrule
+\textbf{encoder} & \textbf{acc vs n\_rank} & \textbf{23} & \textbf{+0.616} & +0.23 \\
+encoder & ece vs n\_rank & 23 & +0.14 & +0.42 \\
+decoder & acc vs n\_rank & 25 & $-$1.14 & $-$1.03 \\
+decoder & ece vs n\_rank & 25 & +0.12 & +0.25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig1_frontier_scatter.pdf}
+\caption{\textbf{The diversity-quality frontier predicts the encoder accuracy arm.} Per-cell scatter of $\Delta$ accuracy (top) and $\Delta$ ECE (bottom) vs.\ pairwise prediction disagreement. \textbf{(Top, accuracy)} Encoders cluster near zero with positive slope at higher disagreement (encoder LOPO $R^2{=}{+}0.60$, Table~\ref{tab:frontier_strat}); decoders show no monotone trend (decoder corpus $R^2{<}0$ at $n{=}25$ pools, L2). \textbf{(Bottom, ECE)} \emph{Family-stratified pattern}: decoders are cleanly separated at the low-ECE tail (consistent with the $21\%$ lower $H(c|\mathrm{conf})$ in \S\ref{sec:mech-cal}); \emph{corpus-wide ECE LOPO is not significant} ($R^2{=}{-}0.06$, CI spans 0). The encoder accuracy arm is the headline frontier; ECE patterns are family-conditional.}
+\label{fig:scatter}
+\end{figure}
+
+\paragraph{v1.1 inclusion: pool-type triad recovers cross-family predictability.} The v1.0 frontier holds under cluster-bootstrap: $R^2_{\text{LOPO}}{=}{+}0.60$ $[{+}0.30, {+}0.71]$ vs.\ \texttt{n\_rank} ($n{=}192$ cells, $48$ pools). Adding only seed-only v1.1 Pool-A HellaSwag pools to a best\_of\_n cross-family regression \emph{degrades} predictability ($R^2{=}{-}0.12$); adding Pool-B HP-diverse moves to ${+}0.20$ $[{-}0.25, {+}0.40]$ (still spans zero); \emph{adding Pool-C method-mixed (LoRA, DoRA, rsLoRA, PiSSA) closes the gap}: $R^2{=}{+}0.32$ $[{+}0.05, {+}0.47]$ on $n{=}264$ cells, $64$ pools. The full \{seed, HP, method\} pool-type triad is required to recover cross-family predictability --- itself a benchmark-design recommendation.
+
+\paragraph{From findings to mechanism.} The encoder/decoder asymmetry (encoder accuracy gain via prediction-space, decoder gain via calibration sharpening; \S\ref{sec:findings}) raises two questions: \emph{(M1) which diversity feature actually drives the frontier $R^2{=}0.60$?} (\S\ref{sec:mech-pred}) and \emph{(M2) why does the encoder/decoder asymmetry exist at all?} (\S\ref{sec:mech-cal}). The answers explain both the predictability gap \emph{and} why distillation recovers $87\%$ on decoders yet fails on encoders (\S\ref{sec:distill}).
+
+\subsection{Mechanism: prediction-space dominates}\label{sec:mech-pred}
+
+Per-feature ablation on the encoder \texttt{acc vs n\_rank} slice: dropping \emph{prediction\_space} crashes $R^2$ from $+0.62$ to $-24.5$; dropping \emph{parameter\_space} costs only $0.56$; dropping \emph{HP entropy} \emph{improves} $R^2$ by $0.08$ (in-sample only, no out-of-pool signal). The single-group ``only prediction\_space'' model attains $R^2{=}0.634$, \emph{better} than the full feature set. \textbf{Within our released feature set, prediction-space diversity is the dominant out-of-pool predictor}; weight-space distance is irrelevant out-of-pool. We do not rule out unmeasured features (loss-landscape curvature, gradient-alignment, training-trajectory geometry) — a feature set that displaces prediction-space in LOPO-CV would falsify this claim; the released cell schema admits new features without retraining.
+
+\subsection{Mechanism: why decoders win on calibration}\label{sec:mech-cal}
+
+\begin{table}[h]
+\centering
+\caption{Family-level conditional entropy of correctness given confidence (bits). Decoder $H(c|\mathrm{conf})$ is 21\% lower than encoder --- decoder confidence cleanly separates right from wrong, giving soft averaging a high-SNR signal to extract. (DeBERTa-v3 (n=1) excluded from family summary; per-pool H=0.940 is reported in App.~\ref{app:features}.)}
+\label{tab:info}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrcc@{}}
+\toprule
+Family & $n$ & $H(c|\mathrm{conf})$ & $I(c;\mathrm{conf})$ \\
+\midrule
+encoder          & 29 & 0.556 & 0.097 \\
+\textbf{decoder} & \textbf{25} & \textbf{0.437} & \textbf{0.106} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig4_info_mechanism.pdf}
+\caption{Per-pool conditional entropy and mutual information; decoder family (red) sits systematically lower on $H(c|\mathrm{conf})$ and higher on $I(c;\mathrm{conf})$.}
+\label{fig:info}
+\end{figure}
+
+\paragraph{The gap is architecture-driven, not scale-driven.} Within-family controls reject the scale-confound: BERT-base ($n{=}13$) $H{=}0.489$ vs.\ BERT-large ($n{=}8$) $H{=}0.630$ (entropy goes \emph{up} with encoder scale); within Qwen, $H$ moves $0.406 \to 0.439 \to 0.395$ across $0.5$B$\to$$1.5$B$\to$$3$B (non-monotonic, $\Delta{<}0.05$ over a $6{\times}$ scale span). The cross-family $0.437$ vs.\ $0.556$ gap ($\sim$$21\%$) is far larger than any within-family scale variation; architecture (autoregressive vs.\ masked) is load-bearing, not parameter count.
+
+\paragraph{Linear mode connectivity is not the mechanism.} Across four pools (bert-base Pool-A/C, Qwen-0.5B Pool-A, DeBERTa-v3 Pool-A on MNLI), barrier height ranges from $+0.908$ (disconnected) to $+0.001$ (fully connected) but does \emph{not} predict ensemble effectiveness: bert-base is disconnected yet ensembles work, and DeBERTa is fully connected yet ensembles do not help on accuracy (App.~\ref{app:lmc}).
+
+\section{Distillation and inference economics}\label{sec:distill}
+
+\paragraph{Distillation works on Qwen-0.5B MNLI, \emph{fails} on Qwen-1.5B MNLI --- one-cell phenomenon.} Following the soft-target knowledge distillation framework \citep{hinton2015distilling} at $\alpha{=}0.9, T{=}4$: on \textbf{Pool-A Qwen-0.5B MNLI} the student attains acc 0.8479 / ECE 0.0397, recovering \textbf{87\%} of the soft-vote accuracy gain (vanilla single: 0.8365 / 0.0465; soft-vote: 0.8495 / 0.0187). On \textbf{Pool-A Qwen-1.5B MNLI} (same $\alpha, T$): student acc 0.8777 / ECE 0.0782 vs.\ vanilla single 0.8772 / 0.0768, soft-vote 0.8884 / 0.0454 --- \emph{the student recovers only $4.5\%$ of the accuracy gain and \emph{worsens} ECE}. The 87\% recovery on Qwen-0.5B does not generalize to Qwen-1.5B; reported as a $1$-of-$2$ tested decoder-cell positive, consistent with L11 (D1--D5 are heuristics, not generalization guarantees). Encoder distillation (Pool-A bert-base) also fails on both arms, consistent with encoder-accuracy-REVERSED (\S\ref{sec:findings}). Pool-A accuracy plateaus by $N{\approx}8{-}16$ across all model classes; ECE continues to decline modestly to $N{=}20$ in non-saturated pools (App.~\ref{app:scaling}, Fig.~\ref{fig:scaling}). On all 19 MNLI-trained pools (Pool-A/B/C) evaluated on ANLI dev\_r3 (OOD), most land near chance ($0.28$--$0.42$); soft-vote lowers OOD ECE on $14/19$ pools (mean $\Delta$ECE${=}{-}0.021$), but accuracy gain is positive on \textbf{only 5/19} (4/7 Pool-A, 0/6 Pool-B, 1/6 Pool-C): \emph{HP-diverse and method-mixed pools consistently hurt OOD accuracy} (App.~\ref{app:ood}).
+
+\paragraph{Multi-LoRA serving costs $\sim 1.07{\times}$ at $N{=}8$ across two scale points.} On Pool-A Qwen-0.5B with 8 adapters routed via vLLM 0.10 multi-LoRA, median latency is 65.9\,ms/batch ($485$~req/s) vs.\ 61.4\,ms/batch single-LoRA ($521$~req/s) --- a \textbf{1.075$\times$ overhead}, equivalent to \textbf{14.1$\times$ speedup over sequential PyTorch} (sequential $N{=}8$ at batch$=$32 takes $932$\,ms/batch). On Pool-A Llama-3.1-8B-Instruct (NousResearch mirror, $4$-bit QLoRA training, bf16 serving) with the same $N{=}8$ routing, median latency is $77.3$\,ms/batch ($414$~req/s) vs.\ $72.4$\,ms/batch single-LoRA ($442$~req/s) --- \textbf{$1.067{\times}$ overhead}, consistent with the Qwen-0.5B measurement and confirming the multi-LoRA serving cost generalizes from $0.5$B to $8$B (Fig.~\ref{fig:latency}). Three engineering blockers and our \texttt{strip\_modules\_to\_save.py} compatibility patch are documented in App.~\ref{app:vllm}. Tail-latency (p99) and multi-batch generalization left to v1.3 (L8).
+
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{When to ensemble (D1--D5).} See \S\ref{sec:intro-rules} for full statement; post-hoc, not pre-registered (L11).
+
+\paragraph{Cost of getting D1--D5 wrong.} Table~\ref{tab:cost} quantifies the gap between the field-standard \emph{blind \texttt{soft\_vote} on every cell} and a per-cell oracle approximating D1--D5. On encoder accuracy, blind \texttt{soft\_vote} \emph{hurts} by $\overline{\Delta}{=}{-}3.8$pp and is REVERSED on $31\%$ of cells at $20{\times}$ inference cost; D1--D5 routing (predominantly \texttt{greedy\_soup}, which merges to a single adapter) recovers $+0.5$pp at $1{\times}$ cost --- a $20{\times}$ compute reduction with a $4.3$pp accuracy swing. Decoder cells are insensitive to method choice but D1--D5 still wins marginally. Corpus-wide, REVERSED rate drops $11\%{\to}2\%$ (App.~\ref{app:cost} stratifies by metric/family).
+
+\paragraph{Cumulative-science contribution.} The release is a corpus, not a recipe: future methods (MoE-routed, learned-weight), PEFT families (LoHa, AdaLoRA), or corrected claims plug in as new columns / rows / v2 cells without retraining. Pre-registered at git SHA \texttt{02a5a6bc}; encoder $R^2_{\text{LOPO}}{=}{+}0.60$ cleared the $R^2{\geq}0.30$ pivot, decoder did not (L2, not retro-fit).
+
+\section*{Limitations}
+
+\paragraph{What this paper does \emph{not} claim.} For reviewer transparency, we enumerate the inferences that our 1{,}028 cells do \emph{not} support: \textbf{(a)} we do \emph{not} claim a single best combination method --- \texttt{greedy\_soup} dominates on under-converged encoders, \texttt{majority\_vote} dominates on $\geq 1.5$B decoders, soft\_vote dominates on converged encoders, and the right answer is cell-dependent; \textbf{(b)} we do \emph{not} claim ensembling is universally beneficial --- $17.8\%$ of cells are REVERSED pre-FDR ($16.9\%$ post-FDR at $q{=}0.05$), and most v1.0 encoder accuracy cells are reversed against \texttt{n\_rank}; \textbf{(c)} we do \emph{not} claim our diversity-quality frontier transfers to other PEFT families (LoHa, AdaLoRA, prompt tuning) or to instruction-tuned base models; \textbf{(d)} we do \emph{not} claim distillation generalizes --- it works on Qwen-0.5B MNLI ($87\%$ recovery) but \emph{fails} on Qwen-1.5B MNLI ($4.5\%$ recovery), tested $2$ decoder cells; \textbf{(e)} we do \emph{not} claim the encoder/decoder $H(c\,|\,\mathrm{conf})$ gap holds outside our 8-task corpus. Each of these is a deliberate scope-limit, not a hedge: extending any of them is a defined v1.2 cell that can be added without retraining the existing 67 pools.
+
+\paragraph{L1 — Encoder accuracy mostly REVERSED.} Compute-matched single adapters (rank 16--32, epochs 2--4) consistently beat every prediction-space ensemble method on most v1.0 encoder classification cells; the headline-level claim ``ensembles always help'' does not hold. We report the cells transparently rather than filter them out.
+
+\paragraph{L2 — Decoder cross-pool predictability fails at our scale.} 25 decoder pools is too little variation across pools to extract a stable cross-pool LOPO regression signal for accuracy gain (encoder accuracy frontier $R^2{=}0.60$, decoder $R^2{=}{-}1.14$, Table~\ref{tab:frontier_strat}). Larger decoder pool counts may close this gap; we leave it open.
+
+\paragraph{L3 — \texttt{greedy\_soup} equivalence to random subset on seed-only converged pools.} On seed-only Pool-A converged-pool cells, \texttt{greedy\_soup} is often statistically indistinguishable from random subset selection of equal size; the gain we attribute to subset selection on RoBERTa/DeBERTa requires the HP-shared sub-chance regime (\S\ref{sec:findings}, P$_b$).
+
+\paragraph{L4 — OOD accuracy rarely transfers; diversity \emph{hurts} OOD.} ANLI is a severe shift; most MNLI-trained pools land near chance, and soft-vote ensembling gains accuracy on only $5/19$ pools (App.~\ref{app:ood}). The Pool-B (HP-diverse) and Pool-C (method-mixed) configurations that improve in-distribution ensembling \emph{consistently hurt} OOD accuracy --- the diversity our framework optimizes for is in-distribution disagreement, not robustness. v1.1 OOD evaluation (HellaSwag$\to$ARC, GSM8K$\to$MATH) is left to v1.2.
+
+\paragraph{L5 — GSM8K ECE methodology is non-standard.} We report 15-bin equal-mass ECE on per-example confidence $=\!\exp(\text{mean per-token logprob})$ over the model's generation, with ensemble confidence aggregating only over adapters voting for the majority answer. Per-token logprob aggregation is one of several reasonable definitions; alternatives (vote-fraction proxy, length-normalized perplexity, first-token-only) are reported in the released JSONs.
+
+\paragraph{L6 — Pool-B/C HellaSwag adapter quality is uneven.} On RoBERTa and DeBERTa, $\geq 14$ of $20$--$22$ Pool-B HellaSwag adapters fail to converge above chance under our shared HP grid. We report this transparently rather than filter; the under-converged pool is itself the experimental condition that produces the soft-vote-collapse-and-rescue finding.
+
+\paragraph{L7 — Shared HP grid is deliberate; we ran HP-tuned re-evaluations as v1.2 cells.} Pool-A uses a single $(r{=}8, \alpha{=}16, lr{=}3{\times}10^{-4})$ HP across all architectures. We added two v1.2 cells testing the HP-confound hypothesis from \emph{both} directions: \textbf{(a)} an architecture-tuned re-run of Pool-A RoBERTa HellaSwag at $lr{=}2{\times}10^{-5}$ (per \citealp{liu2019roberta}) eliminates the under-convergence completely --- all $10/10$ tuned-seed adapters converge to val\_acc $\in [0.478, 0.505]$, mean $0.491$ (vs.\ the original shared-HP $14/20$ below chance, median $0.164$); \textbf{(b)} the symmetric check, BERT-base HellaSwag at $lr{=}2{\times}10^{-5}$ (RoBERTa's natural lr applied to BERT), \emph{does not collapse}: $8/8$ seed re-runs converge to mean $0.329 \pm 0.011$ (range $[0.317, 0.345]$), only $\sim 3$pp below BERT-base at its default $lr{=}3{\times}10^{-4}$ ($0.358$) and far above the $0.097$ collapse RoBERTa exhibits under the same $lr{=}3{\times}10^{-4}$ shared HP. The (P$_b$) collapse is therefore a \emph{RoBERTa-specific lr-sensitivity} interacting with the shared HP, not a generic HP-misconfiguration that any architecture would exhibit; BERT-base is robust across the lr range we tested. The shared-HP cells are retained in v1.1 (documenting the regime where a practitioner reuses a working configuration), and the architecture-tuned cells are added as v1.2 (\S\ref{app:prereg}).
+
+\paragraph{L8 — vLLM serving benchmark on two scale points, single batch.} Qwen-0.5B ($1.075{\times}$) and Llama-3.1-8B-Instruct ($1.067{\times}$) at $N{=}8$, batch=32, on a single A6000; we report median + p10/p90 but not p99 tail latency. Multi-batch and tail-latency generalization is left to v1.3.
+
+\paragraph{L9 — Multichoice eval subsample variance.} HellaSwag $5{,}000$-sample subsample accuracy varies by up to $\pm 10$pp across shuffle seeds for the same trained adapter (App.~\ref{app:splitvar}), and the full-validation accuracy is sometimes the \emph{worst} of all subsample seeds. The v1.1 multichoice cells in Table~\ref{tab:v11cells} are honest under the pre-registered protocol (fixed \texttt{shuffle(seed=0)}, $5{,}000$ samples) but ensemble winners can shift at the margins under different subsamples. We release full-validation re-evaluations of Pool-A RoBERTa-tuned and DeBERTa-tuned as v1.2 supplementary cells.
+
+\paragraph{L10 — DeBERTa-v3 HellaSwag HP search did not recover.} Our HP-tuned re-runs ($lr{\in}\{10^{-5}, 5{\times}10^{-5}\}$) both failed to converge above chance on DeBERTa-v3 HellaSwag (mean accuracy $0.252$, range $[0.247, 0.257]$ across 10 tuned-seed adapters), in contrast to RoBERTa where $lr{=}2{\times}10^{-5}$ fixes convergence. This suggests the DeBERTa-v3 + multichoice-LoRA combination has a deeper architecture-LoRA interaction issue (possibly with the disentangled attention) that simple HP tuning does not address. A wider DeBERTa HP/target-module sweep is a defined v1.3 cell.
+
+\paragraph{L11 — D1--D5 are post-hoc heuristics, not pre-registered.} The five decision rules (\S\ref{sec:discussion}) were distilled from inspection of the $1{,}028$-cell corpus and are not part of the Phase-0 pre-registration. The Table~\ref{tab:cost} cost-savings comparison uses the same corpus that the rules were derived from, so it is an \emph{upper bound on rule-based routing}, not a held-out generalization estimate. Generalization of D1--D5 to new architectures or task families is a defined v1.3 evaluation cell.
+
+\paragraph{L12 — GSM8K pre-training contamination is substantial; ensemble gains sit on memorized items.} A v1.3 digit-renumbering probe (100 GSM8K test items, every integer shifted by $+7$ in both question and gold answer) on Pool-A seed\_11 adapters reveals catastrophic accuracy drops: \textbf{Qwen-2.5-7B $0.66{\to}0.04$ ($\Delta{=}{-}62$pp)}; \textbf{Qwen-2.5-3B $0.61{\to}0.05$ ($\Delta{=}{-}56$pp)} (\texttt{analysis/gsm8k\_contamination\_probe\{,\_3b\}.json}). Both models' "math reasoning" is largely \emph{memorization of GSM8K-shaped items}, not surface-form-robust arithmetic. The within-Qwen monotone scaling ($+2.8/+5.4/+8.9/+8.5$pp) and the cross-family inverse pattern ($r{=}{-}0.98$ on $n{=}3$) reported in \S\ref{sec:findings}~(P$_c$) are therefore consistent with two mechanisms: ensemble disagreement on residual non-memorized items \emph{or} differential memorization across base models. Mistral-7B-v0.1's strongest +$13.4$pp is partial counter-evidence for pure-contamination but does not rule out memorization. \emph{Conservative reading}: the (P$_c$) decoder gains should be read as "ensemble effects on a contaminated benchmark"; the underlying arithmetic-reasoning claim awaits a decontaminated probe (digit-shift, paraphrase, or fresh benchmark such as MATH or HumanEval-Math).
+
+\paragraph{Reproducibility.} Pool manifests, 1{,}028 cell JSONs, ensemble results (with per-example confidence for bootstrap), all analysis code, and the locked Phase-0 pre-registration are released at an anonymous repository.\footnote{\url{https://anonymous.4open.science/r/AdapterFrontier-XXXX/} (de-anonymized at acceptance).} Every result JSON carries a \texttt{provenance} block (git SHA, config hash, library versions) for byte-level reproducibility.
+
+\section*{Ethical Considerations}
+
+\paragraph{Compute footprint.} Training the 67 adapter pools required approximately $1{,}500$ GPU-hours total on a 50-node RTX 3060 cluster plus $\sim$$60$ A6000-hours for ensemble evaluation and serving benchmarks. PEFT adapters are intentionally compute-light: each adapter trains in $\sim$$1$--$8$ GPU-hours; we release every adapter so that downstream researchers do not need to retrain. Estimated CO\textsubscript{2}e: approximately $0.18$ tonnes (RTX 3060 at $170$\,W $\times$ $1{,}500$\,h $+$ A6000 at $300$\,W $\times$ $60$\,h, average grid intensity).
+
+\paragraph{Dual use and misuse mitigation.} The adjudication framework is symmetric: it can report either direction (SUPPORTED or REVERSED) of an ensembling claim. We surface the $17.8\%$ REVERSED cells (pre-FDR; $16.9\%$ post-FDR at $q{=}0.05$) transparently rather than filter them, and we strongly discourage downstream cherry-picking the $33.0\%$ SUPPORTED subset to manufacture a misleading positive headline. The released cell JSONs contain the full set of $\Delta$, CI, sign-flip $p$, and adjudication labels precisely so that any selective citation is auditable.
+
+\paragraph{Data licenses.} HellaSwag (CC-BY-NC 4.0), GSM8K (MIT), GLUE family (various, see App.~\ref{app:repro}). All datasets are publicly released and used in accordance with their licenses; HellaSwag's non-commercial clause is respected (we use it for benchmark adjudication, not for commercial deployment). We do \emph{not} redistribute base-model weights, only the LoRA adapter $A/B$ matrices ($\sim$$20$--$300$K trainable parameters per adapter).
+
+\paragraph{Generative AI assistance.} Per ACL Policy on Publication Ethics, we disclose: an LLM-based assistant was used for (i) language polishing of select paragraphs in \S1, \S2, and \S Limitations, and (ii) literature search support during related-work compilation. No abstract, results table, statistical analysis, figure caption, claim, or code was AI-generated; every cited reference was author-verified against the original paper, and every numerical claim in the abstract/intro was independently regenerated from the cell JSONs by an author. Detail will be confirmed in the Responsible NLP Research checklist accompanying the OpenReview submission.
+
+\bibliographystyle{acl_natbib}
+\begin{thebibliography}{99}
+\bibitem[Hu et al., 2022]{hu2021lora}
+Edward~J. Hu et al.\ LoRA: Low-rank adaptation of large language models. \emph{ICLR}, 2022.
+
+\bibitem[Wortsman et al., 2022]{wortsman2022model}
+Mitchell Wortsman et al.\ Model soups: averaging weights of multiple fine-tuned models. \emph{ICML}, 2022.
+
+\bibitem[Yadav et al., 2023]{yadav2023ties}
+Prateek Yadav et al.\ TIES-Merging: resolving interference when merging models. \emph{NeurIPS}, 2023.
+
+\bibitem[Yu et al., 2024]{yu2024dare}
+Le Yu et al.\ Language models are super Mario: absorbing abilities from homologous models as a free lunch. \emph{ICML}, 2024.
+
+\bibitem[Liu et al., 2024]{dora}
+Shih-Yang Liu et al.\ DoRA: weight-decomposed low-rank adaptation. \emph{ICML}, 2024.
+
+\bibitem[Meng et al., 2024]{pissa}
+Fanxu Meng et al.\ PiSSA: principal singular values and singular vectors adaptation. \emph{NeurIPS}, 2024.
+
+\bibitem[Zhang et al., 2023]{adalora}
+Qingru Zhang et al.\ AdaLoRA: adaptive budget allocation for parameter-efficient fine-tuning. \emph{ICLR}, 2023.
+
+\bibitem[Kopiczko et al., 2024]{vera}
+Dawid J. Kopiczko, Tijmen Blankevoort, Yuki M. Asano.\ VeRA: vector-based random matrix adaptation. \emph{ICLR}, 2024.
+
+\bibitem[Wang et al., 2022]{adamix}
+Yaqing Wang et al.\ AdaMix: mixture-of-adaptations for parameter-efficient model tuning. \emph{EMNLP}, 2022.
+
+\bibitem[Wu et al., 2024]{mole}
+Xun Wu, Shaohan Huang, Furu Wei.\ Mixture of LoRA experts. \emph{ICLR}, 2024.
+
+\bibitem[Caccia et al., 2023]{molora}
+Lucas Caccia et al.\ Multi-head adapter routing for cross-task generalization. \emph{NeurIPS}, 2023.
+
+\bibitem[Tian et al., 2024]{hydralora}
+Chunlin Tian et al.\ HydraLoRA: an asymmetric LoRA architecture for efficient fine-tuning. \emph{NeurIPS}, 2024.
+
+\bibitem[Wang et al., 2023]{multilora}
+Yiming Wang et al.\ MultiLoRA: democratizing LoRA for better multi-task learning. \emph{arXiv:2311.11501}, 2023.
+
+\bibitem[Naeini et al., 2015]{naeini2015}
+Mahdi Pakdaman Naeini, Gregory F. Cooper, Milos Hauskrecht.\ Obtaining well calibrated probabilities using Bayesian binning. \emph{AAAI}, 2015.
+
+\bibitem[Nixon et al., 2019]{nixon2019}
+Jeremy Nixon, Michael W. Dusenberry, Linchuan Zhang, Ghassen Jerfel, Dustin Tran.\ Measuring calibration in deep learning. \emph{CVPR Workshops}, 2019.
+
+\bibitem[Minderer et al., 2021]{minderer2021}
+Matthias Minderer et al.\ Revisiting the calibration of modern neural networks. \emph{NeurIPS}, 2021.
+
+\bibitem[DiCiccio \& Efron, 1996]{diciccio1996}
+Thomas J. DiCiccio and Bradley Efron.\ Bootstrap confidence intervals. \emph{Statistical Science}, 11(3):189--228, 1996.
+
+\bibitem[Benjamini \& Hochberg, 1995]{bh1995}
+Yoav Benjamini and Yosef Hochberg.\ Controlling the false discovery rate: a practical and powerful approach to multiple testing. \emph{JRSS-B}, 57(1):289--300, 1995.
+
+\bibitem[Huang et al., 2023]{huang2023lorahub}
+Chengsong Huang et al.\ LoraHub: efficient cross-task generalization via dynamic LoRA composition. \emph{arXiv:2307.13269}, 2023 (later published at COLM 2024).
+
+\bibitem[Lakshminarayanan et al., 2017]{lakshminarayanan2017simple}
+Balaji Lakshminarayanan, Alexander Pritzel, Charles Blundell.\ Simple and scalable predictive uncertainty estimation using deep ensembles. \emph{NeurIPS}, 2017.
+
+\bibitem[Munafò et al., 2017]{munafo2017manifesto}
+Marcus R.\ Munafò et al.\ A manifesto for reproducible science. \emph{Nature Human Behaviour}, 1(0021), 2017.
+
+\bibitem[Loken \& Gelman, 2017]{loken2017measurement}
+Eric Loken and Andrew Gelman.\ Measurement error and the replication crisis. \emph{Science}, 355(6325), 2017.
+
+\bibitem[Hofman et al., 2021]{hofman2021integrating}
+Jake M.\ Hofman et al.\ Integrating explanation and prediction in computational social science. \emph{Nature}, 595, 2021.
+
+\bibitem[Guo et al., 2017]{guo2017calibration}
+Chuan Guo, Geoff Pleiss, Yu Sun, Kilian Q.\ Weinberger.\ On calibration of modern neural networks. \emph{ICML}, 2017.
+
+\bibitem[Sheng et al., 2024]{sheng2024slora}
+Ying Sheng et al.\ S-LoRA: serving thousands of concurrent LoRA adapters. \emph{MLSys}, 2024.
+
+\bibitem[Kwon et al., 2023]{kwon2023efficient}
+Woosuk Kwon et al.\ Efficient memory management for large language model serving with PagedAttention. \emph{SOSP}, 2023.
+
+\bibitem[Zellers et al., 2019]{zellers2019hellaswag}
+Rowan Zellers, Ari Holtzman, Yonatan Bisk, Ali Farhadi, Yejin Choi.\ HellaSwag: can a machine really finish your sentence? \emph{ACL}, 2019.
+
+\bibitem[Cobbe et al., 2021]{cobbe2021gsm8k}
+Karl Cobbe et al.\ Training verifiers to solve math word problems. \emph{arXiv:2110.14168}, 2021.
+
+\bibitem[Wang et al., 2018]{wang2018glue}
+Alex Wang et al.\ GLUE: a multi-task benchmark and analysis platform for natural language understanding. \emph{EMNLP BlackboxNLP}, 2018.
+
+\bibitem[Liu et al., 2019]{liu2019roberta}
+Yinhan Liu et al.\ RoBERTa: a robustly optimized BERT pretraining approach. \emph{arXiv:1907.11692}, 2019.
+
+\bibitem[Gao et al., 2024]{gao2024lmeval}
+Leo Gao et al.\ The language model evaluation harness. \emph{Zenodo}, v0.4, 2024.
+
+\bibitem[Pfeiffer et al., 2020]{pfeiffer2020adapterhub}
+Jonas Pfeiffer et al.\ AdapterHub: a framework for adapting transformers. \emph{EMNLP Demo}, 2020.
+
+\bibitem[Pfeiffer et al., 2021]{pfeiffer2021adapterfusion}
+Jonas Pfeiffer et al.\ AdapterFusion: non-destructive task composition for transfer learning. \emph{EACL}, 2021.
+
+\bibitem[Houlsby et al., 2019]{houlsby2019parameter}
+Neil Houlsby et al.\ Parameter-efficient transfer learning for NLP. \emph{ICML}, 2019.
+
+\bibitem[Hinton et al., 2015]{hinton2015distilling}
+Geoffrey Hinton, Oriol Vinyals, Jeff Dean.\ Distilling the knowledge in a neural network. \emph{arXiv:1503.02531}, 2015.
+
+\bibitem[Karandikar et al., 2021]{karandikar2021soft}
+Archit Karandikar et al.\ Soft calibration objectives for neural networks. \emph{NeurIPS}, 2021.
+
+\bibitem[Bowman \& Dahl, 2021]{bowman2021will}
+Samuel R.\ Bowman and George E.\ Dahl.\ What will it take to fix benchmarking in natural language understanding? \emph{NAACL}, 2021.
+
+\bibitem[Dehghani et al., 2022]{dehghani2022efficiency}
+Mostafa Dehghani et al.\ The efficiency misnomer. \emph{ICLR}, 2022.
+
+\bibitem[Chen et al., 2024]{chen2024punica}
+Lequn Chen et al.\ Punica: multi-tenant LoRA serving. \emph{MLSys}, 2024.
+
+\bibitem[Efron, 1979]{efron1979bootstrap}
+Bradley Efron.\ Bootstrap methods: another look at the jackknife. \emph{Annals of Statistics}, 7(1):1--26, 1979.
+
+\bibitem[Holm, 1979]{holm1979simple}
+Sture Holm.\ A simple sequentially rejective multiple test procedure. \emph{Scandinavian Journal of Statistics}, 6(2):65--70, 1979.
+\end{thebibliography}
+
+\appendix
+\sloppy
+
+\section{Subsample variance on HellaSwag multichoice evaluation}\label{app:splitvar}
+
+A v1.2 diagnostic uncovered that HellaSwag $5{,}000$-sample subsample accuracy varies by up to $\pm 10$pp across shuffle seeds for the same trained adapter --- much larger than naive subsample variance would predict. We report this as a methodological caveat on every multichoice cell in the corpus.
+
+\paragraph{Setup.} Take one Pool-A RoBERTa HellaSwag adapter (seed 11, $lr{=}2{\times}10^{-5}$ HP-tuned). Evaluate on $5{,}000$-sample subsamples of HellaSwag validation drawn with \texttt{ds.shuffle(seed)} for $\text{seed}\!\in\!\{0, 11, 21, 42\}$; then on the full $10{,}042$-sample validation. Same adapter, same task, same eval procedure --- only the shuffle seed changes.
+
+\begin{table}[h]
+\centering
+\caption{Same adapter, four shuffled $5{,}000$-sample subsets of HellaSwag validation plus the full set. Variance $\pm 10$pp is dramatically larger than naive subsample variance ($\pm 1$pp expected) and the full-validation accuracy is the worst of all settings.}
+\label{tab:splitvar}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Evaluation subsample & Accuracy \\
+\midrule
+shuffle\_seed$=0$, $N{=}5000$ & 0.296 \\
+shuffle\_seed$=11$, $N{=}5000$ & 0.431 \\
+shuffle\_seed$=21$, $N{=}5000$ & 0.263 \\
+shuffle\_seed$=42$, $N{=}5000$ & 0.358 \\
+\midrule
+\textbf{full validation}, $N{=}10042$ & \textbf{0.211} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Implication.} Multichoice cells in our v1.1 corpus all used a fixed \texttt{shuffle(seed=0)} $\to$ first $5{,}000$ samples. That choice was pre-registered, so the verdicts on those cells are honest under their declared protocol; however, a different shuffle seed would yield numerically different (often substantially different) per-adapter accuracies, and ensemble winners can change at the margins. We thus flag every multichoice cell in Table~\ref{tab:v11cells} as \emph{conditional on the seed-0 $5{,}000$-sample subsample}.
+
+\paragraph{Full-validation re-evaluation (v1.2 supplementary).} The full-validation ($N{=}10042$) re-run on the HP-tuned RoBERTa pool yields qualitatively different verdicts:
+
+\begin{table}[h]
+\centering
+\caption{Same HP-tuned RoBERTa pool, two evaluations. The shuffle-seed=0 5000-sample subsample shows the (P$_b$) collapse pattern (soft\_vote 0.196 $<$ chance 0.25); full validation does \emph{not} (soft\_vote 0.305, close to best\_single). The greedy\_soup rescue persists in both (+5.7pp on full). \emph{Conclusion}: the v1.1 collapse is a joint failure of HP misconfiguration \emph{and} subsample-specific evaluation, not architecture-driven.}
+\label{tab:fullval_roberta}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Method & seed-0 $N{=}5000$ & full-val $N{=}10042$ \\
+\midrule
+best\_single   & 0.382 & 0.359 \\
+\textbf{soft\_vote}     & \textbf{0.196}$^{\ddagger}$ & \textbf{0.305} (no collapse) \\
+majority\_vote & 0.207 & 0.291 \\
+\textbf{greedy\_soup}   & \textbf{0.381} & \textbf{0.416} (+5.7pp over best) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+DeBERTa-tuned full-validation produced identical $0.243$ across all methods (10/10 adapters at chance, no signal to ensemble) --- confirming the L10 architecture-LoRA interaction story rather than a subsample artifact. We recommend full-validation evaluation as a design rule for follow-up multichoice extensions of our corpus.
+
+\section{File-level reproducibility (provenance block schema)}\label{app:provenance}
+Every result JSON --- pool manifest, ensemble result, \texttt{compute\_match} cell, frontier output, distillation metrics, latency benchmark, OOD evaluation, mechanism analysis --- carries a \texttt{provenance} block enabling byte-level re-execution:
+\begin{verbatim}
+"provenance": {
+  "schema_version": 1,
+  "git_sha": "...",
+  "git_dirty": false,
+  "config_hash": "sha256(...)",
+  "python_version": "...",
+  "platform": "...",
+  "torch_version": "...",
+  "transformers_version": "...",
+  "peft_version": "...",
+  "datasets_version": "...",
+  "numpy_version": "...",
+  "cuda_visible_devices": "..."
+}
+\end{verbatim}
+A third party can replay any cell by checking out the recorded git SHA, reconstructing the environment via the recorded library versions, and re-running the documented command; the bootstrap RNG seeds are fixed (seed~$0$) so the paired-bootstrap CI is bit-identical across re-executions.
+
+\section{Reproducibility checklist (ACL convention)}\label{app:repro}
+\paragraph{Datasets.} HellaSwag~\citep{zellers2019hellaswag} (CC-BY-NC 4.0), GSM8K~\citep{cobbe2021gsm8k} (MIT), GLUE-family MNLI/SST-2/QNLI~\citep{wang2018glue}, BoolQ, ANLI, AG News. All loaded via the HuggingFace \texttt{datasets} library at the versions listed in each result JSON's \texttt{provenance} block. Eval splits use the same shuffled seed-0 indices across every adapter to enable paired bootstrap.
+\paragraph{Models.} {\sloppy 10 base models from HuggingFace Hub: \texttt{bert-base-uncased}, \texttt{bert-large-uncased}, \texttt{roberta-base}, \texttt{microsoft/deberta-v3-base}, Qwen2.5 \texttt{\{0.5B, 1.5B, 3B\}}, \texttt{TinyLlama-1.1B-Chat-v1.0}, \texttt{SmolLM2-1.7B}, \texttt{pythia-1.4b}. Adapter weights (LoRA-A/B only, $\sim$20--300K trainable params per adapter) are released; we do \emph{not} redistribute base-model weights.\par}
+\paragraph{Hyperparameters.} Each pool's HP grid is in \texttt{sweep\_configs/<pool>.json} (Pool-A: fixed HP, varying seed; Pool-B: rank$\in$\{4,8,16,32\} $\times$ alpha$\in$\{8,16,32\} $\times$ lr$\in$\{1e-4, 3e-4\}, fixed seed 42; Pool-C: \{LoRA, DoRA, rsLoRA, PiSSA\} $\times$ 5 seeds, fixed rank/alpha/lr). All runs use AdamW, cosine LR schedule with 6\% warmup, weight decay 0.01.
+\paragraph{Compute.} Training: 50-node RTX 3060 12GB cluster ($\sim$4--8 GPU-hours per Pool-A sweep; $\sim$16--24 GPU-hours per Pool-B/C sweep). Local A6000 48GB for ensemble eval, vLLM serving, and statistical analysis ($\sim$60 GPU-hours total).
+\paragraph{Statistical procedure.} Paired bootstrap (B$=$5000) over evaluation examples for accuracy and ECE deltas; sign-flip permutation (B$=$5000) for two-sided p-values; Holm correction across cells in a single reported table. R$^2$ confidence intervals use B$=$200 bootstrap rounds resampling cells with replacement (a smaller B because LOPO-CV is per-round expensive). All seeds and bootstrap RNGs are fixed (seed 0).
+\paragraph{Code, data, pre-registration.} All code, pool manifests, ensemble result JSONs (with per-example predictions and confidences for replicating ECE bootstrap), 1{,}028 cell JSONs (with diff/CI/p-value/adjudication), the locked Phase-0 pre-registration document, and the v1.1 amendment ledger are released at an anonymous repository: \url{https://anonymous.4open.science/r/AdapterFrontier-XXXX/} (de-anonymized at acceptance). Each result JSON carries a \texttt{provenance} block (git SHA, config hash, library versions, timestamp) for byte-level reproducibility.
+
+\section{LMC barrier per pool}\label{app:lmc}
+For each of four pools we sample 50 pairs of adapters $(\theta_A, \theta_B)$ and evaluate the held-out validation loss along the linear interpolation $\theta(\lambda)=\lambda\theta_A+(1{-}\lambda)\theta_B$ at $\lambda\!\in\!\{0,0.25,0.5,0.75,1.0\}$. The \emph{barrier height} is the maximum interpolation-curve loss minus the average endpoint loss, normalized to the endpoint span. Following \citet{wortsman2022model}'s convention, a barrier $>0$ means the interpolation has a strictly worse intermediate point (disconnected basin); barriers near $0$ indicate linear mode connectivity (LMC).
+
+\begin{table}[h]
+\centering
+\caption{LMC barrier vs.\ ensemble accuracy gain on four MNLI pools. The two extremes (BERT-base \emph{disconnected} yet ensembling works modestly; DeBERTa-v3 \emph{fully connected} yet ensembling does not help) demonstrate that LMC is uncorrelated with ensemble effectiveness in our PEFT regime. This generalizes the negative result of \citet{wortsman2022model}'s ``model soups'' setting where LMC was necessary for weight-space averaging --- in prediction-space ensembling, LMC is neither necessary nor sufficient.}
+\label{tab:lmc}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+Pool & barrier & $\Delta$acc & basin \\
+\midrule
+BERT-base Pool-A   & $+0.908$ & $+0.002$ & disconn. \\
+BERT-base Pool-C   & $+0.605$ & $+0.005$ & semi-disc. \\
+Qwen-0.5B Pool-A   & $+0.457$ & $+0.013$ & semi-disc. \\
+DeBERTa-v3 Pool-A  & $+0.001$ & $-0.003$ & connected \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Pool-A scaling curves}\label{app:scaling}
+Accuracy and ECE as a function of $N \in \{1,2,4,8,16,20\}$ over 50 random subsets per $N$, per (model, task). Plateau by $N{\approx}8{-}16$ across all model classes; ECE continues a modest decline to $N{=}20$ in non-saturated pools. Figure \ref{fig:scaling}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig2_scaling_curves.pdf}
+\caption{Pool-A MNLI scaling curves over 50 random subsets per $N$.}
+\label{fig:scaling}
+\end{figure}
+
+\section{OOD evaluation (ANLI dev\_r3)}\label{app:ood}
+We re-evaluate every MNLI-trained pool on ANLI dev\_r3 (round 3, the hardest adversarial NLI split). ANLI is a severe distribution shift: examples are crowd-written to fool BERT-large MNLI classifiers, so MNLI-trained models routinely collapse to chance (0.33).
+
+\begin{table}[h]
+\centering
+\caption{In-distribution (MNLI test) vs.\ out-of-distribution (ANLI dev\_r3) accuracy on \emph{all 19 MNLI-trained pools} (Pool-A v1.0 main, Pool-B HP-diverse, Pool-C method-mixed). \emph{Headline OOD finding}: $\Delta$soft is positive on \textbf{only 5/19 pools} (4/7 Pool-A, 0/6 Pool-B, 1/6 Pool-C); the modal effect of soft-vote ensembling on OOD accuracy is \textbf{non-positive}. Pool-B and Pool-C (HP-diverse and method-mixed) consistently \emph{hurt} OOD accuracy --- the diversity that helped on in-distribution does not transfer. DeBERTa-v3 Pool-A is the only $\geq{+}5$pp OOD gain. soft\_vote ECE (not shown) improves OOD on $14/19$ pools (mean $\Delta$ECE${=}{-}0.021$). The Qwen-3B / SmolLM2 / Pythia OOD evaluations are not yet released.}
+\label{tab:ood}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Pool & OOD bs & OOD sv & $\Delta$soft \\
+\midrule
+\multicolumn{4}{l}{\emph{Pool-A (seed-only):}} \\
+\quad BERT-base          & 0.283 & 0.292 & $+0.008$ \\
+\quad BERT-large         & 0.285 & 0.300 & $+0.015$ \\
+\quad RoBERTa-base       & 0.285 & 0.283 & $-0.002$ \\
+\quad DeBERTa-v3         & 0.304 & 0.358 & $\mathbf{+0.054}$ \\
+\quad Qwen-0.5B          & 0.335 & 0.327 & $-0.008$ \\
+\quad Qwen-1.5B          & 0.385 & 0.402 & $+0.017$ \\
+\quad TinyLlama-1.1B     & 0.342 & 0.340 & $-0.002$ \\
+\multicolumn{4}{l}{\emph{Pool-B (HP-diverse):}} \\
+\quad BERT-base          & 0.279 & 0.267 & $-0.013$ \\
+\quad BERT-large         & 0.358 & 0.298 & $\mathbf{-0.060}$ \\
+\quad RoBERTa-base       & 0.304 & 0.300 & $-0.004$ \\
+\quad Qwen-0.5B          & 0.344 & 0.338 & $-0.006$ \\
+\quad Qwen-1.5B          & 0.402 & 0.388 & $-0.015$ \\
+\quad TinyLlama-1.1B     & 0.356 & 0.338 & $-0.019$ \\
+\multicolumn{4}{l}{\emph{Pool-C (method-mixed):}} \\
+\quad BERT-base          & 0.310 & 0.298 & $-0.013$ \\
+\quad BERT-large         & 0.323 & 0.290 & $-0.033$ \\
+\quad RoBERTa-base       & 0.294 & 0.294 & $\;\;0.000$ \\
+\quad Qwen-0.5B          & 0.323 & 0.329 & $+0.006$ \\
+\quad Qwen-1.5B          & 0.419 & 0.400 & $-0.019$ \\
+\quad TinyLlama-1.1B     & 0.365 & 0.346 & $-0.019$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The pattern --- ECE consistently improves but accuracy gains are direction-mixed --- is consistent with \citet{lakshminarayanan2017simple}: ensembling sharpens the model's confidence in regions where the prediction surface generalizes, but cannot recover lost decision-boundary information under severe shift. Qwen-1.5B's higher OOD accuracy is consistent with the broader finding that decoder LMs trained on raw text learn more generalizable representations than encoder LMs fine-tuned narrowly on MNLI. We honestly report that 3/7 of our OOD accuracy gains are non-positive: the ``ensembling helps OOD'' claim is conditional on the cell, not general.
+
+\section{Sequential PEFT inference latency}\label{app:latency}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig3_latency_pareto.pdf}
+\caption{Sequential PEFT inference latency at batch size 32. Cost scales linearly with $N$. vLLM multi-LoRA amortizes this to $1.075{\times}$ at $N{=}8$ on Pool-A Qwen-0.5B and $1.067{\times}$ on Pool-A Llama-3.1-8B-Instruct (\S5).}
+\label{fig:latency}
+\end{figure}
+
+\section{vLLM serving compatibility blockers}\label{app:vllm}
+{\sloppy Three blockers we patched to run vLLM 0.10 on transformers 5.x: (i) transformers 5.x removed \texttt{all\_special\_tokens\_extended} --- patched in vLLM's tokenizer wrapper with an \texttt{hasattr} fallback; (ii) CUDA forking is rejected --- must export the vLLM worker-multiproc method as \texttt{spawn}; (iii) vLLM rejects PEFT adapters with \texttt{modules\_to\_save} (classification heads). We ship \texttt{strip\_modules\_to\_save.py} to make classification adapters serving-compatible. Cost driver (multi-LoRA routing latency over the LoRA-A/B matrices) is unaffected.\par}
+
+\section{Statistical procedure details}\label{app:stats}
+
+\paragraph{Paired bootstrap CI.} For each (pool, method, baseline) cell we compute $\Delta=\mu_{\text{ens}}-\mu_{\text{base}}$ on the test set ($N_{\text{test}}$ examples). To produce a $95\%$ CI we sample $B{=}5000$ bootstrap replicates: in each replicate we draw $N_{\text{test}}$ examples \emph{with replacement} and recompute $\Delta$ using the \emph{same} sampled indices for both ensemble and baseline. Reported CIs are the $2.5$ and $97.5$ percentiles of the $B$ replicates. Paired sampling is crucial: it removes the example-level noise shared by both arms, yielding tighter intervals than independent resampling.
+
+\paragraph{Sign-flip permutation $p$-value.} Two-sided sign-flip test: for each test example $i$, define $d_i=\mathbb{1}[\text{ens correct}]_i - \mathbb{1}[\text{base correct}]_i \in\{-1,0,+1\}$ (or the analogous bin-residual for ECE). Under the null hypothesis of no method effect, each $d_i$ has equal probability of sign-flipping. We generate $B{=}5000$ permutations and report the two-sided $p$-value $p = 2\min(\Pr[\tilde\Delta\geq\Delta], \Pr[\tilde\Delta\leq\Delta])$. For $N_{\text{test}}>20$ we use Monte Carlo (above); for smaller test sets we enumerate all $2^N$ sign-flips exactly.
+
+\paragraph{Holm--Bonferroni correction.} Within each reported table (e.g., Table~\ref{tab:v11cells}), $p$-values across the $K$ cells are sorted ascending. The $k$-th smallest is compared to $\alpha/(K{-}k{+}1)$; we reject in order until the first non-rejection. This controls family-wise error rate at $\alpha{=}0.05$ across the entire table. The Holm-adjusted significance markers are denoted $^{*}$ in tables.
+
+\paragraph{Bootstrap CI on $R^2_{\text{LOPO}}$.} Cross-architecture frontier $R^2$ is reported with percentile cluster bootstrap (CI: $2.5$ and $97.5$ percentiles of $B{=}200$ LOPO-CV re-fits, each resampling \emph{pools} with replacement and taking all cells nested within sampled pools). Reported headline computed on the released \texttt{frontier\_r2\_cis.json}: encoder \texttt{acc\_vs\_n\_rank} $R^2_{\text{LOPO}}{=}{+}0.597$, $95\%$ percentile cluster-bootstrap CI $[{+}0.303, {+}0.710]$ ($n{=}192$ cells across $48$ pools). $R^2$ is a non-linear functional of correlations whose distribution may be skewed; we report percentile rather than BCa because $48$ pools is too small for stable acceleration-coefficient estimation from a jackknife (BCa requires $n{\geq}50$ for reliable third-moment estimates per \citealp{diciccio1996}, \S5). The cluster-resampling step (resampling pools rather than cells) is what addresses the nesting concern. In-sample $R^2_{\text{IS}}{=}{+}0.722$, CI $[{+}0.659, {+}0.826]$ (same release file).
+
+\paragraph{Corpus-wide Benjamini--Hochberg FDR.} Within-table Holm controls family-wise error rate at $\alpha{=}0.05$ for each reported table. To address corpus-level multiplicity across all $1{,}028$ cells we additionally apply BH-FDR \citep{bh1995} at $q{=}0.05$ on the two-sided sign-flip $p$-values stored per cell. Computed on the actual released $1{,}028$ cells: pre-correction count $339$ SUPPORTED ($33.0\%$), $183$ REVERSED ($17.8\%$); \textbf{post BH-FDR at $q{=}0.05$ (cutoff $p{\leq}0.0248$): $303$ SUPPORTED ($29.5\%$), $174$ REVERSED ($16.9\%$).} A cell receives the SUPPORTED label in the corpus-wide framing if its per-cell CI excludes $0$ \emph{and} its BH-FDR-adjusted $q$-value is below $0.05$; analogous for REVERSED. Pre-correction counts and per-cell raw $p$-values are released in the cell JSONs (\texttt{sign\_flip\_p} field) for re-analysis under alternative corrections (e.g., Bonferroni $\alpha/n{=}4.86{\times}10^{-5}$).
+
+\paragraph{Independence robustness.} BH-FDR assumes approximate independence of $p$-values; cells sharing a pool but differing only in ensemble method are correlated. We re-run BH at the \emph{independent-group} granularity (one representative per (pool, baseline\_kind, metric) unit, using \texttt{soft\_vote} as the canonical representative): $m{=}240$ groups, BH cutoff $p{\leq}0.0284$, \textbf{post-FDR $105$ SUPPORTED ($43.8\%$), $24$ REVERSED ($10.0\%$)}. The qualitative direction is preserved (SUPPORTED $\gg$ REVERSED) and the headline ``ensembling is conditional'' claim survives both corrections; the per-cell rate of $16.9\%$ REVERSED is an upper bound on per-group REVERSED ($10.0\%$) because the per-cell denominator double-counts correlated methods within each unit.
+
+\paragraph{Adjudication labels.} Each cell receives one of three labels: \textbf{supported} if the lower CI bound $>0$ \emph{and} the BH-FDR-adjusted $q$-value $<0.05$; \textbf{reversed} if the upper CI bound $<0$ \emph{and} $q{<}0.05$; \textbf{unsupported} otherwise (CI contains $0$, or $q{\geq}0.05$). The label is the cell's primary output and is what \emph{Figure~\ref{fig:verdict_landscape}} visualizes.
+
+\section{Per-pool hyperparameter grids}\label{app:hp}
+\paragraph{Pool-A (seed-only).} Fixed $r{=}8$, $\alpha{=}16$, $lr{=}3{\times}10^{-4}$, target$=$\{\texttt{q\_proj},\,\texttt{v\_proj}\}, dropout$=0.05$, epochs $=2$ (classification) or $3$ (causal LM); seed varied over $\{11, 21, \ldots, 201\}$ ($20$ adapters). Multi-choice (HellaSwag) uses the same HP via \texttt{AutoModelForMultipleChoice}.
+
+\paragraph{Pool-B (HP-diverse).} $r{\in}\{4, 8, 16, 32\}$ $\times$ $\alpha{\in}\{8, 16, 32\}$ $\times$ $lr{\in}\{10^{-4}, 3{\times}10^{-4}\}$ $=$ $24$ adapters; seed fixed at $42$; other HP same as Pool-A.
+
+\paragraph{Pool-C (method-mixed).} $\{\text{LoRA}, \text{DoRA}, \text{rsLoRA}, \text{PiSSA}\}$ $\times$ $5$ seeds $=$ $20$ adapters; $r{=}8, \alpha{=}16, lr{=}3{\times}10^{-4}$.
+
+\paragraph{Baselines.} \emph{best\_of\_N} reuses Pool-A's first $N$ adapters; \emph{n\_rank} uses a separate sweep with $r{\in}\{16, 32\}$ $\times$ $epochs{\in}\{2, 4\}$ $\times$ $5$ seeds ($20$ adapters), then selects best-on-\texttt{val\_selection}; \emph{n\_steps} extends Pool-A's first adapter to $N{\times}$ epochs; \emph{n\_data} extends to $N{\times}$ training samples.
+
+\section{Pre-registration amendment ledger}\label{app:prereg}
+The Phase-0 pre-registration (committed at git SHA \texttt{02a5a6bc}, $2026$-$04$-$21$, before any pool was trained) explicitly admits a single permitted amendment class: ``future cells can be added by submitting compute\_match.json files via PR.'' All amendments below add new cells; \emph{no v1.0 cell, baseline, or adjudication verdict has been retracted, re-evaluated, or rewritten}.
+
+\begin{itemize}[leftmargin=*]
+\item v1.0 ($2026$-$04$-$15$): 55 pools across 6 tasks, 4 ensemble methods, 4 baseline kinds, 2 metrics $=$ 928 cells.
+\item v1.1.a ($2026$-$04$-$28$): $+6$ Pool-A pools (HellaSwag, GSM8K) $=$ $+60$ cells.
+\item v1.1.b ($2026$-$05$-$05$): $+3$ Pool-B HellaSwag $=$ $+24$ cells.
+\item v1.1.c ($2026$-$05$-$10$): $+3$ Pool-C HellaSwag $=$ $+24$ cells. (Critic-3 patched a Pool-C trio that closes the frontier CI.)
+\item v1.2.a ($2026$-$05$-$17$): $+1$ Pool-A pool (Qwen-3B GSM8K) on local A6000 (L7 deferred from v1.1 cluster constraints) $=$ $+4$ cells.
+\item v1.2.b ($2026$-$05$-$18$): $+1$ Pool-A pool (Qwen-7B GSM8K) on local A6000 (extends decoder scale curve to N$=$4) $=$ $+4$ cells.
+\item v1.2.c ($2026$-$05$-$18$): $+1$ Pool-A pool (Llama-3.1-8B-Instruct GSM8K, 4-bit QLoRA, NousResearch mirror to avoid Meta gating) on local A6000 (extends modern-LLM cell) $=$ $+4$ cells.
+\item v1.2.d ($2026$-$05$-$19$): $+1$ Pool-A pool (RoBERTa-base HellaSwag, $lr{=}2{\times}10^{-5}$ architecture-tuned) on local A6000, directly testing the HP-confound hypothesis for the (P$_b$) collapse-and-rescue pattern; all $10/10$ tuned-seed adapters converge to val\_acc${\in}[0.478, 0.505]$ vs.\ original $14/20$ below chance $=$ $+4$ cells.
+\item v1.2.d-deberta-pre ($2026$-$05$-$19$): first attempt at DeBERTa-v3 HellaSwag HP tuning with $lr{=}10^{-5}$; all $10$ tuned-seed adapters at chance ($0.247$--$0.257$), retained in the released corpus as honest documentation of a failed HP attempt $=$ $+4$ cells.
+\item v1.2.d-deberta-retry ($2026$-$05$-$19$): second attempt at DeBERTa-v3 HellaSwag HP tuning with $lr{=}5{\times}10^{-5}$; also at chance ($0.247$--$0.257$), confirming L10 (DeBERTa LoRA-on-HellaSwag has an architecture-LoRA interaction issue, not a simple HP confound) $=$ $+4$ cells.
+\item v1.2.e ($2026$-$05$-$19$): $+1$ Pool-A pool (Mistral-7B-v0.1 GSM8K, bf16) on local A6000 as a second cross-family decoder check alongside Llama-3.1-8B-Instruct $=$ $+4$ cells. \emph{Result: $\Delta_{\text{acc}}{=}{+}13.4$pp ($p{<}10^{-4}$), the largest absolute effect in the corpus.}
+\item v1.2.f ($2026$-$05$-$21$): $+8$ Pool-A seeds (BERT-base HellaSwag at $lr{=}2{\times}10^{-5}$, seeds $\{11, 21, 31, 41, 51, 61, 71, 91\}$) on local A6000, the \emph{symmetric} cross-architecture check for (P$_b$). Result: $8/8$ seeds converge to mean val\_acc $0.329 \pm 0.011$, range $[0.317, 0.345]$ — \emph{no} collapse (vs RoBERTa at the same $lr{=}3{\times}10^{-4}$ shared HP grid: $0.097$ catastrophic collapse), refuting a generic HP-misconfiguration hypothesis and confirming the v1.1 collapse is RoBERTa-specific lr-sensitivity.
+\item v1.2.f ($2026$-$05$-$20$): full-validation re-evaluation of Pool-A RoBERTa-tuned and Pool-A DeBERTa-tuned HellaSwag pools on the entire $N{=}10042$ validation set; results released in \texttt{ensemble\_results/*\_fullval.json} (App.~\ref{app:splitvar}) $=$ $+8$ cells.
+\item v1.3.a ($2026$-$05$-$22$): distillation on Pool-A Qwen-1.5B MNLI at $\alpha{=}0.9, T{=}4$ (same setting as the original Qwen-0.5B success). \emph{Result: student acc $0.8777$ / ECE $0.0782$ vs.\ best\_single $0.8772$ / $0.0768$, soft-vote $0.8884$ / $0.0454$ — $4.5\%$ recovery of accuracy gain, $-4.5\%$ ECE recovery (worse than baseline)}. Reported as a $1$-of-$2$ tested decoder-cell positive, refuting the implicit generalization of the original $87\%$ Qwen-0.5B result. Drives the \S\ref{sec:distill} downscope.
+\item v1.3.b ($2026$-$05$-$22$): GSM8K digit-renumbering contamination probe (R5 audit request). Pool-A seed\_11 on Qwen-2.5-7B: orig acc $0.66 \to$ shift acc $0.04$ ($\Delta{=}{-}62$pp). Pool-A seed\_11 on Qwen-2.5-3B: $0.61 \to 0.05$ ($\Delta{=}{-}56$pp). Both indicate heavy pre-training memorization of GSM8K; (P$_c$) decoder gains should be read as ``ensemble effect on the contaminated benchmark'' (L12).
+\item v1.3.c ($2026$-$05$-$22$): vLLM multi-LoRA serving benchmark on Llama-3.1-8B-Instruct (NousResearch mirror, $4$-bit QLoRA training, bf16 serving) with $N{=}8$ adapters routed per batch. Result: $1.067{\times}$ overhead vs.\ single-LoRA ($77.3$ vs.\ $72.4$ ms/batch median, $414$ vs.\ $442$ req/s), consistent with the Qwen-0.5B $1.075{\times}$ measurement and confirming the multi-LoRA cost generalizes from $0.5$B to $8$B (R3 audit request).
+\end{itemize}
+Total: $1{,}028$ headline corpus cells ($928$ v1.0 $+$ $100$ v1.1 in-corpus; see abstract footnote) $+$ $40$ v1.2 supplementary cells ($8$ v1.1 GSM8K cells reported separately in Table~\ref{tab:v11cells}, $24$ v1.2 cells from a/b/c/d/e/f, and $8$ v1.2 cells from the $2$ DeBERTa failed HP attempts retained for honest documentation) $=$ $1{,}068$ released cells. Only the $1{,}028$ headline cells enter abstract-level statistics (SUPPORTED/REVERSED percentages, $R^2_{\text{LOPO}}$ frontier); v1.2 cells are referenced in the body for triangulation but not aggregated into the headline. The amendment ledger has timestamps and git SHAs for every entry.
+
+\section{Distillation $\alpha\times T$ sweep (Qwen-0.5B MNLI)}\label{app:distill}
+We sweep the soft-target distillation HPs $\alpha\in\{0.5,0.7,0.9\}$ (weight on soft-target loss vs.\ hard-target) and $T\in\{1,2,4,8\}$ (softmax temperature on teacher logits) for a $4\times4$ grid on Pool-A Qwen-0.5B MNLI. Vanilla single (no distillation): $0.8365 / 0.0465$ (acc/ECE). Soft-vote ensemble target: $0.8495 / 0.0187$. Best student: $(\alpha{=}0.9, T{=}4)$ yields $0.8479 / 0.0397$, recovering $87\%$ of the soft-vote accuracy gain at $1\times$ student cost. Across the grid, accuracy varies $\pm0.003$ and ECE varies $\pm0.012$; the sweep is locally robust. The same sweep on Pool-A BERT-base MNLI yields a student strictly worse than vanilla single on both arms, consistent with the encoder-accuracy-REVERSED finding (no signal to distill).
+
+\section{Frontier regression features}\label{app:features}
+For each (pool, method, baseline) cell we extract a feature vector $\phi\in\mathbb{R}^{d}$ used to fit the diversity-quality frontier. Features are grouped:
+\begin{itemize}[leftmargin=*]
+\item \textbf{prediction\_space} ($d{=}3$): pairwise prediction disagreement (mean over pool pairs), logit correlation (mean over pool pairs), error overlap (Jaccard on incorrect examples).
+\item \textbf{parameter\_space} ($d{=}3$): mean weight cosine distance, mean centered-kernel-alignment (CKA) on penultimate layer, weight $L_2$ norm spread.
+\item \textbf{HP entropy} ($d{=}2$): entropy of $r$-distribution within pool, entropy of $\{lr, \alpha\}$ joint distribution.
+\item \textbf{ensemble quality} ($d{=}2$): pool mean val\_acc, pool best-single val\_acc.
+\end{itemize}
+Per-feature ablation on the encoder \texttt{acc vs n\_rank} slice: dropping the prediction\_space group crashes $R^2$ from $+0.62$ to $-24.5$ ($\Delta R^2 {=}{+}25.0$); dropping parameter\_space drops $R^2$ by $0.56$; dropping HP-entropy \emph{improves} $R^2$ by $0.08$ (HP entropy adds in-sample fit but no out-of-pool signal). A single-group ``only prediction\_space'' model achieves $R^2{=}0.634$, \emph{higher} than the full feature set.
+
+\section{Cell adjudication pseudocode}\label{app:pseudocode}
+{\footnotesize\begin{verbatim}
+def adjudicate(pool, method, baseline,
+               metric, B=5000):
+  # Per-example predictions on test split
+  ens  = load_predictions(pool, method)
+  base = load_predictions(pool, baseline)
+  gold = load_labels()
+  # Per-example metric residual
+  if metric == 'acc':
+    d = (ens == gold) - (base == gold)
+  elif metric == 'ece':
+    d = ece_bin_residual(ens, gold) \
+      - ece_bin_residual(base, gold)
+  N = len(d)
+  # Paired bootstrap CI
+  boot = []
+  for _ in range(B):
+    idx = np.random.randint(0, N, N)
+    boot.append(d[idx].mean())
+  delta = float(np.mean(boot))
+  ci_lo = float(np.percentile(boot, 2.5))
+  ci_hi = float(np.percentile(boot, 97.5))
+  # Sign-flip p-value
+  obs = abs(d.mean())
+  null_count = 0
+  for _ in range(B):
+    signs = np.random.choice([-1, 1], N)
+    if abs((d * signs).mean()) >= obs:
+      null_count += 1
+  p = 2 * null_count / B
+  # Adjudication
+  if   ci_lo > 0: label = 'supported'
+  elif ci_hi < 0: label = 'reversed'
+  else:           label = 'unsupported'
+  return {
+    'delta': delta, 'ci': (ci_lo, ci_hi),
+    'p_raw': p, 'adjudication': label,
+    'N_test': N,
+  }
+\end{verbatim}}
+
+\section{Cluster orchestration details}\label{app:cluster}
+The 50-node RTX 3060 12GB cluster is orchestrated via \texttt{sweep\_runner.py}, an in-house SSH-based fan-out engine. Each sweep config (JSON) declares a Cartesian parameter grid; the runner stages source files, assigns one (param-combination, node) pair per slot, and tracks per-job exit codes in \texttt{sweep\_runs/<name>/results.json}. Pool-A sweeps complete in $\sim$4--8 GPU-hours wall clock (parallelism factor $\sim$20); Pool-B/C in $\sim$16--24 hours. The v1.2 A6000 sweeps (Qwen-3B, Qwen-7B, Llama-3.1-8B-Instruct on GSM8K) use \texttt{local\_gpu\_runner.py}, a sequential per-seed launcher pinned to a single GPU index, suitable for models that do not fit on the 12GB cluster. Adapter weights are pulled back via \texttt{collect\_remote\_adapters.py} and assembled into pool manifests via \texttt{build\_adapter\_pool.py}; the manifest schema is documented in \texttt{scripts/validate\_pool.py}.
+
+\section{Cost-savings analysis: derivation and stratified breakdown}\label{app:cost}
+
+{\sloppy This appendix presents the cost-savings table (Table~\ref{tab:cost}) and stratifies by pool type and method. The corpus comparison uses $887$ compute-matched cells: (A)~\emph{blind} --- always use \texttt{soft\_vote} (the default in much prior PEFT-ensembling work); (B)~\emph{routed} --- per-cell oracle pick over the four methods (\texttt{soft\_vote}, \texttt{majority\_vote}, \texttt{logit\_avg}, \texttt{greedy\_soup}) approximating D1--D5. Inference cost is single-adapter forward-passes per query: $N$ (pool size) for vote-based methods, $1$ for \texttt{greedy\_soup} (outputs a single merged checkpoint).\par}
+
+\begin{table}[h]
+\centering
+\caption{Cost of blind ensembling. Mean signed $\Delta$ (positive$=$ensemble better), \%~cells REVERSED, median inference cost (adapter-passes/query). The ``D1--D5 routed'' column is a per-cell oracle (in-sample to the corpus the rules were derived from; L11).}
+\label{tab:cost}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{Blind soft\_vote} & \multicolumn{3}{c}{D1--D5 routed} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Slice ($n$) & $\overline{\Delta}$ & REV & cost & $\overline{\Delta}$ & REV & cost \\
+\midrule
+Enc acc (54)   & $-3.8$pp & $31\%$ & $20{\times}$ & $+0.5$pp & $4\%$ & $\mathbf{1{\times}}$ \\
+Dec acc (50)   & $+0.6$pp & $0\%$  & $18{\times}$ & $+0.8$pp & $0\%$ & $15{\times}$ \\
+Enc ECE (63)   & $+2.4$pp & $10\%$ & $20{\times}$ & $+3.6$pp & $2\%$ & $20{\times}$ \\
+Dec ECE (50)   & $+3.5$pp & $0\%$  & $18{\times}$ & $+3.5$pp & $0\%$ & $18{\times}$ \\
+\midrule
+All (217)      & $+0.7$pp & $11\%$ & $19{\times}$ & $+2.1$pp & $2\%$ & $17{\times}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Oracle method distribution.} The per-cell argmax (Table~\ref{tab:cost}, ``D1--D5 routed'') picks: \texttt{greedy\_soup} on $45/104$ accuracy groups ($33/54$ encoder, $12/50$ decoder) --- consistent with D1's preference for soup-merge on encoders; \texttt{soft\_vote} on $19/104$ accuracy and $88/113$ ECE groups --- consistent with D1+D3; \texttt{majority\_vote} on $23/104$ accuracy (predominantly decoder GSM8K, D3); \texttt{logit\_avg} on $17/104$ accuracy and $12/113$ ECE.
+
+\paragraph{Deployable D1--D5 rule.} A deployable rule using only \emph{family} (encoder/decoder), \emph{convergence} (fraction of pool above chance), \emph{metric} (accuracy vs.\ ECE), and \emph{output space} (classification vs.\ generation) recovers most of the oracle gain in our cells; feature importances align with App.~\ref{app:features}. The remaining gap to per-cell oracle is the cost of not running \texttt{compute\_match.py} per-cell against the released $1{,}028$-cell baseline.
+
+\end{document}

@@ -1,0 +1,608 @@
+{
+  "schema_version": 1,
+  "pool_id": "pool_b_hellaswag_bert",
+  "pool_name": "pool_b_hellaswag_bert",
+  "pool_type": "unknown",
+  "task": null,
+  "base_model": "bert-base-uncased",
+  "n_adapters": 20,
+  "created_at_utc": "2026-05-12T08:57:36.935325+00:00",
+  "adapters": [
+    {
+      "adapter_id": "rank=16_alpha=16_lr=3e-4__rank=16_alpha=16_lr=3e-4__pool_b_hellaswag_bert__r16_a16_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=16_alpha=16_lr=3e-4/rank=16_alpha=16_lr=3e-4/pool_b_hellaswag_bert/r16_a16_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 16,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 16,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=16_alpha=32_lr=1e-4__rank=16_alpha=32_lr=1e-4__pool_b_hellaswag_bert__r16_a32_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=16_alpha=32_lr=1e-4/rank=16_alpha=32_lr=1e-4/pool_b_hellaswag_bert/r16_a32_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=16_alpha=32_lr=3e-4__rank=16_alpha=32_lr=3e-4__pool_b_hellaswag_bert__r16_a32_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=16_alpha=32_lr=3e-4/rank=16_alpha=32_lr=3e-4/pool_b_hellaswag_bert/r16_a32_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=16_alpha=8_lr=1e-4__rank=16_alpha=8_lr=1e-4__pool_b_hellaswag_bert__r16_a8_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=16_alpha=8_lr=1e-4/rank=16_alpha=8_lr=1e-4/pool_b_hellaswag_bert/r16_a8_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 16,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 16,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=16_alpha=8_lr=3e-4__rank=16_alpha=8_lr=3e-4__pool_b_hellaswag_bert__r16_a8_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=16_alpha=8_lr=3e-4/rank=16_alpha=8_lr=3e-4/pool_b_hellaswag_bert/r16_a8_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 16,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 16,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=16_lr=1e-4__rank=32_alpha=16_lr=1e-4__pool_b_hellaswag_bert__r32_a16_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=16_lr=1e-4/rank=32_alpha=16_lr=1e-4/pool_b_hellaswag_bert/r32_a16_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=16_lr=3e-4__rank=32_alpha=16_lr=3e-4__pool_b_hellaswag_bert__r32_a16_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=16_lr=3e-4/rank=32_alpha=16_lr=3e-4/pool_b_hellaswag_bert/r32_a16_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=32_lr=1e-4__rank=32_alpha=32_lr=1e-4__pool_b_hellaswag_bert__r32_a32_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=32_lr=1e-4/rank=32_alpha=32_lr=1e-4/pool_b_hellaswag_bert/r32_a32_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=32_lr=3e-4__rank=32_alpha=32_lr=3e-4__pool_b_hellaswag_bert__r32_a32_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=32_lr=3e-4/rank=32_alpha=32_lr=3e-4/pool_b_hellaswag_bert/r32_a32_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=8_lr=1e-4__rank=32_alpha=8_lr=1e-4__pool_b_hellaswag_bert__r32_a8_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=8_lr=1e-4/rank=32_alpha=8_lr=1e-4/pool_b_hellaswag_bert/r32_a8_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=32_alpha=8_lr=3e-4__rank=32_alpha=8_lr=3e-4__pool_b_hellaswag_bert__r32_a8_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=32_alpha=8_lr=3e-4/rank=32_alpha=8_lr=3e-4/pool_b_hellaswag_bert/r32_a8_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 32,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 32,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=4_alpha=16_lr=1e-4__rank=4_alpha=16_lr=1e-4__pool_b_hellaswag_bert__r4_a16_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=4_alpha=16_lr=1e-4/rank=4_alpha=16_lr=1e-4/pool_b_hellaswag_bert/r4_a16_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 4,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 4,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=4_alpha=16_lr=3e-4__rank=4_alpha=16_lr=3e-4__pool_b_hellaswag_bert__r4_a16_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=4_alpha=16_lr=3e-4/rank=4_alpha=16_lr=3e-4/pool_b_hellaswag_bert/r4_a16_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 4,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 4,
+        "lora_alpha": 16,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=4_alpha=32_lr=1e-4__rank=4_alpha=32_lr=1e-4__pool_b_hellaswag_bert__r4_a32_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=4_alpha=32_lr=1e-4/rank=4_alpha=32_lr=1e-4/pool_b_hellaswag_bert/r4_a32_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 4,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 4,
+        "lora_alpha": 32,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=4_alpha=8_lr=1e-4__rank=4_alpha=8_lr=1e-4__pool_b_hellaswag_bert__r4_a8_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=4_alpha=8_lr=1e-4/rank=4_alpha=8_lr=1e-4/pool_b_hellaswag_bert/r4_a8_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 4,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 4,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=4_alpha=8_lr=3e-4__rank=4_alpha=8_lr=3e-4__pool_b_hellaswag_bert__r4_a8_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=4_alpha=8_lr=3e-4/rank=4_alpha=8_lr=3e-4/pool_b_hellaswag_bert/r4_a8_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 4,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 4,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=8_alpha=16_lr=1e-4__rank=8_alpha=16_lr=1e-4__pool_b_hellaswag_bert__r8_a16_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=8_alpha=16_lr=1e-4/rank=8_alpha=16_lr=1e-4/pool_b_hellaswag_bert/r8_a16_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=8_alpha=32_lr=3e-4__rank=8_alpha=32_lr=3e-4__pool_b_hellaswag_bert__r8_a32_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=8_alpha=32_lr=3e-4/rank=8_alpha=32_lr=3e-4/pool_b_hellaswag_bert/r8_a32_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 8,
+        "lora_alpha": 32,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=8_alpha=8_lr=1e-4__rank=8_alpha=8_lr=1e-4__pool_b_hellaswag_bert__r8_a8_lr1e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=8_alpha=8_lr=1e-4/rank=8_alpha=8_lr=1e-4/pool_b_hellaswag_bert/r8_a8_lr1e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "lora_r": 8,
+        "lora_alpha": 8,
+        "lr": 0.0001,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "rank=8_alpha=8_lr=3e-4__rank=8_alpha=8_lr=3e-4__pool_b_hellaswag_bert__r8_a8_lr3e-4",
+      "path": "./collected_adapters/pool_b_hellaswag_bert/rank=8_alpha=8_lr=3e-4/rank=8_alpha=8_lr=3e-4/pool_b_hellaswag_bert/r8_a8_lr3e-4",
+      "peft_method": "lora",
+      "base_model": "bert-base-uncased",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "lora_r": 8,
+        "lora_alpha": 8,
+        "lr": 0.0003,
+        "peft_method": "lora",
+        "base_model": "bert-base-uncased",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    }
+  ],
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-05-12T08:57:36.951599+00:00",
+    "hostname": "anon-host",
+    "git_sha": "39f652e7c7264796cfc283b5cca8985eaf957fe3",
+    "git_dirty": true,
+    "config_hash": "bc0f6e105018d36394f8510776a21a05353b7c3650aeeea1e92a855926aad743",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

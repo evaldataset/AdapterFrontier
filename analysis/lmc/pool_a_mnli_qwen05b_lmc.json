@@ -1,0 +1,251 @@
+{
+  "pool_id": "pool_a_mnli_qwen25_05b",
+  "task": "mnli",
+  "base_model": "Qwen/Qwen2.5-0.5B",
+  "n_pairs": 5,
+  "alphas": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "n_eval": 1000,
+  "pairs": [
+    {
+      "adapter_a": "seed=11__seed=11__pool_a_mnli_qwen25_05b__seed_11",
+      "adapter_b": "seed=81__seed=81__pool_a_mnli_qwen25_05b__seed_81",
+      "path": [
+        {
+          "loss": 0.4785989074707031,
+          "acc": 0.819,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 4.7
+        },
+        {
+          "loss": 0.6279032955169678,
+          "acc": 0.742,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.9876197166442872,
+          "acc": 0.542,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.6044041347503663,
+          "acc": 0.756,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.46063157653808595,
+          "acc": 0.819,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.5
+        }
+      ],
+      "barrier": 0.509020809173584,
+      "endpoints_max": 0.4785989074707031
+    },
+    {
+      "adapter_a": "seed=11__seed=11__pool_a_mnli_qwen25_05b__seed_11",
+      "adapter_b": "seed=201__seed=201__pool_a_mnli_qwen25_05b__seed_201",
+      "path": [
+        {
+          "loss": 0.43539759159088137,
+          "acc": 0.838,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.6
+        },
+        {
+          "loss": 0.5351497440338134,
+          "acc": 0.793,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.7255748939514161,
+          "acc": 0.691,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.5491189289093018,
+          "acc": 0.781,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.46063157653808595,
+          "acc": 0.819,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.4
+        }
+      ],
+      "barrier": 0.2649433174133301,
+      "endpoints_max": 0.46063157653808595
+    },
+    {
+      "adapter_a": "seed=31__seed=31__pool_a_mnli_qwen25_05b__seed_31",
+      "adapter_b": "seed=51__seed=51__pool_a_mnli_qwen25_05b__seed_51",
+      "path": [
+        {
+          "loss": 0.4647962951660156,
+          "acc": 0.83,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.620856315612793,
+          "acc": 0.749,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 1.0426948127746583,
+          "acc": 0.558,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.3
+        },
+        {
+          "loss": 0.6748226299285889,
+          "acc": 0.732,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.45018567848205565,
+          "acc": 0.826,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.4
+        }
+      ],
+      "barrier": 0.5778985176086426,
+      "endpoints_max": 0.4647962951660156
+    },
+    {
+      "adapter_a": "seed=101__seed=101__pool_a_mnli_qwen25_05b__seed_101",
+      "adapter_b": "seed=81__seed=81__pool_a_mnli_qwen25_05b__seed_81",
+      "path": [
+        {
+          "loss": 0.4785989074707031,
+          "acc": 0.819,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.3
+        },
+        {
+          "loss": 0.6317246170043945,
+          "acc": 0.751,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.6
+        },
+        {
+          "loss": 0.8834603652954102,
+          "acc": 0.533,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.6065738563537597,
+          "acc": 0.745,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.4713239917755127,
+          "acc": 0.818,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.3
+        }
+      ],
+      "barrier": 0.40486145782470706,
+      "endpoints_max": 0.4785989074707031
+    },
+    {
+      "adapter_a": "seed=11__seed=11__pool_a_mnli_qwen25_05b__seed_11",
+      "adapter_b": "seed=161__seed=161__pool_a_mnli_qwen25_05b__seed_161",
+      "path": [
+        {
+          "loss": 0.4632368850708008,
+          "acc": 0.822,
+          "n": 1000,
+          "alpha": 0.0,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.6386151714324951,
+          "acc": 0.764,
+          "n": 1000,
+          "alpha": 0.25,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.9898845024108887,
+          "acc": 0.631,
+          "n": 1000,
+          "alpha": 0.5,
+          "wall_s": 2.4
+        },
+        {
+          "loss": 0.5866964530944824,
+          "acc": 0.77,
+          "n": 1000,
+          "alpha": 0.75,
+          "wall_s": 2.3
+        },
+        {
+          "loss": 0.46063157653808595,
+          "acc": 0.819,
+          "n": 1000,
+          "alpha": 1.0,
+          "wall_s": 2.4
+        }
+      ],
+      "barrier": 0.5266476173400878,
+      "endpoints_max": 0.4632368850708008
+    }
+  ],
+  "barrier_mean": 0.4566743438720703,
+  "barrier_std": 0.11115491297732764,
+  "barrier_max": 0.5778985176086426,
+  "barrier_min": 0.2649433174133301,
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-28T12:02:37.523559+00:00",
+    "hostname": "anon-host",
+    "git_sha": "2d2eca5bd2670e6558140a29294757422ebf10e3",
+    "git_dirty": true,
+    "config_hash": "3dabd002a0059c45ea00344f639486b2018fd08794b214b81323e25eff20e119",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": "0"
+  }
+}
