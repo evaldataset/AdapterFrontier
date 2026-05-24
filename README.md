@@ -2,9 +2,8 @@
 
 Empirical study of PEFT adapters as **populations** rather than isolated checkpoints. Uses a 50-node RTX 3060 cluster to train large adapter pools and characterize how **diversity, selection pressure, and combination rules** affect downstream performance.
 
-- Detailed agent guidance: [CLAUDE.md](CLAUDE.md)
-- 2-week MVP roadmap: [PLAN.md](PLAN.md)
-- Parent project (REPEFT): `./JS` (parent path before sanitization)
+- Pre-registration: [paper/prereg.md](paper/prereg.md)
+- Amendment ledger: [paper/prereg_amendments.md](paper/prereg_amendments.md)
 
 ## Reproduction Paths
 
