@@ -1,5 +1,5 @@
-"""W1 gate (TOP_PLAN.md) / AUDIT Minor 2: deterministic unit tests for the
-statistics and split logic that every headline number depends on.
+"""Deterministic unit tests for the statistics and split logic that every
+headline number depends on.
 
 Run: python3 -m pytest tests/ -q
 """

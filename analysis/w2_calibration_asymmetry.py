@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""W2 make-or-break test (TOP_PLAN_B_calibration.md).
+"""Is the frontier's accuracy-specificity a metric artifact? (Appendix "mechanism".)
 
 Question: is the diversity->gain predictability asymmetry (accuracy gain
 predictable, calibration gain not) real, and does it hold across

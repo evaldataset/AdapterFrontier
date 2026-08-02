@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Figure 1 for the EACL 2027 submission: the apparent PEFT-ensembling
-benefit is a product of evaluation protocol.
+"""Figure 1: the apparent PEFT-ensembling benefit is a product of
+evaluation protocol.
 
 Panel A (waterfall): the fraction of cells adjudicated SUPPORTED collapses
 as evaluation shortcuts are removed — weak baseline (best_of_n, all

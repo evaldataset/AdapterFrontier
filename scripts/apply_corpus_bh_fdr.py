@@ -157,7 +157,7 @@ def main() -> int:
     cutoff = bh_cutoff_p(pvals, args.q)
     holm_vals = holm_qvalues(pvals)
 
-    # Content hash (TOP_PLAN §3.4): commit to WHAT was corrected, not just
+    # Content hash: commit to WHAT was corrected, not just
     # which files. Each cell contributes (relpath, metric, delta, p, ci_lo,
     # ci_hi, method, baseline_kind); renaming files no longer preserves the
     # hash, and silently editing any statistic invalidates it.

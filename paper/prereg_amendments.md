@@ -84,7 +84,7 @@ it does not change any cell verdict.
 
 ---
 
-## 2026-07-11 — C1 pilot unsealing record (prereg_prospective_policy.md §10)
+## 2026-07-11 — C1 pilot unsealing record (prospective-policy protocol, sealing clause)
 
 **Unsealed**: `analysis/c1_sealed/c1_pilot_sealed.json` (sha256 prefix
 `fa4172ffae6782f4`), after both negative controls PASSED (feature-shuffle

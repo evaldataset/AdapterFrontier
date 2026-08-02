@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""C1 prospective-policy harness (paper/prereg_prospective_policy.md, LOCKED).
+"""C1 prospective-policy harness: nested LOTO/LOMO evaluation of a
+validation-only routing policy, sealed before unsealing (Limitation L11).
 
 Implements, exactly as pre-registered:
   §4 features   — validation-side only, from schema-v2 result JSONs + logits

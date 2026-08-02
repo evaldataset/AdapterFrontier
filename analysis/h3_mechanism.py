@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""H3 mechanism test (paper/prereg_calibration_predictability.md, §2 H3).
+"""Does the frontier's accuracy-specificity flow through calibration geometry?
+
+Tests the natural refinement-versus-reliability explanation under the Murphy
+decomposition, and refutes it (Appendix "mechanism", hypothesis H3).
 
 Claim to test: the diversity->gain predictability spectrum (accuracy/NLL/MCE
 predictable; ECE/Brier not) is explained by the Murphy decomposition of a
@@ -183,7 +186,7 @@ def main():
         print("=> the spectrum is mechanistically explained; NLL predictability expected.")
     else:
         print(f"H3 NOT cleanly supported: res R2={r_res}, rel R2={r_rel}.")
-        print("=> mechanism weak; per prereg §5, risk of downgrade to honest-negative/D&B.")
+        print("=> mechanism weak: the refinement explanation is not supported.")
 
     out = ROOT / "analysis/h3_mechanism.json"
     out.write_text(json.dumps({

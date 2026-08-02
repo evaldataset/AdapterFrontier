@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Protocol-sensitivity analysis — the核心 contribution of the EACL 2027 submission.
+"""Protocol-sensitivity analysis — the paper's central contribution.
 
 Question: how much of the *apparent* PEFT-ensembling benefit is produced by
 common evaluation shortcuts rather than by ensembling itself?
@@ -17,7 +17,7 @@ literature, using only released artifacts (no cluster, no GPU):
                             verdicts, hiding REVERSED cells inside a positive
                             task average.
 
-Scope discipline (matches paper/claim_ledger.md):
+Scope discipline:
   - HellaSwag cells are EXCLUDED: they were produced by the pre-fix evaluator
     that selected on val_combine (stale selection split). Documented, not used.
   - GSM8K is excluded: best_single there was selected on the same test split
@@ -40,7 +40,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 
 DECODER_TAGS = ("qwen", "llama", "mistral", "tinyllama", "pythia", "smollm")
-EXCLUDE_TAGS = ("hellaswag",)      # stale selection split (see claim ledger)
+EXCLUDE_TAGS = ("hellaswag",)      # stale selection split; see Limitation L1b
 CONTAM_TAGS = ("gsm8k",)           # contaminated -> S4 only
 
 
