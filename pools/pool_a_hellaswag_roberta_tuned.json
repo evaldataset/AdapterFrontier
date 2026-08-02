@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "pool_id": "pool_a_hellaswag_roberta_tuned",
+  "pool_name": "pool_a_hellaswag_roberta_tuned",
+  "pool_type": "unknown",
+  "task": null,
+  "base_model": "roberta-base",
+  "n_adapters": 10,
+  "created_at_utc": "2026-05-19T13:45:16.152357+00:00",
+  "adapters": [
+    {
+      "adapter_id": "seed_101",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_101",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 101,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 101,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_11",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_11",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_21",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_21",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_31",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_31",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_41",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_41",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_51",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_51",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_61",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_61",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 61,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 61,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_71",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_71",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 71,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 71,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_81",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_81",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 81,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 81,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "seed_91",
+      "path": "./pool_a_hellaswag_roberta_tuned/seed_91",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 91,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 91,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    }
+  ],
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-05-19T13:45:16.170352+00:00",
+    "hostname": "anon-host",
+    "git_sha": "39f652e7c7264796cfc283b5cca8985eaf957fe3",
+    "git_dirty": true,
+    "config_hash": "78e32edeb83896529b28c03fa6288f963d76743864033e2983dbb1241b3a2ac1",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "slice": "accuracy__n_rank",
+  "results": [
+    {
+      "label": "H1: Pool-A \u2192 Pool-B+C",
+      "n_train_cells": 100,
+      "n_test_cells": 92,
+      "train_pools": 25,
+      "test_pools": 23,
+      "test_r2": 0.6183952681158278,
+      "y_tr_mean": 0.0001321074602677491,
+      "y_te_mean": -0.006767033783622225
+    },
+    {
+      "label": "H2: encoder \u2192 decoder",
+      "n_train_cells": 92,
+      "n_test_cells": 100,
+      "train_pools": 23,
+      "test_pools": 25,
+      "test_r2": 0.7573867386631798,
+      "y_tr_mean": -0.012674953429697204,
+      "y_te_mean": 0.005567393534656731
+    },
+    {
+      "label": "H3: v1.0 classification \u2192 v1.1 (HellaSwag/GSM8K)",
+      "n_train": 192,
+      "n_test": 0,
+      "error": "insufficient data (n<5 in train or test)"
+    },
+    {
+      "label": "H4 (control): random 50/50 within encoder cells",
+      "n_train_cells": 46,
+      "n_test_cells": 46,
+      "train_pools": 21,
+      "test_pools": 21,
+      "test_r2": 0.47707892859026957,
+      "y_tr_mean": -0.013175515067596151,
+      "y_te_mean": -0.012174391791798252
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "pool": "pool_a_mnli_qwen25_05b",
+  "task": "mnli",
+  "n_test": 3926,
+  "accuracy_test": 0.8469179826795721,
+  "ece_15bin_equalmass_test": 0.03733947267352594,
+  "alpha": 0.5,
+  "temperature": 2.0,
+  "lora_r": 8,
+  "lora_alpha": 16,
+  "train_runtime_s": 465.9,
+  "n_train": 40000,
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-04-28T12:55:48.493027+00:00",
+    "hostname": "anon-host",
+    "git_sha": "828c12cd00fa111a84122681d6b71d88c9884e94",
+    "git_dirty": true,
+    "config_hash": "422a822c2cac282e86ffb24fdb5476d403e51a02f8e27ca4fc94fe0da7d97083",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": "0"
+  }
+}

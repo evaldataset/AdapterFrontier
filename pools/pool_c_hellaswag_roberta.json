@@ -1,0 +1,608 @@
+{
+  "schema_version": 1,
+  "pool_id": "pool_c_hellaswag_roberta",
+  "pool_name": "pool_c_hellaswag_roberta",
+  "pool_type": "unknown",
+  "task": null,
+  "base_model": "roberta-base",
+  "n_adapters": 20,
+  "created_at_utc": "2026-05-14T09:18:55.417627+00:00",
+  "adapters": [
+    {
+      "adapter_id": "peft=dora_seed=11__peft=dora_seed=11__pool_c_hellaswag_roberta__dora_seed_11",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=dora_seed=11/peft=dora_seed=11/pool_c_hellaswag_roberta/dora_seed_11",
+      "peft_method": "dora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "dora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "dora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=dora_seed=21__peft=dora_seed=21__pool_c_hellaswag_roberta__dora_seed_21",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=dora_seed=21/peft=dora_seed=21/pool_c_hellaswag_roberta/dora_seed_21",
+      "peft_method": "dora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "dora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "dora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=dora_seed=31__peft=dora_seed=31__pool_c_hellaswag_roberta__dora_seed_31",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=dora_seed=31/peft=dora_seed=31/pool_c_hellaswag_roberta/dora_seed_31",
+      "peft_method": "dora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "dora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "dora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=dora_seed=41__peft=dora_seed=41__pool_c_hellaswag_roberta__dora_seed_41",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=dora_seed=41/peft=dora_seed=41/pool_c_hellaswag_roberta/dora_seed_41",
+      "peft_method": "dora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "dora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "dora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=dora_seed=51__peft=dora_seed=51__pool_c_hellaswag_roberta__dora_seed_51",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=dora_seed=51/peft=dora_seed=51/pool_c_hellaswag_roberta/dora_seed_51",
+      "peft_method": "dora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "dora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "dora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=lora_seed=11__peft=lora_seed=11__pool_c_hellaswag_roberta__lora_seed_11",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=lora_seed=11/peft=lora_seed=11/pool_c_hellaswag_roberta/lora_seed_11",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=lora_seed=21__peft=lora_seed=21__pool_c_hellaswag_roberta__lora_seed_21",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=lora_seed=21/peft=lora_seed=21/pool_c_hellaswag_roberta/lora_seed_21",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=lora_seed=31__peft=lora_seed=31__pool_c_hellaswag_roberta__lora_seed_31",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=lora_seed=31/peft=lora_seed=31/pool_c_hellaswag_roberta/lora_seed_31",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=lora_seed=41__peft=lora_seed=41__pool_c_hellaswag_roberta__lora_seed_41",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=lora_seed=41/peft=lora_seed=41/pool_c_hellaswag_roberta/lora_seed_41",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "lora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=lora_seed=51__peft=lora_seed=51__pool_c_hellaswag_roberta__lora_seed_51",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=lora_seed=51/peft=lora_seed=51/pool_c_hellaswag_roberta/lora_seed_51",
+      "peft_method": "lora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "lora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "lora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=pissa_seed=11__peft=pissa_seed=11__pool_c_hellaswag_roberta__pissa_seed_11",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=pissa_seed=11/peft=pissa_seed=11/pool_c_hellaswag_roberta/pissa_seed_11",
+      "peft_method": "pissa",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "pissa",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "pissa",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=pissa_seed=21__peft=pissa_seed=21__pool_c_hellaswag_roberta__pissa_seed_21",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=pissa_seed=21/peft=pissa_seed=21/pool_c_hellaswag_roberta/pissa_seed_21",
+      "peft_method": "pissa",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "pissa",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "pissa",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=pissa_seed=31__peft=pissa_seed=31__pool_c_hellaswag_roberta__pissa_seed_31",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=pissa_seed=31/peft=pissa_seed=31/pool_c_hellaswag_roberta/pissa_seed_31",
+      "peft_method": "pissa",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "pissa",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "pissa",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=pissa_seed=41__peft=pissa_seed=41__pool_c_hellaswag_roberta__pissa_seed_41",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=pissa_seed=41/peft=pissa_seed=41/pool_c_hellaswag_roberta/pissa_seed_41",
+      "peft_method": "pissa",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "pissa",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "pissa",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=pissa_seed=51__peft=pissa_seed=51__pool_c_hellaswag_roberta__pissa_seed_51",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=pissa_seed=51/peft=pissa_seed=51/pool_c_hellaswag_roberta/pissa_seed_51",
+      "peft_method": "pissa",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "pissa",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "pissa",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=rslora_seed=11__peft=rslora_seed=11__pool_c_hellaswag_roberta__rslora_seed_11",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=rslora_seed=11/peft=rslora_seed=11/pool_c_hellaswag_roberta/rslora_seed_11",
+      "peft_method": "rslora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 11,
+        "peft_method": "rslora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 11,
+        "peft_method": "rslora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=rslora_seed=21__peft=rslora_seed=21__pool_c_hellaswag_roberta__rslora_seed_21",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=rslora_seed=21/peft=rslora_seed=21/pool_c_hellaswag_roberta/rslora_seed_21",
+      "peft_method": "rslora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 21,
+        "peft_method": "rslora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 21,
+        "peft_method": "rslora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=rslora_seed=31__peft=rslora_seed=31__pool_c_hellaswag_roberta__rslora_seed_31",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=rslora_seed=31/peft=rslora_seed=31/pool_c_hellaswag_roberta/rslora_seed_31",
+      "peft_method": "rslora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 31,
+        "peft_method": "rslora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 31,
+        "peft_method": "rslora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=rslora_seed=41__peft=rslora_seed=41__pool_c_hellaswag_roberta__rslora_seed_41",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=rslora_seed=41/peft=rslora_seed=41/pool_c_hellaswag_roberta/rslora_seed_41",
+      "peft_method": "rslora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 41,
+        "peft_method": "rslora",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metadata": {
+        "seed": 41,
+        "peft_method": "rslora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "value",
+          "query"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    },
+    {
+      "adapter_id": "peft=rslora_seed=51__peft=rslora_seed=51__pool_c_hellaswag_roberta__rslora_seed_51",
+      "path": "./collected_adapters/pool_c_hellaswag_roberta/peft=rslora_seed=51/peft=rslora_seed=51/pool_c_hellaswag_roberta/rslora_seed_51",
+      "peft_method": "rslora",
+      "base_model": "roberta-base",
+      "hyperparams": {
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "seed": 51,
+        "peft_method": "rslora",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metadata": {
+        "seed": 51,
+        "peft_method": "rslora",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "base_model": "roberta-base",
+        "target_modules": [
+          "query",
+          "value"
+        ]
+      },
+      "metrics": {},
+      "provenance_from_metrics": null
+    }
+  ],
+  "provenance": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-05-14T09:18:55.433128+00:00",
+    "hostname": "anon-host",
+    "git_sha": "39f652e7c7264796cfc283b5cca8985eaf957fe3",
+    "git_dirty": true,
+    "config_hash": "c0f34653ddc7c968d7d2a74895585bdefc29ee814a8b03a5de7a97fd7f48d99d",
+    "python_version": "3.10.12",
+    "platform": "Linux-6.8.0-106-generic-x86_64-with-glibc2.35",
+    "torch_version": "2.7.1+cu126",
+    "transformers_version": "5.3.0",
+    "peft_version": "0.18.1",
+    "datasets_version": "4.5.0",
+    "numpy_version": "2.2.6",
+    "cuda_visible_devices": null
+  }
+}

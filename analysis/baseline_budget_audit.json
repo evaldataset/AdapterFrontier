@@ -1,0 +1,443 @@
+{
+  "note": "Realised training cost of the n_rank baseline relative to the pool it is compared against, summed from per-adapter train_runtime_s in the released pool manifests. Ratios > 1 mean the baseline received more training compute than the pool, so it is a strict upper-bound competitor rather than a compute-matched one.",
+  "n_pairs": 48,
+  "ratio_min": 0.896,
+  "ratio_median": 1.448,
+  "ratio_mean": 1.4780416666666667,
+  "ratio_max": 2.96,
+  "n_pairs_baseline_favoured": 47,
+  "pairs": [
+    {
+      "pool_id": "pool_a_mnli_bert_large",
+      "baseline": "baseline_compute_matched_mnli_bert_large",
+      "pool_gpu_h": 2.158,
+      "pool_n": 11,
+      "baseline_gpu_h": 6.388,
+      "baseline_n": 20,
+      "ratio": 2.96
+    },
+    {
+      "pool_id": "pool_a_mnli_tinyllama_11b",
+      "baseline": "baseline_compute_matched_mnli_tinyllama_11b",
+      "pool_gpu_h": 7.916,
+      "pool_n": 13,
+      "baseline_gpu_h": 15.872,
+      "baseline_n": 17,
+      "ratio": 2.005
+    },
+    {
+      "pool_id": "pool_b_anli_bert_large",
+      "baseline": "baseline_compute_matched_anli_bert_large",
+      "pool_gpu_h": 4.686,
+      "pool_n": 16,
+      "baseline_gpu_h": 8.714,
+      "baseline_n": 20,
+      "ratio": 1.86
+    },
+    {
+      "pool_id": "pool_a_qnli_qwen25_15b",
+      "baseline": "baseline_compute_matched_qnli_qwen25_15b",
+      "pool_gpu_h": 9.947,
+      "pool_n": 15,
+      "baseline_gpu_h": 17.322,
+      "baseline_n": 16,
+      "ratio": 1.741
+    },
+    {
+      "pool_id": "pool_a_anli_roberta_base",
+      "baseline": "baseline_compute_matched_anli_roberta_base",
+      "pool_gpu_h": 1.652,
+      "pool_n": 20,
+      "baseline_gpu_h": 2.753,
+      "baseline_n": 20,
+      "ratio": 1.667
+    },
+    {
+      "pool_id": "pool_c_mnli_tinyllama_11b_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_tinyllama_11b",
+      "pool_gpu_h": 9.539,
+      "pool_n": 15,
+      "baseline_gpu_h": 15.872,
+      "baseline_n": 17,
+      "ratio": 1.664
+    },
+    {
+      "pool_id": "pool_a_anli_bert_large",
+      "baseline": "baseline_compute_matched_anli_bert_large",
+      "pool_gpu_h": 5.264,
+      "pool_n": 20,
+      "baseline_gpu_h": 8.714,
+      "baseline_n": 20,
+      "ratio": 1.655
+    },
+    {
+      "pool_id": "pool_c_agnews_qwen25_05b_method_mixed",
+      "baseline": "baseline_compute_matched_agnews_qwen25_05b",
+      "pool_gpu_h": 3.662,
+      "pool_n": 14,
+      "baseline_gpu_h": 5.984,
+      "baseline_n": 16,
+      "ratio": 1.634
+    },
+    {
+      "pool_id": "pool_a_anli_tinyllama_11b",
+      "baseline": "baseline_compute_matched_anli_tinyllama_11b",
+      "pool_gpu_h": 11.825,
+      "pool_n": 15,
+      "baseline_gpu_h": 18.888,
+      "baseline_n": 14,
+      "ratio": 1.597
+    },
+    {
+      "pool_id": "pool_a_mnli_roberta_base",
+      "baseline": "baseline_compute_matched_mnli_roberta_base",
+      "pool_gpu_h": 1.323,
+      "pool_n": 20,
+      "baseline_gpu_h": 2.109,
+      "baseline_n": 20,
+      "ratio": 1.594
+    },
+    {
+      "pool_id": "pool_b_mnli_qwen25_15b",
+      "baseline": "baseline_compute_matched_mnli_qwen25_15b",
+      "pool_gpu_h": 11.297,
+      "pool_n": 19,
+      "baseline_gpu_h": 17.746,
+      "baseline_n": 20,
+      "ratio": 1.571
+    },
+    {
+      "pool_id": "pool_c_qnli_qwen25_05b_method_mixed",
+      "baseline": "baseline_compute_matched_qnli_qwen25_05b",
+      "pool_gpu_h": 4.316,
+      "pool_n": 17,
+      "baseline_gpu_h": 6.655,
+      "baseline_n": 18,
+      "ratio": 1.542
+    },
+    {
+      "pool_id": "pool_a_qnli_bert_base",
+      "baseline": "baseline_compute_matched_qnli_bert_base",
+      "pool_gpu_h": 1.239,
+      "pool_n": 17,
+      "baseline_gpu_h": 1.9,
+      "baseline_n": 18,
+      "ratio": 1.534
+    },
+    {
+      "pool_id": "pool_c_agnews_bert_base_method_mixed",
+      "baseline": "baseline_compute_matched_agnews_bert_base",
+      "pool_gpu_h": 1.248,
+      "pool_n": 15,
+      "baseline_gpu_h": 1.909,
+      "baseline_n": 16,
+      "ratio": 1.53
+    },
+    {
+      "pool_id": "pool_a_qnli_qwen25_05b",
+      "baseline": "baseline_compute_matched_qnli_qwen25_05b",
+      "pool_gpu_h": 4.363,
+      "pool_n": 17,
+      "baseline_gpu_h": 6.655,
+      "baseline_n": 18,
+      "ratio": 1.525
+    },
+    {
+      "pool_id": "pool_a_mnli_qwen25_15b",
+      "baseline": "baseline_compute_matched_mnli_qwen25_15b",
+      "pool_gpu_h": 11.754,
+      "pool_n": 20,
+      "baseline_gpu_h": 17.746,
+      "baseline_n": 20,
+      "ratio": 1.51
+    },
+    {
+      "pool_id": "pool_a_anli_qwen25_05b",
+      "baseline": "baseline_compute_matched_anli_qwen25_05b",
+      "pool_gpu_h": 6.093,
+      "pool_n": 20,
+      "baseline_gpu_h": 9.187,
+      "baseline_n": 20,
+      "ratio": 1.508
+    },
+    {
+      "pool_id": "pool_a_mnli_bert",
+      "baseline": "baseline_compute_matched_mnli_bert",
+      "pool_gpu_h": 1.355,
+      "pool_n": 20,
+      "baseline_gpu_h": 2.036,
+      "baseline_n": 20,
+      "ratio": 1.503
+    },
+    {
+      "pool_id": "pool_c_qnli_bert_base_method_mixed",
+      "baseline": "baseline_compute_matched_qnli_bert_base",
+      "pool_gpu_h": 1.273,
+      "pool_n": 17,
+      "baseline_gpu_h": 1.9,
+      "baseline_n": 18,
+      "ratio": 1.493
+    },
+    {
+      "pool_id": "pool_a_sst2_bert",
+      "baseline": "baseline_compute_matched_sst2_bert",
+      "pool_gpu_h": 0.937,
+      "pool_n": 20,
+      "baseline_gpu_h": 1.397,
+      "baseline_n": 20,
+      "ratio": 1.49
+    },
+    {
+      "pool_id": "pool_a_agnews_bert_base",
+      "baseline": "baseline_compute_matched_agnews_bert_base",
+      "pool_gpu_h": 1.308,
+      "pool_n": 17,
+      "baseline_gpu_h": 1.909,
+      "baseline_n": 16,
+      "ratio": 1.46
+    },
+    {
+      "pool_id": "pool_a_agnews_bert_large",
+      "baseline": "baseline_compute_matched_agnews_bert_large",
+      "pool_gpu_h": 3.962,
+      "pool_n": 18,
+      "baseline_gpu_h": 5.755,
+      "baseline_n": 16,
+      "ratio": 1.452
+    },
+    {
+      "pool_id": "pool_a_agnews_qwen25_15b",
+      "baseline": "baseline_compute_matched_agnews_qwen25_15b",
+      "pool_gpu_h": 12.243,
+      "pool_n": 18,
+      "baseline_gpu_h": 17.772,
+      "baseline_n": 17,
+      "ratio": 1.452
+    },
+    {
+      "pool_id": "pool_a_mnli_qwen25_05b",
+      "baseline": "baseline_compute_matched_mnli_qwen25_05b",
+      "pool_gpu_h": 4.425,
+      "pool_n": 20,
+      "baseline_gpu_h": 6.415,
+      "baseline_n": 19,
+      "ratio": 1.45
+    },
+    {
+      "pool_id": "pool_a_qnli_tinyllama_11b",
+      "baseline": "baseline_compute_matched_qnli_tinyllama_11b",
+      "pool_gpu_h": 12.021,
+      "pool_n": 18,
+      "baseline_gpu_h": 17.379,
+      "baseline_n": 17,
+      "ratio": 1.446
+    },
+    {
+      "pool_id": "pool_c_mnli_qwen25_15b_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_qwen25_15b",
+      "pool_gpu_h": 12.295,
+      "pool_n": 20,
+      "baseline_gpu_h": 17.746,
+      "baseline_n": 20,
+      "ratio": 1.443
+    },
+    {
+      "pool_id": "pool_a_mnli_pythia_14b",
+      "baseline": "baseline_compute_matched_mnli_pythia_14b",
+      "pool_gpu_h": 3.954,
+      "pool_n": 7,
+      "baseline_gpu_h": 5.681,
+      "baseline_n": 6,
+      "ratio": 1.437
+    },
+    {
+      "pool_id": "pool_b_mnli_qwen25_05b",
+      "baseline": "baseline_compute_matched_mnli_qwen25_05b",
+      "pool_gpu_h": 4.464,
+      "pool_n": 20,
+      "baseline_gpu_h": 6.415,
+      "baseline_n": 19,
+      "ratio": 1.437
+    },
+    {
+      "pool_id": "pool_c_mnli_roberta_base_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_roberta_base",
+      "pool_gpu_h": 1.482,
+      "pool_n": 20,
+      "baseline_gpu_h": 2.109,
+      "baseline_n": 20,
+      "ratio": 1.423
+    },
+    {
+      "pool_id": "pool_b_qnli_bert_base",
+      "baseline": "baseline_compute_matched_qnli_bert_base",
+      "pool_gpu_h": 1.338,
+      "pool_n": 19,
+      "baseline_gpu_h": 1.9,
+      "baseline_n": 18,
+      "ratio": 1.42
+    },
+    {
+      "pool_id": "pool_b_qnli_qwen25_05b",
+      "baseline": "baseline_compute_matched_qnli_qwen25_05b",
+      "pool_gpu_h": 4.691,
+      "pool_n": 19,
+      "baseline_gpu_h": 6.655,
+      "baseline_n": 18,
+      "ratio": 1.419
+    },
+    {
+      "pool_id": "pool_c_mnli_bert_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_bert",
+      "pool_gpu_h": 1.437,
+      "pool_n": 20,
+      "baseline_gpu_h": 2.036,
+      "baseline_n": 20,
+      "ratio": 1.417
+    },
+    {
+      "pool_id": "pool_a_anli_qwen25_15b",
+      "baseline": "baseline_compute_matched_anli_qwen25_15b",
+      "pool_gpu_h": 15.255,
+      "pool_n": 17,
+      "baseline_gpu_h": 21.579,
+      "baseline_n": 17,
+      "ratio": 1.415
+    },
+    {
+      "pool_id": "pool_c_mnli_bert_large_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_bert_large",
+      "pool_gpu_h": 4.552,
+      "pool_n": 20,
+      "baseline_gpu_h": 6.388,
+      "baseline_n": 20,
+      "ratio": 1.403
+    },
+    {
+      "pool_id": "pool_a_agnews_qwen25_05b",
+      "baseline": "baseline_compute_matched_agnews_qwen25_05b",
+      "pool_gpu_h": 4.282,
+      "pool_n": 17,
+      "baseline_gpu_h": 5.984,
+      "baseline_n": 16,
+      "ratio": 1.397
+    },
+    {
+      "pool_id": "pool_a_mnli_qwen25_3b",
+      "baseline": "baseline_compute_matched_mnli_qwen25_3b",
+      "pool_gpu_h": 25.18,
+      "pool_n": 21,
+      "baseline_gpu_h": 34.748,
+      "baseline_n": 20,
+      "ratio": 1.38
+    },
+    {
+      "pool_id": "pool_c_mnli_qwen25_05b_method_mixed",
+      "baseline": "baseline_compute_matched_mnli_qwen25_05b",
+      "pool_gpu_h": 4.712,
+      "pool_n": 20,
+      "baseline_gpu_h": 6.415,
+      "baseline_n": 19,
+      "ratio": 1.361
+    },
+    {
+      "pool_id": "pool_a_agnews_tinyllama_11b",
+      "baseline": "baseline_compute_matched_agnews_tinyllama_11b",
+      "pool_gpu_h": 9.988,
+      "pool_n": 14,
+      "baseline_gpu_h": 13.578,
+      "baseline_n": 13,
+      "ratio": 1.36
+    },
+    {
+      "pool_id": "pool_b_agnews_bert_base",
+      "baseline": "baseline_compute_matched_agnews_bert_base",
+      "pool_gpu_h": 1.451,
+      "pool_n": 19,
+      "baseline_gpu_h": 1.909,
+      "baseline_n": 16,
+      "ratio": 1.316
+    },
+    {
+      "pool_id": "pool_b_mnli_bert_large",
+      "baseline": "baseline_compute_matched_mnli_bert_large",
+      "pool_gpu_h": 5.108,
+      "pool_n": 24,
+      "baseline_gpu_h": 6.388,
+      "baseline_n": 20,
+      "ratio": 1.251
+    },
+    {
+      "pool_id": "pool_b_anli_roberta_base",
+      "baseline": "baseline_compute_matched_anli_roberta_base",
+      "pool_gpu_h": 2.217,
+      "pool_n": 24,
+      "baseline_gpu_h": 2.753,
+      "baseline_n": 20,
+      "ratio": 1.242
+    },
+    {
+      "pool_id": "pool_b_mnli_tinyllama_11b",
+      "baseline": "baseline_compute_matched_mnli_tinyllama_11b",
+      "pool_gpu_h": 12.817,
+      "pool_n": 21,
+      "baseline_gpu_h": 15.872,
+      "baseline_n": 17,
+      "ratio": 1.238
+    },
+    {
+      "pool_id": "pool_b_mnli_roberta_base",
+      "baseline": "baseline_compute_matched_mnli_roberta_base",
+      "pool_gpu_h": 1.706,
+      "pool_n": 24,
+      "baseline_gpu_h": 2.109,
+      "baseline_n": 20,
+      "ratio": 1.236
+    },
+    {
+      "pool_id": "pool_b_mnli_bert",
+      "baseline": "baseline_compute_matched_mnli_bert",
+      "pool_gpu_h": 1.675,
+      "pool_n": 24,
+      "baseline_gpu_h": 2.036,
+      "baseline_n": 20,
+      "ratio": 1.216
+    },
+    {
+      "pool_id": "pool_b_sst2_bert",
+      "baseline": "baseline_compute_matched_sst2_bert",
+      "pool_gpu_h": 1.152,
+      "pool_n": 24,
+      "baseline_gpu_h": 1.397,
+      "baseline_n": 20,
+      "ratio": 1.213
+    },
+    {
+      "pool_id": "pool_b_agnews_qwen25_05b",
+      "baseline": "baseline_compute_matched_agnews_qwen25_05b",
+      "pool_gpu_h": 5.292,
+      "pool_n": 21,
+      "baseline_gpu_h": 5.984,
+      "baseline_n": 16,
+      "ratio": 1.131
+    },
+    {
+      "pool_id": "pool_a_mnli_smollm2_17b",
+      "baseline": "baseline_compute_matched_mnli_smollm2_17b",
+      "pool_gpu_h": 14.831,
+      "pool_n": 15,
+      "baseline_gpu_h": 15.607,
+      "baseline_n": 14,
+      "ratio": 1.052
+    },
+    {
+      "pool_id": "pool_a_qnli_bert_large",
+      "baseline": "baseline_compute_matched_qnli_bert_large",
+      "pool_gpu_h": 3.707,
+      "pool_n": 18,
+      "baseline_gpu_h": 3.322,
+      "baseline_n": 10,
+      "ratio": 0.896
+    }
+  ]
+}

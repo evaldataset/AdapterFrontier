@@ -1,0 +1,172 @@
+{
+  "note": "Temperature fitted on the pre-registered val_combine split (reserved for combination hyperparameters and otherwise unused), evaluated on test. Six pools: the ones whose per-adapter logits cache was retained. These are best_of_n pools, not the headline n_rank slice, so direction transfers and magnitude does not.",
+  "n_pools": 6,
+  "n_bins": 15,
+  "ensemble_better_than": {
+    "uncalibrated_single": {
+      "pools": 4,
+      "mean_ece_gain": 0.0078413892265152
+    },
+    "temperature_scaled_single": {
+      "pools": 2,
+      "mean_ece_gain": -0.03161039066950096
+    },
+    "temperature_scaled_both_arms": {
+      "pools": 3,
+      "mean_ece_gain": 0.0020238422394506226
+    }
+  },
+  "median_fitted_temperature": 1.31885790855394,
+  "pools": [
+    {
+      "pool_id": "pool_a_agnews_roberta_base_local10",
+      "n_adapters": 10,
+      "n_test": 3040,
+      "T_single": 1.3356249460702294,
+      "T_ensemble": 1.3395756517551451,
+      "ece": {
+        "ensemble": 0.01958914148180107,
+        "single": 0.01636008910442653,
+        "single_temp": 0.014772043259520282,
+        "ensemble_temp": 0.017499326463592695
+      },
+      "accuracy": {
+        "ensemble": 0.9345394736842105,
+        "single": 0.9328947368421052
+      },
+      "mean_conf": {
+        "ensemble": 0.9499090313911438,
+        "single": 0.9485357999801636,
+        "single_temp": 0.9214096069335938
+      },
+      "gain_vs_uncalibrated": -0.0032290523773745375,
+      "gain_vs_temp_scaled": -0.004817098222280786,
+      "gain_temp_both": -0.0027272832040724122
+    },
+    {
+      "pool_id": "pool_a_anli_roberta_base_local10",
+      "n_adapters": 10,
+      "n_test": 480,
+      "T_single": 4.025244006505005,
+      "T_ensemble": 3.8247706425214307,
+      "ece": {
+        "ensemble": 0.2613537530104319,
+        "single": 0.2531964719295502,
+        "single_temp": 0.06977706750233968,
+        "ensemble_temp": 0.057984944184621176
+      },
+      "accuracy": {
+        "ensemble": 0.3958333333333333,
+        "single": 0.4125
+      },
+      "mean_conf": {
+        "ensemble": 0.6571871042251587,
+        "single": 0.659612238407135,
+        "single_temp": 0.4313839077949524
+      },
+      "gain_vs_uncalibrated": -0.008157281080881706,
+      "gain_vs_temp_scaled": -0.1915766855080922,
+      "gain_temp_both": 0.011792123317718506
+    },
+    {
+      "pool_id": "pool_a_boolq_roberta_base_local10",
+      "n_adapters": 10,
+      "n_test": 1308,
+      "T_single": 1.3020908710376509,
+      "T_ensemble": 0.9899551795873226,
+      "ece": {
+        "ensemble": 0.025130278291323145,
+        "single": 0.0489798576459972,
+        "single_temp": 0.027311394611994427,
+        "ensemble_temp": 0.025015945463734677
+      },
+      "accuracy": {
+        "ensemble": 0.7752293577981652,
+        "single": 0.7737003058103975
+      },
+      "mean_conf": {
+        "ensemble": 0.7756266593933105,
+        "single": 0.8148958683013916,
+        "single_temp": 0.7748854160308838
+      },
+      "gain_vs_uncalibrated": 0.023849579354674057,
+      "gain_vs_temp_scaled": 0.0021811163206712815,
+      "gain_temp_both": 0.0022954491482597497
+    },
+    {
+      "pool_id": "pool_a_qnli_roberta_base_local10",
+      "n_adapters": 10,
+      "n_test": 2186,
+      "T_single": 1.0522966860312182,
+      "T_ensemble": 1.014817045763027,
+      "ece": {
+        "ensemble": 0.011998484141218025,
+        "single": 0.014085161854996125,
+        "single_temp": 0.01161503516417082,
+        "ensemble_temp": 0.01184124722463322
+      },
+      "accuracy": {
+        "ensemble": 0.9066788655077768,
+        "single": 0.9011893870082343
+      },
+      "mean_conf": {
+        "ensemble": 0.9105098247528076,
+        "single": 0.9135012030601501,
+        "single_temp": 0.9081138968467712
+      },
+      "gain_vs_uncalibrated": 0.0020866777137780994,
+      "gain_vs_temp_scaled": -0.00038344897704720507,
+      "gain_temp_both": -0.00022621206046239892
+    },
+    {
+      "pool_id": "pool_b_sst2_bert_local6",
+      "n_adapters": 6,
+      "n_test": 350,
+      "T_single": 1.8633915704326334,
+      "T_ensemble": 1.6169089542079171,
+      "ece": {
+        "ensemble": 0.03685511997767857,
+        "single": 0.0511348295211792,
+        "single_temp": 0.04891888328960964,
+        "ensemble_temp": 0.043438070842197966
+      },
+      "accuracy": {
+        "ensemble": 0.9142857142857143,
+        "single": 0.9142857142857143
+      },
+      "mean_conf": {
+        "ensemble": 0.9446671009063721,
+        "single": 0.9626789093017578,
+        "single_temp": 0.9059819579124451
+      },
+      "gain_vs_uncalibrated": 0.014279709543500628,
+      "gain_vs_temp_scaled": 0.01206376331193107,
+      "gain_temp_both": 0.005480812447411672
+    },
+    {
+      "pool_id": "pool_c_mnli_roberta_base_method_mixed_local8",
+      "n_adapters": 8,
+      "n_test": 3926,
+      "T_single": 1.2630598318984172,
+      "T_ensemble": 1.044199197979569,
+      "ece": {
+        "ensemble": 0.024718726889794405,
+        "single": 0.04293742909518906,
+        "single_temp": 0.01758873594760653,
+        "ensemble_temp": 0.02206057215975791
+      },
+      "accuracy": {
+        "ensemble": 0.8441161487519103,
+        "single": 0.8334182373917474
+      },
+      "mean_conf": {
+        "ensemble": 0.851689875125885,
+        "single": 0.8763556480407715,
+        "single_temp": 0.8374691605567932
+      },
+      "gain_vs_uncalibrated": 0.018218702205394652,
+      "gain_vs_temp_scaled": -0.007129990942187876,
+      "gain_temp_both": -0.00447183621215138
+    }
+  ]
+}

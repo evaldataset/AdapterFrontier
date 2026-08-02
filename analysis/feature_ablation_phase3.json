@@ -1,0 +1,398 @@
+{
+  "slices": {
+    "accuracy__vs__n_rank": {
+      "n_rows": 55,
+      "n_pools": 14,
+      "feat_names": [
+        "pred_disagreement_rate",
+        "pred_logit_correlation",
+        "pred_ensemble_entropy",
+        "par_mean_cosine_distance_lora_A",
+        "par_mean_cosine_distance_lora_B",
+        "par_mean_frobenius_distance",
+        "hp_seed",
+        "hp_peft_method",
+        "hp_lora_r",
+        "hp_lora_alpha",
+        "hp_lr",
+        "hp_total",
+        "method_greedy_soup",
+        "method_soft_vote",
+        "method_logit_avg",
+        "method_majority_vote"
+      ],
+      "baseline_full": {
+        "r2_lopo": 0.5283938870524094,
+        "r2_in_sample": 0.7929617311089597,
+        "n_features": 16
+      },
+      "group_holdout": {
+        "prediction_space": {
+          "r2_lopo": -24.46628307459391,
+          "r2_in_sample": 0.4590153463008533,
+          "n_features": 13,
+          "dropped": [
+            "pred_disagreement_rate",
+            "pred_logit_correlation",
+            "pred_ensemble_entropy"
+          ],
+          "r2_lopo_drop": 24.99467696164632
+        },
+        "parameter_space": {
+          "r2_lopo": -0.031113567249604568,
+          "r2_in_sample": 0.7587225651929724,
+          "n_features": 13,
+          "dropped": [
+            "par_mean_cosine_distance_lora_A",
+            "par_mean_cosine_distance_lora_B",
+            "par_mean_frobenius_distance"
+          ],
+          "r2_lopo_drop": 0.559507454302014
+        },
+        "hp_entropy": {
+          "r2_lopo": 0.6070583075975137,
+          "r2_in_sample": 0.7905153356372799,
+          "n_features": 10,
+          "dropped": [
+            "hp_seed",
+            "hp_peft_method",
+            "hp_lora_r",
+            "hp_lora_alpha",
+            "hp_lr",
+            "hp_total"
+          ],
+          "r2_lopo_drop": -0.07866442054510425
+        },
+        "method_indicator": {
+          "r2_lopo": 0.4841319073981325,
+          "r2_in_sample": 0.7655691135731767,
+          "n_features": 12,
+          "dropped": [
+            "method_greedy_soup",
+            "method_soft_vote",
+            "method_logit_avg",
+            "method_majority_vote"
+          ],
+          "r2_lopo_drop": 0.04426197965427692
+        }
+      },
+      "group_only": {
+        "prediction_space": {
+          "r2_lopo": 0.633937589775726,
+          "r2_in_sample": 0.7187279046115713,
+          "n_features": 3
+        },
+        "parameter_space": {
+          "r2_lopo": -0.21644923913023772,
+          "r2_in_sample": 0.332842153208857,
+          "n_features": 3
+        },
+        "hp_entropy": {
+          "r2_lopo": -113.85555243862918,
+          "r2_in_sample": 0.05593796863678002,
+          "n_features": 6
+        },
+        "method_indicator": {
+          "r2_lopo": -0.1443422253255373,
+          "r2_in_sample": 0.0173501043646741,
+          "n_features": 4
+        }
+      },
+      "feature_holdout": {
+        "pred_disagreement_rate": {
+          "r2_lopo": -11.820890503366641,
+          "r2_in_sample": 0.7384265820976617,
+          "n_features": 15,
+          "r2_lopo_drop": 12.34928439041905
+        },
+        "pred_logit_correlation": {
+          "r2_lopo": -19.47029714820587,
+          "r2_in_sample": 0.7221297451613525,
+          "n_features": 15,
+          "r2_lopo_drop": 19.99869103525828
+        },
+        "pred_ensemble_entropy": {
+          "r2_lopo": -19.962040225541905,
+          "r2_in_sample": 0.6759835705398762,
+          "n_features": 15,
+          "r2_lopo_drop": 20.490434112594315
+        },
+        "par_mean_cosine_distance_lora_A": {
+          "r2_lopo": 0.5246223390195006,
+          "r2_in_sample": 0.7911428611385568,
+          "n_features": 15,
+          "r2_lopo_drop": 0.0037715480329088003
+        },
+        "par_mean_cosine_distance_lora_B": {
+          "r2_lopo": 0.21142242998373717,
+          "r2_in_sample": 0.7866004846922117,
+          "n_features": 15,
+          "r2_lopo_drop": 0.31697145706867225
+        },
+        "par_mean_frobenius_distance": {
+          "r2_lopo": 0.42799293604188404,
+          "r2_in_sample": 0.7661255518273417,
+          "n_features": 15,
+          "r2_lopo_drop": 0.10040095101052537
+        },
+        "hp_seed": {
+          "r2_lopo": 0.546211946113691,
+          "r2_in_sample": 0.7929077681852557,
+          "n_features": 15,
+          "r2_lopo_drop": -0.017818059061281533
+        },
+        "hp_peft_method": {
+          "r2_lopo": 0.5290469811475764,
+          "r2_in_sample": 0.7929577547923824,
+          "n_features": 15,
+          "r2_lopo_drop": -0.0006530940951670061
+        },
+        "hp_lora_r": {
+          "r2_lopo": 0.5398093375683733,
+          "r2_in_sample": 0.7929366308436111,
+          "n_features": 15,
+          "r2_lopo_drop": -0.011415450515963932
+        },
+        "hp_lora_alpha": {
+          "r2_lopo": 0.5395135518945308,
+          "r2_in_sample": 0.7929072412737498,
+          "n_features": 15,
+          "r2_lopo_drop": -0.011119664842121346
+        },
+        "hp_lr": {
+          "r2_lopo": 0.5398058724457462,
+          "r2_in_sample": 0.7929363272274604,
+          "n_features": 15,
+          "r2_lopo_drop": -0.011411985393336765
+        },
+        "hp_total": {
+          "r2_lopo": 0.5700427707664846,
+          "r2_in_sample": 0.7926943370733066,
+          "n_features": 15,
+          "r2_lopo_drop": -0.04164888371407516
+        },
+        "method_greedy_soup": {
+          "r2_lopo": 0.5283475846357959,
+          "r2_in_sample": 0.7929600212008838,
+          "n_features": 15,
+          "r2_lopo_drop": 4.6302416613519526e-05
+        },
+        "method_soft_vote": {
+          "r2_lopo": 0.5284201105507516,
+          "r2_in_sample": 0.7929618432657459,
+          "n_features": 15,
+          "r2_lopo_drop": -2.622349834213722e-05
+        },
+        "method_logit_avg": {
+          "r2_lopo": 0.528423984257653,
+          "r2_in_sample": 0.7929619541260353,
+          "n_features": 15,
+          "r2_lopo_drop": -3.0097205243606595e-05
+        },
+        "method_majority_vote": {
+          "r2_lopo": 0.5283228505573752,
+          "r2_in_sample": 0.7929591550459008,
+          "n_features": 15,
+          "r2_lopo_drop": 7.103649503426013e-05
+        }
+      }
+    },
+    "ece__vs__n_rank": {
+      "n_rows": 56,
+      "n_pools": 14,
+      "feat_names": [
+        "pred_disagreement_rate",
+        "pred_logit_correlation",
+        "pred_ensemble_entropy",
+        "par_mean_cosine_distance_lora_A",
+        "par_mean_cosine_distance_lora_B",
+        "par_mean_frobenius_distance",
+        "hp_seed",
+        "hp_peft_method",
+        "hp_lora_r",
+        "hp_lora_alpha",
+        "hp_lr",
+        "hp_total",
+        "method_greedy_soup",
+        "method_soft_vote",
+        "method_logit_avg",
+        "method_majority_vote"
+      ],
+      "baseline_full": {
+        "r2_lopo": 0.5266510099874393,
+        "r2_in_sample": 0.8010026583610005,
+        "n_features": 16
+      },
+      "group_holdout": {
+        "prediction_space": {
+          "r2_lopo": -1.7702802437974379,
+          "r2_in_sample": 0.6430324590670757,
+          "n_features": 13,
+          "dropped": [
+            "pred_disagreement_rate",
+            "pred_logit_correlation",
+            "pred_ensemble_entropy"
+          ],
+          "r2_lopo_drop": 2.2969312537848774
+        },
+        "parameter_space": {
+          "r2_lopo": 0.5186618113948599,
+          "r2_in_sample": 0.7994404988008574,
+          "n_features": 13,
+          "dropped": [
+            "par_mean_cosine_distance_lora_A",
+            "par_mean_cosine_distance_lora_B",
+            "par_mean_frobenius_distance"
+          ],
+          "r2_lopo_drop": 0.007989198592579405
+        },
+        "hp_entropy": {
+          "r2_lopo": 0.6966983373466686,
+          "r2_in_sample": 0.7944695454770921,
+          "n_features": 10,
+          "dropped": [
+            "hp_seed",
+            "hp_peft_method",
+            "hp_lora_r",
+            "hp_lora_alpha",
+            "hp_lr",
+            "hp_total"
+          ],
+          "r2_lopo_drop": -0.17004732735922934
+        },
+        "method_indicator": {
+          "r2_lopo": 0.0735657362770954,
+          "r2_in_sample": 0.3166090205560558,
+          "n_features": 12,
+          "dropped": [
+            "method_greedy_soup",
+            "method_soft_vote",
+            "method_logit_avg",
+            "method_majority_vote"
+          ],
+          "r2_lopo_drop": 0.4530852737103439
+        }
+      },
+      "group_only": {
+        "prediction_space": {
+          "r2_lopo": 0.2891812900230032,
+          "r2_in_sample": 0.3081679681851932,
+          "n_features": 3
+        },
+        "parameter_space": {
+          "r2_lopo": 0.009707918927603143,
+          "r2_in_sample": 0.13402054790897444,
+          "n_features": 3
+        },
+        "hp_entropy": {
+          "r2_lopo": -26.407434683808855,
+          "r2_in_sample": 0.03339927395355968,
+          "n_features": 6
+        },
+        "method_indicator": {
+          "r2_lopo": 0.4020654857014707,
+          "r2_in_sample": 0.48439363780494493,
+          "n_features": 4
+        }
+      },
+      "feature_holdout": {
+        "pred_disagreement_rate": {
+          "r2_lopo": -2.06789375252635,
+          "r2_in_sample": 0.795370720160016,
+          "n_features": 15,
+          "r2_lopo_drop": 2.594544762513789
+        },
+        "pred_logit_correlation": {
+          "r2_lopo": 0.5166621670094245,
+          "r2_in_sample": 0.7992658045068533,
+          "n_features": 15,
+          "r2_lopo_drop": 0.009988842978014834
+        },
+        "pred_ensemble_entropy": {
+          "r2_lopo": -1.0982010616194722,
+          "r2_in_sample": 0.7966327704821135,
+          "n_features": 15,
+          "r2_lopo_drop": 1.6248520716069115
+        },
+        "par_mean_cosine_distance_lora_A": {
+          "r2_lopo": 0.5280921958083186,
+          "r2_in_sample": 0.8005560780019876,
+          "n_features": 15,
+          "r2_lopo_drop": -0.001441185820879265
+        },
+        "par_mean_cosine_distance_lora_B": {
+          "r2_lopo": 0.32299120707357465,
+          "r2_in_sample": 0.80022369596915,
+          "n_features": 15,
+          "r2_lopo_drop": 0.20365980291386465
+        },
+        "par_mean_frobenius_distance": {
+          "r2_lopo": 0.5299470348743726,
+          "r2_in_sample": 0.8001294783928183,
+          "n_features": 15,
+          "r2_lopo_drop": -0.0032960248869332576
+        },
+        "hp_seed": {
+          "r2_lopo": 0.533532820250304,
+          "r2_in_sample": 0.8009913415181442,
+          "n_features": 15,
+          "r2_lopo_drop": -0.006881810262864718
+        },
+        "hp_peft_method": {
+          "r2_lopo": 0.5507459091601586,
+          "r2_in_sample": 0.8010030209122386,
+          "n_features": 15,
+          "r2_lopo_drop": -0.024094899172719342
+        },
+        "hp_lora_r": {
+          "r2_lopo": 0.5260312195673209,
+          "r2_in_sample": 0.8009893482497106,
+          "n_features": 15,
+          "r2_lopo_drop": 0.0006197904201183935
+        },
+        "hp_lora_alpha": {
+          "r2_lopo": 0.5305884603619189,
+          "r2_in_sample": 0.8009965641470941,
+          "n_features": 15,
+          "r2_lopo_drop": -0.0039374503744795675
+        },
+        "hp_lr": {
+          "r2_lopo": 0.526088828393868,
+          "r2_in_sample": 0.8009894469870549,
+          "n_features": 15,
+          "r2_lopo_drop": 0.0005621815935713537
+        },
+        "hp_total": {
+          "r2_lopo": 0.7213830448691041,
+          "r2_in_sample": 0.8003378705626085,
+          "n_features": 15,
+          "r2_lopo_drop": -0.1947320348816648
+        },
+        "method_greedy_soup": {
+          "r2_lopo": 0.5266765904938491,
+          "r2_in_sample": 0.8010019692653758,
+          "n_features": 15,
+          "r2_lopo_drop": -2.5580506409772497e-05
+        },
+        "method_soft_vote": {
+          "r2_lopo": 0.5266800655469233,
+          "r2_in_sample": 0.8010008187709574,
+          "n_features": 15,
+          "r2_lopo_drop": -2.9055559483959215e-05
+        },
+        "method_logit_avg": {
+          "r2_lopo": 0.5266665321153332,
+          "r2_in_sample": 0.8010007454214794,
+          "n_features": 15,
+          "r2_lopo_drop": -1.5522127893907722e-05
+        },
+        "method_majority_vote": {
+          "r2_lopo": 0.5267471424998762,
+          "r2_in_sample": 0.8009899168645358,
+          "n_features": 15,
+          "r2_lopo_drop": -9.613251243689724e-05
+        }
+      }
+    }
+  }
+}

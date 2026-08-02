@@ -1,0 +1,170 @@
+{
+  "accuracy__vs__n_rank": {
+    "n_rows": 71,
+    "n_pools": 18,
+    "ridge_aug_r2_lopo": 0.04967707957661782,
+    "rf_50_r2_lopo": -0.12137481294593733,
+    "rf_200_r2_lopo": -0.07517477141206097,
+    "gbm_r2_lopo": -0.3464475709757162,
+    "rf_feature_importance": [
+      {
+        "feature": "pred_ensemble_entropy",
+        "importance": 0.46183265090564807
+      },
+      {
+        "feature": "pred_logit_correlation",
+        "importance": 0.175450566114008
+      },
+      {
+        "feature": "pred_disagreement_rate",
+        "importance": 0.08834523162556308
+      },
+      {
+        "feature": "par_mean_frobenius_distance",
+        "importance": 0.05683587907050554
+      },
+      {
+        "feature": "is_decoder",
+        "importance": 0.041611028561878545
+      },
+      {
+        "feature": "method_majority_vote",
+        "importance": 0.037340417721890444
+      },
+      {
+        "feature": "method_greedy_soup",
+        "importance": 0.035584713161613775
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_A",
+        "importance": 0.027990510852546717
+      }
+    ]
+  },
+  "ece__vs__n_rank": {
+    "n_rows": 72,
+    "n_pools": 18,
+    "ridge_aug_r2_lopo": 0.07266603863576226,
+    "rf_50_r2_lopo": 0.6109698652047713,
+    "rf_200_r2_lopo": 0.6521863487569006,
+    "gbm_r2_lopo": 0.6513937306883291,
+    "rf_feature_importance": [
+      {
+        "feature": "method_majority_vote",
+        "importance": 0.39432795295939393
+      },
+      {
+        "feature": "pred_disagreement_rate",
+        "importance": 0.18698381259837069
+      },
+      {
+        "feature": "pred_ensemble_entropy",
+        "importance": 0.17724923074362664
+      },
+      {
+        "feature": "pred_logit_correlation",
+        "importance": 0.14332555440608344
+      },
+      {
+        "feature": "par_mean_frobenius_distance",
+        "importance": 0.02645517366618612
+      },
+      {
+        "feature": "method_greedy_soup",
+        "importance": 0.014999529678256488
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_A",
+        "importance": 0.013870491248686806
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_B",
+        "importance": 0.013165510503272922
+      }
+    ]
+  },
+  "accuracy__vs__best_of_n": {
+    "n_rows": 96,
+    "n_pools": 24,
+    "ridge_aug_r2_lopo": -0.4532724109457753,
+    "rf_50_r2_lopo": 0.47745384577558436,
+    "rf_200_r2_lopo": 0.26789169134067137,
+    "gbm_r2_lopo": 0.45569635633737837,
+    "rf_feature_importance": [
+      {
+        "feature": "pred_logit_correlation",
+        "importance": 0.521664656265546
+      },
+      {
+        "feature": "method_greedy_soup",
+        "importance": 0.2868729111408163
+      },
+      {
+        "feature": "pred_ensemble_entropy",
+        "importance": 0.05988211676865306
+      },
+      {
+        "feature": "pred_disagreement_rate",
+        "importance": 0.02524381788410751
+      },
+      {
+        "feature": "method_majority_vote",
+        "importance": 0.023346516785266835
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_A",
+        "importance": 0.017602014575742068
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_B",
+        "importance": 0.017267765876564548
+      },
+      {
+        "feature": "is_deberta",
+        "importance": 0.014886271876906365
+      }
+    ]
+  },
+  "ece__vs__best_of_n": {
+    "n_rows": 96,
+    "n_pools": 24,
+    "ridge_aug_r2_lopo": 0.20506581071210372,
+    "rf_50_r2_lopo": 0.45581556246557076,
+    "rf_200_r2_lopo": 0.45882242705021603,
+    "gbm_r2_lopo": 0.3958487495485742,
+    "rf_feature_importance": [
+      {
+        "feature": "method_majority_vote",
+        "importance": 0.5177735634518794
+      },
+      {
+        "feature": "pred_ensemble_entropy",
+        "importance": 0.15698850316562715
+      },
+      {
+        "feature": "pred_disagreement_rate",
+        "importance": 0.10050756163217812
+      },
+      {
+        "feature": "pred_logit_correlation",
+        "importance": 0.05943689923924225
+      },
+      {
+        "feature": "par_mean_frobenius_distance",
+        "importance": 0.042077763126363944
+      },
+      {
+        "feature": "method_greedy_soup",
+        "importance": 0.03050013328076916
+      },
+      {
+        "feature": "method_soft_vote",
+        "importance": 0.018237839954639026
+      },
+      {
+        "feature": "par_mean_cosine_distance_lora_A",
+        "importance": 0.017984177971507913
+      }
+    ]
+  }
+}

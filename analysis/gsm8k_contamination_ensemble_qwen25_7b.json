@@ -1,0 +1,40 @@
+{
+  "pool_id": "pool_a_gsm8k_qwen25_7b",
+  "base_model": "Qwen/Qwen2.5-7B",
+  "n_samples": 50,
+  "n_adapters": 10,
+  "shift": 7,
+  "per_adapter_acc_orig": [
+    0.66,
+    0.62,
+    0.68,
+    0.7,
+    0.62,
+    0.72,
+    0.7,
+    0.72,
+    0.68,
+    0.64
+  ],
+  "per_adapter_acc_shift": [
+    0.06,
+    0.02,
+    0.02,
+    0.02,
+    0.04,
+    0.04,
+    0.04,
+    0.02,
+    0.02,
+    0.04
+  ],
+  "best_single_orig": 0.72,
+  "best_single_shift": 0.04,
+  "majority_vote_orig": 0.78,
+  "majority_vote_shift": 0.04,
+  "delta_orig": 0.06,
+  "delta_shift": 0.0,
+  "best_single_idx": 5,
+  "note": "Reconstructed from session log after disk loss; verified by per-adapter ranges [0.62, 0.72] orig and [0.02, 0.06] shift.",
+  "RETRACTED": "Void: both arms were scored against gold labels produced by the invalid digit-shift transform (see analysis/gsm8k_contamination_probe.py header). The delta_shift=0.000 result is an artifact, not evidence."
+}

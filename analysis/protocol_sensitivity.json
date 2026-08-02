@@ -1,0 +1,992 @@
+{
+  "scope": {
+    "excluded_stale_split": [
+      "hellaswag"
+    ],
+    "excluded_contaminated_from_S1_S3": [
+      "gsm8k"
+    ],
+    "n_accuracy_cells_clean": 515,
+    "n_pools_clean": 80
+  },
+  "S1_selection_on_test": {
+    "n_pools_total": 100,
+    "n_pools_encoder": 51,
+    "all": {
+      "mean_inflation_pp": 1.1159499991130954,
+      "median_inflation_pp": 0.5714285714285783,
+      "max_inflation_pp": 9.583333333333337,
+      "frac_pools_inflated": 0.82
+    },
+    "encoder": {
+      "mean_inflation_pp": 1.2960645277786935,
+      "median_inflation_pp": 0.5592105263157898,
+      "max_inflation_pp": 9.583333333333337,
+      "frac_pools_inflated": 0.7647058823529411
+    },
+    "rows": [
+      {
+        "pool_id": "baseline_compute_matched_agnews_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9361842105263158,
+        "strict_val_selected": 0.9305921052631579,
+        "inflation_pp": 0.5592105263157898,
+        "n_adapters": 16
+      },
+      {
+        "pool_id": "baseline_compute_matched_agnews_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.9450657894736842,
+        "strict_val_selected": 0.9398026315789474,
+        "inflation_pp": 0.5263157894736858,
+        "n_adapters": 16
+      },
+      {
+        "pool_id": "baseline_compute_matched_agnews_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9424342105263158,
+        "strict_val_selected": 0.9391447368421053,
+        "inflation_pp": 0.3289473684210509,
+        "n_adapters": 16
+      },
+      {
+        "pool_id": "baseline_compute_matched_agnews_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9467105263157894,
+        "strict_val_selected": 0.9411184210526315,
+        "inflation_pp": 0.5592105263157898,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "baseline_compute_matched_agnews_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9496710526315789,
+        "strict_val_selected": 0.9434210526315789,
+        "inflation_pp": 0.6249999999999978,
+        "n_adapters": 13
+      },
+      {
+        "pool_id": "baseline_compute_matched_anli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.46875,
+        "strict_val_selected": 0.46875,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_anli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5145833333333333,
+        "strict_val_selected": 0.5145833333333333,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_anli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5916666666666667,
+        "strict_val_selected": 0.5666666666666667,
+        "inflation_pp": 2.500000000000002,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "baseline_compute_matched_anli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.44375,
+        "strict_val_selected": 0.41875,
+        "inflation_pp": 2.4999999999999964,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_anli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5333333333333333,
+        "strict_val_selected": 0.4979166666666667,
+        "inflation_pp": 3.541666666666665,
+        "n_adapters": 14
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.7855323484462557,
+        "strict_val_selected": 0.78222109016811,
+        "inflation_pp": 0.3311258278145712,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.8191543555781966,
+        "strict_val_selected": 0.8158430973000509,
+        "inflation_pp": 0.3311258278145712,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_pythia_14b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8318899643402955,
+        "strict_val_selected": 0.8252674477840041,
+        "inflation_pp": 0.6622516556291425,
+        "n_adapters": 6
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.847682119205298,
+        "strict_val_selected": 0.8413143148242486,
+        "inflation_pp": 0.6367804381049447,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8825776872134488,
+        "strict_val_selected": 0.8795211411105451,
+        "inflation_pp": 0.30565461029036234,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_qwen25_3b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8706062149770759,
+        "strict_val_selected": 0.8706062149770759,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.8461538461538461,
+        "strict_val_selected": 0.8387671930718288,
+        "inflation_pp": 0.7386653082017358,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_smollm2_17b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8851248089658685,
+        "strict_val_selected": 0.8825776872134488,
+        "inflation_pp": 0.25471217524197787,
+        "n_adapters": 14
+      },
+      {
+        "pool_id": "baseline_compute_matched_mnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8596535914416709,
+        "strict_val_selected": 0.8596535914416709,
+        "inflation_pp": 0.0,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "baseline_compute_matched_qnli_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9016468435498628,
+        "strict_val_selected": 0.8975297346752058,
+        "inflation_pp": 0.4117108874656994,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "baseline_compute_matched_qnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.9126258005489478,
+        "strict_val_selected": 0.9048490393412626,
+        "inflation_pp": 0.7776761207685223,
+        "n_adapters": 10
+      },
+      {
+        "pool_id": "baseline_compute_matched_qnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9231473010064044,
+        "strict_val_selected": 0.9181152790484904,
+        "inflation_pp": 0.5032021957913968,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "baseline_compute_matched_qnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9455626715462031,
+        "strict_val_selected": 0.9451052150045746,
+        "inflation_pp": 0.045745654162854255,
+        "n_adapters": 16
+      },
+      {
+        "pool_id": "baseline_compute_matched_qnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9263494967978042,
+        "strict_val_selected": 0.923604757548033,
+        "inflation_pp": 0.2744739249771255,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "baseline_compute_matched_sst2_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.92,
+        "strict_val_selected": 0.9142857142857143,
+        "inflation_pp": 0.5714285714285783,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_agnews_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9279605263157895,
+        "strict_val_selected": 0.9217105263157894,
+        "inflation_pp": 0.6250000000000089,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_agnews_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.937828947368421,
+        "strict_val_selected": 0.9305921052631579,
+        "inflation_pp": 0.7236842105263097,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "pool_a_agnews_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9424342105263158,
+        "strict_val_selected": 0.937828947368421,
+        "inflation_pp": 0.4605263157894779,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_agnews_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9450657894736842,
+        "strict_val_selected": 0.9430921052631579,
+        "inflation_pp": 0.19736842105263497,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "pool_a_agnews_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9365131578947369,
+        "strict_val_selected": 0.9342105263157895,
+        "inflation_pp": 0.23026315789473895,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_agnews_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9490131578947368,
+        "strict_val_selected": 0.9444078947368421,
+        "inflation_pp": 0.4605263157894779,
+        "n_adapters": 14
+      },
+      {
+        "pool_id": "pool_a_anli_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.4395833333333333,
+        "strict_val_selected": 0.4041666666666667,
+        "inflation_pp": 3.541666666666665,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_anli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.4625,
+        "strict_val_selected": 0.44375,
+        "inflation_pp": 1.8750000000000044,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_anli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5083333333333333,
+        "strict_val_selected": 0.475,
+        "inflation_pp": 3.3333333333333326,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_anli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5875,
+        "strict_val_selected": 0.58125,
+        "inflation_pp": 0.6249999999999978,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_anli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.42916666666666664,
+        "strict_val_selected": 0.4083333333333333,
+        "inflation_pp": 2.0833333333333313,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_anli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.5354166666666667,
+        "strict_val_selected": 0.5208333333333334,
+        "inflation_pp": 1.4583333333333282,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_a_boolq_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.7048929663608563,
+        "strict_val_selected": 0.6857798165137615,
+        "inflation_pp": 1.911314984709478,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_boolq_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.7423547400611621,
+        "strict_val_selected": 0.7423547400611621,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_boolq_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.7836391437308868,
+        "strict_val_selected": 0.7836391437308868,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.7547121752419765,
+        "strict_val_selected": 0.7539480387162506,
+        "inflation_pp": 0.07641365257259336,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.31875,
+        "strict_val_selected": 0.2833333333333333,
+        "inflation_pp": 3.541666666666665,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.8064187468160978,
+        "strict_val_selected": 0.8064187468160978,
+        "inflation_pp": 0.0,
+        "n_adapters": 11
+      },
+      {
+        "pool_id": "pool_a_mnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.35833333333333334,
+        "strict_val_selected": 0.28541666666666665,
+        "inflation_pp": 7.291666666666669,
+        "n_adapters": 11
+      },
+      {
+        "pool_id": "pool_a_mnli_deberta_v3_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.4816607233825777,
+        "strict_val_selected": 0.4816607233825777,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_deberta_v3_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.4,
+        "strict_val_selected": 0.30416666666666664,
+        "inflation_pp": 9.583333333333337,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_pythia_14b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8362200713194091,
+        "strict_val_selected": 0.8362200713194091,
+        "inflation_pp": 0.0,
+        "n_adapters": 7
+      },
+      {
+        "pool_id": "pool_a_mnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8451349974528782,
+        "strict_val_selected": 0.8364747834946511,
+        "inflation_pp": 0.8660213958227136,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.36041666666666666,
+        "strict_val_selected": 0.33541666666666664,
+        "inflation_pp": 2.500000000000002,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8841059602649006,
+        "strict_val_selected": 0.8772287315333673,
+        "inflation_pp": 0.6877228731533291,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.41875,
+        "strict_val_selected": 0.3854166666666667,
+        "inflation_pp": 3.3333333333333326,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_qwen25_3b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8991339786041773,
+        "strict_val_selected": 0.8856342333163525,
+        "inflation_pp": 1.3499745287824827,
+        "n_adapters": 21
+      },
+      {
+        "pool_id": "pool_a_mnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.8303616912888436,
+        "strict_val_selected": 0.8303616912888436,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.3104166666666667,
+        "strict_val_selected": 0.28541666666666665,
+        "inflation_pp": 2.500000000000002,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_a_mnli_smollm2_17b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8866530820173204,
+        "strict_val_selected": 0.8774834437086093,
+        "inflation_pp": 0.9169638308711092,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_a_mnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8599083036169128,
+        "strict_val_selected": 0.8573611818644932,
+        "inflation_pp": 0.25471217524196677,
+        "n_adapters": 13
+      },
+      {
+        "pool_id": "pool_a_mnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.35,
+        "strict_val_selected": 0.3416666666666667,
+        "inflation_pp": 0.8333333333333304,
+        "n_adapters": 13
+      },
+      {
+        "pool_id": "pool_a_qnli_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.8838060384263495,
+        "strict_val_selected": 0.8806038426349497,
+        "inflation_pp": 0.3202195791399798,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_qnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.903476669716377,
+        "strict_val_selected": 0.8998170173833486,
+        "inflation_pp": 0.36596523330283404,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "pool_a_qnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9176578225068619,
+        "strict_val_selected": 0.9153705397987191,
+        "inflation_pp": 0.22872827081428238,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_qnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9510521500457456,
+        "strict_val_selected": 0.939615736505032,
+        "inflation_pp": 1.1436413540713564,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_a_qnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9085086916742909,
+        "strict_val_selected": 0.9085086916742909,
+        "inflation_pp": 0.0,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_a_qnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9318389752973467,
+        "strict_val_selected": 0.9240622140896615,
+        "inflation_pp": 0.7776761207685223,
+        "n_adapters": 18
+      },
+      {
+        "pool_id": "pool_a_sst2_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.9342857142857143,
+        "strict_val_selected": 0.9142857142857143,
+        "inflation_pp": 2.0000000000000018,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_b_agnews_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.9279605263157895,
+        "strict_val_selected": 0.9233552631578947,
+        "inflation_pp": 0.4605263157894779,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "pool_b_agnews_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9421052631578948,
+        "strict_val_selected": 0.9421052631578948,
+        "inflation_pp": 0.0,
+        "n_adapters": 21
+      },
+      {
+        "pool_id": "pool_b_anli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.45416666666666666,
+        "strict_val_selected": 0.38125,
+        "inflation_pp": 7.291666666666669,
+        "n_adapters": 16
+      },
+      {
+        "pool_id": "pool_b_anli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.43125,
+        "strict_val_selected": 0.4083333333333333,
+        "inflation_pp": 2.2916666666666696,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.7638818135506877,
+        "strict_val_selected": 0.7567498726439124,
+        "inflation_pp": 0.713194090677538,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.3020833333333333,
+        "strict_val_selected": 0.2791666666666667,
+        "inflation_pp": 2.2916666666666643,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.8117677024961794,
+        "strict_val_selected": 0.8097300050942435,
+        "inflation_pp": 0.2037697401935823,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_bert_large",
+        "family": "encoder",
+        "oracle_test_selected": 0.35833333333333334,
+        "strict_val_selected": 0.35833333333333334,
+        "inflation_pp": 0.0,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8395313295975547,
+        "strict_val_selected": 0.8385124808965868,
+        "inflation_pp": 0.10188487009679115,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_b_mnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.36875,
+        "strict_val_selected": 0.34375,
+        "inflation_pp": 2.500000000000002,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_b_mnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8792664289353032,
+        "strict_val_selected": 0.8769740193581254,
+        "inflation_pp": 0.22924095771778008,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "pool_b_mnli_qwen25_15b",
+        "family": "decoder",
+        "oracle_test_selected": 0.42083333333333334,
+        "strict_val_selected": 0.40208333333333335,
+        "inflation_pp": 1.874999999999999,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "pool_b_mnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.8357106469689252,
+        "strict_val_selected": 0.8357106469689252,
+        "inflation_pp": 0.0,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_roberta_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.3104166666666667,
+        "strict_val_selected": 0.30416666666666664,
+        "inflation_pp": 0.6250000000000033,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_b_mnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.8578706062149771,
+        "strict_val_selected": 0.8517575140091697,
+        "inflation_pp": 0.6113092205807469,
+        "n_adapters": 21
+      },
+      {
+        "pool_id": "pool_b_mnli_tinyllama_11b",
+        "family": "decoder",
+        "oracle_test_selected": 0.36666666666666664,
+        "strict_val_selected": 0.35625,
+        "inflation_pp": 1.041666666666663,
+        "n_adapters": 21
+      },
+      {
+        "pool_id": "pool_b_qnli_bert_base",
+        "family": "encoder",
+        "oracle_test_selected": 0.8870082342177493,
+        "strict_val_selected": 0.8860933211344922,
+        "inflation_pp": 0.09149130832570851,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "pool_b_qnli_qwen25_05b",
+        "family": "decoder",
+        "oracle_test_selected": 0.9162854528819762,
+        "strict_val_selected": 0.9126258005489478,
+        "inflation_pp": 0.36596523330283404,
+        "n_adapters": 19
+      },
+      {
+        "pool_id": "pool_b_sst2_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.9285714285714286,
+        "strict_val_selected": 0.9228571428571428,
+        "inflation_pp": 0.5714285714285783,
+        "n_adapters": 24
+      },
+      {
+        "pool_id": "pool_c_agnews_bert_base_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.9315789473684211,
+        "strict_val_selected": 0.9292763157894737,
+        "inflation_pp": 0.23026315789473895,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_c_agnews_qwen25_05b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.9447368421052632,
+        "strict_val_selected": 0.9447368421052632,
+        "inflation_pp": 0.0,
+        "n_adapters": 14
+      },
+      {
+        "pool_id": "pool_c_mnli_bert_large_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.8102394294447275,
+        "strict_val_selected": 0.8099847172694855,
+        "inflation_pp": 0.025471217524197787,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_bert_large_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.35833333333333334,
+        "strict_val_selected": 0.3229166666666667,
+        "inflation_pp": 3.541666666666665,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_bert_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.7689760570555273,
+        "strict_val_selected": 0.7689760570555273,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_bert_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.32083333333333336,
+        "strict_val_selected": 0.3104166666666667,
+        "inflation_pp": 1.0416666666666685,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_qwen25_05b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.8423331635252165,
+        "strict_val_selected": 0.8380030565461029,
+        "inflation_pp": 0.4330106979113624,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_qwen25_05b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.375,
+        "strict_val_selected": 0.3229166666666667,
+        "inflation_pp": 5.208333333333331,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_qwen25_15b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.8856342333163525,
+        "strict_val_selected": 0.8797758532857871,
+        "inflation_pp": 0.585838003056538,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_qwen25_15b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.4270833333333333,
+        "strict_val_selected": 0.41875,
+        "inflation_pp": 0.8333333333333304,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_roberta_base_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.8364747834946511,
+        "strict_val_selected": 0.8364747834946511,
+        "inflation_pp": 0.0,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_roberta_base_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.32083333333333336,
+        "strict_val_selected": 0.29375,
+        "inflation_pp": 2.708333333333335,
+        "n_adapters": 20
+      },
+      {
+        "pool_id": "pool_c_mnli_tinyllama_11b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.8614365766683647,
+        "strict_val_selected": 0.8520122261844116,
+        "inflation_pp": 0.942435048395307,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_c_mnli_tinyllama_11b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.36875,
+        "strict_val_selected": 0.3645833333333333,
+        "inflation_pp": 0.41666666666667074,
+        "n_adapters": 15
+      },
+      {
+        "pool_id": "pool_c_qnli_bert_base_method_mixed",
+        "family": "encoder",
+        "oracle_test_selected": 0.8865507776761208,
+        "strict_val_selected": 0.8806038426349497,
+        "inflation_pp": 0.5946935041171053,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "pool_c_qnli_qwen25_05b_method_mixed",
+        "family": "decoder",
+        "oracle_test_selected": 0.9222323879231473,
+        "strict_val_selected": 0.9153705397987191,
+        "inflation_pp": 0.6861848124428249,
+        "n_adapters": 17
+      },
+      {
+        "pool_id": "smoke_2seed_mnli_bert",
+        "family": "encoder",
+        "oracle_test_selected": 0.365,
+        "strict_val_selected": 0.365,
+        "inflation_pp": 0.0,
+        "n_adapters": 2
+      }
+    ]
+  },
+  "S2_no_compute_match": {
+    "all": {
+      "best_of_n": {
+        "n_cells": 320,
+        "pct_supported": 27.2,
+        "pct_reversed": 6.6,
+        "mean_diff_pp": -0.2425839140100182
+      },
+      "n_rank": {
+        "n_cells": 192,
+        "pct_supported": 9.9,
+        "pct_reversed": 16.1,
+        "mean_diff_pp": -0.3173731052429529
+      },
+      "delta_pct_supported": 17.3,
+      "delta_mean_diff_pp": 0.075
+    },
+    "encoder": {
+      "best_of_n": {
+        "n_cells": 160,
+        "pct_supported": 12.5,
+        "pct_reversed": 11.2,
+        "mean_diff_pp": -0.8174445392361489
+      },
+      "n_rank": {
+        "n_cells": 92,
+        "pct_supported": 0.0,
+        "pct_reversed": 33.7,
+        "mean_diff_pp": -1.2674953429697202
+      },
+      "delta_pct_supported": 12.5,
+      "delta_mean_diff_pp": 0.45
+    }
+  },
+  "S2b_strict_encoder_by_method": {
+    "greedy_soup": {
+      "n_cells": 23,
+      "pct_supported": 0.0,
+      "pct_reversed": 21.7,
+      "mean_diff_pp": -0.9002001603209385
+    },
+    "logit_avg": {
+      "n_cells": 23,
+      "pct_supported": 0.0,
+      "pct_reversed": 34.8,
+      "mean_diff_pp": -1.2451511914407245
+    },
+    "majority_vote": {
+      "n_cells": 23,
+      "pct_supported": 0.0,
+      "pct_reversed": 43.5,
+      "mean_diff_pp": -1.720838096458737
+    },
+    "soft_vote": {
+      "n_cells": 23,
+      "pct_supported": 0.0,
+      "pct_reversed": 34.8,
+      "mean_diff_pp": -1.2037919236584806
+    }
+  },
+  "S3_aggregate_reporting": {
+    "all": {
+      "neutral_threshold_pp": 0.5,
+      "tasks": [
+        {
+          "task": "agnews",
+          "n_cells": 36,
+          "task_mean_diff_pp": 0.013,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 1,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "anli",
+          "n_cells": 28,
+          "task_mean_diff_pp": -1.838,
+          "task_level_reads_as": "hurts",
+          "reversed_cells_inside": 4,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "mnli",
+          "n_cells": 84,
+          "task_mean_diff_pp": -0.012,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 18,
+          "supported_cells_inside": 19
+        },
+        {
+          "task": "qnli",
+          "n_cells": 36,
+          "task_mean_diff_pp": -0.296,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 8,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "sst2",
+          "n_cells": 8,
+          "task_mean_diff_pp": 0.214,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 0,
+          "supported_cells_inside": 0
+        }
+      ],
+      "n_tasks": 5,
+      "n_tasks_reading_as_no_effect": 4,
+      "significant_cells_hidden_in_neutral_tasks": 46,
+      "cells_in_neutral_tasks": 164,
+      "pct_hidden_significant": 28.0
+    },
+    "encoder": {
+      "neutral_threshold_pp": 0.5,
+      "tasks": [
+        {
+          "task": "agnews",
+          "n_cells": 16,
+          "task_mean_diff_pp": -0.273,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 1,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "anli",
+          "n_cells": 16,
+          "task_mean_diff_pp": -3.359,
+          "task_level_reads_as": "hurts",
+          "reversed_cells_inside": 4,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "mnli",
+          "n_cells": 36,
+          "task_mean_diff_pp": -1.233,
+          "task_level_reads_as": "hurts",
+          "reversed_cells_inside": 18,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "qnli",
+          "n_cells": 16,
+          "task_mean_diff_pp": -0.989,
+          "task_level_reads_as": "hurts",
+          "reversed_cells_inside": 8,
+          "supported_cells_inside": 0
+        },
+        {
+          "task": "sst2",
+          "n_cells": 8,
+          "task_mean_diff_pp": 0.214,
+          "task_level_reads_as": "no effect",
+          "reversed_cells_inside": 0,
+          "supported_cells_inside": 0
+        }
+      ],
+      "n_tasks": 5,
+      "n_tasks_reading_as_no_effect": 2,
+      "significant_cells_hidden_in_neutral_tasks": 1,
+      "cells_in_neutral_tasks": 24,
+      "pct_hidden_significant": 4.2
+    }
+  }
+}

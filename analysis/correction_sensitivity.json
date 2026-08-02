@@ -1,0 +1,68 @@
+{
+  "accuracy": {
+    "raw_ci": {
+      "n": 92,
+      "supported": 0,
+      "reversed": 38,
+      "pct_supported": 0.0,
+      "pct_reversed": 41.3
+    },
+    "holm_corpus_m1028": {
+      "n": 92,
+      "supported": 0,
+      "reversed": 0,
+      "pct_supported": 0.0,
+      "pct_reversed": 0.0
+    },
+    "holm_within_table": {
+      "n": 92,
+      "supported": 0,
+      "reversed": 16,
+      "pct_supported": 0.0,
+      "pct_reversed": 17.4
+    },
+    "bh_corpus_q05": {
+      "n": 92,
+      "supported": 0,
+      "reversed": 31,
+      "pct_supported": 0.0,
+      "pct_reversed": 33.7
+    }
+  },
+  "ECE": {
+    "raw_ci": {
+      "n": 92,
+      "supported": 52,
+      "reversed": 17,
+      "pct_supported": 56.5,
+      "pct_reversed": 18.5
+    },
+    "holm_corpus_m1028": {
+      "n": 92,
+      "supported": 0,
+      "reversed": 0,
+      "pct_supported": 0.0,
+      "pct_reversed": 0.0
+    },
+    "holm_within_table": {
+      "n": 92,
+      "supported": 46,
+      "reversed": 17,
+      "pct_supported": 50.0,
+      "pct_reversed": 18.5
+    },
+    "bh_corpus_q05": {
+      "n": 92,
+      "supported": 52,
+      "reversed": 17,
+      "pct_supported": 56.5,
+      "pct_reversed": 18.5
+    }
+  },
+  "summary": {
+    "accuracy_supported_zero_under_all_procedures": true,
+    "accuracy_reversed_pct_min": 0.0,
+    "accuracy_reversed_pct_max": 41.3,
+    "note": "SUPPORTED=0 is invariant to the correction procedure and is the robust claim. The REVERSED rate is procedure-dependent: the pre-registered corpus-wide Holm yields 0, within-table Holm 16, corpus-wide BH 31, and the raw per-cell CI 38. The paper reports the BH figure and states this dependence explicitly."
+  }
+}

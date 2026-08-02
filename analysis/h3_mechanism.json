@@ -1,0 +1,21 @@
+{
+  "n_cells": 192,
+  "resolution_gain": {
+    "r2_lopo": 0.05015374771270997,
+    "n": 192,
+    "mean": -0.0009172885534561795
+  },
+  "reliability_gain": {
+    "r2_lopo": -0.30239065963232004,
+    "n": 192,
+    "mean": 0.009236046185827846
+  },
+  "accuracy_gain_check": {
+    "r2_lopo": 0.5974126687028674,
+    "n": 192,
+    "mean": -0.0031737310524295238
+  },
+  "corr_resolution_accuracy": -0.09668522518349236,
+  "res_std_over_acc_std": 0.21230588783681534,
+  "verdict_supported": false
+}

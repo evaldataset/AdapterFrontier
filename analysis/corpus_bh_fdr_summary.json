@@ -1,0 +1,31 @@
+{
+  "q_threshold": 0.05,
+  "n_total_files_scanned": 1028,
+  "n_cells_in_batch": 1028,
+  "n_cells_skipped": 0,
+  "bh_cutoff_p_at_q": 0.024795040991801638,
+  "bh_batch_hash": "42134bec54977d15",
+  "counts_pre_fdr": {
+    "supported": 339,
+    "reversed": 183,
+    "unsupported": 506,
+    "other": 0
+  },
+  "counts_post_fdr": {
+    "supported": 303,
+    "reversed": 174,
+    "unsupported": 551,
+    "other": 0
+  },
+  "pct_pre_fdr": {
+    "supported": 32.98,
+    "reversed": 17.8,
+    "unsupported": 49.22
+  },
+  "pct_post_fdr": {
+    "supported": 29.47,
+    "reversed": 16.93,
+    "unsupported": 53.6
+  },
+  "skipped_examples": []
+}

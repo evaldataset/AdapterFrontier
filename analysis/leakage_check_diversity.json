@@ -1,0 +1,157 @@
+{
+  "note": "Prediction-space diversity features recomputed on val_selection only versus the full eval set (which includes the test slice used for the regression target). Measured on the pools whose logits cache is still available; the 48 frontier pools cannot be re-fit without regenerating their cache from adapter weights.",
+  "n_pools_measured": 6,
+  "summary": {
+    "disagreement_rate": {
+      "mean_abs_delta": 0.001611048806384452,
+      "max_abs_delta": 0.004351851851851857,
+      "mean_relative_shift": 0.027590995188033554,
+      "max_relative_shift": 0.049894047389712974
+    },
+    "logit_correlation": {
+      "mean_abs_delta": 0.0009216352879530635,
+      "max_abs_delta": 0.002561817507211517,
+      "mean_relative_shift": 0.001250727077602525,
+      "max_relative_shift": 0.004140908253646193
+    },
+    "ensemble_entropy": {
+      "mean_abs_delta": 0.0037092193961143494,
+      "max_abs_delta": 0.007434248924255371,
+      "mean_relative_shift": 0.012113608043915073,
+      "max_relative_shift": 0.033083838758409354
+    }
+  },
+  "pool_ordering_preserved": {
+    "disagreement_rate": true,
+    "logit_correlation": true,
+    "ensemble_entropy": true
+  },
+  "pools": [
+    {
+      "pool_id": "pool_a_agnews_roberta_base_local10",
+      "n_adapters": 10,
+      "n_eval": 7600,
+      "n_val_selection": 3040,
+      "full": {
+        "disagreement_rate": 0.019412280701754384,
+        "logit_correlation": 0.9865565360374764,
+        "ensemble_entropy": 0.15021777153015137
+      },
+      "val_only": {
+        "disagreement_rate": 0.020226608187134502,
+        "logit_correlation": 0.9866035744780217,
+        "ensemble_entropy": 0.14859706163406372
+      },
+      "delta": {
+        "disagreement_rate": 0.0008143274853801181,
+        "logit_correlation": 4.703844054532169e-05,
+        "ensemble_entropy": -0.0016207098960876465
+      }
+    },
+    {
+      "pool_id": "pool_a_anli_roberta_base_local10",
+      "n_adapters": 10,
+      "n_eval": 1200,
+      "n_val_selection": 480,
+      "full": {
+        "disagreement_rate": 0.17444444444444446,
+        "logit_correlation": 0.9317178605144096,
+        "ensemble_entropy": 0.7820556163787842
+      },
+      "val_only": {
+        "disagreement_rate": 0.17879629629629631,
+        "logit_correlation": 0.9307047083005393,
+        "ensemble_entropy": 0.7894898653030396
+      },
+      "delta": {
+        "disagreement_rate": 0.004351851851851857,
+        "logit_correlation": -0.0010131522138703275,
+        "ensemble_entropy": 0.007434248924255371
+      }
+    },
+    {
+      "pool_id": "pool_a_boolq_roberta_base_local10",
+      "n_adapters": 10,
+      "n_eval": 3270,
+      "n_val_selection": 1308,
+      "full": {
+        "disagreement_rate": 0.18537546721032963,
+        "logit_correlation": 0.6186607744703738,
+        "ensemble_entropy": 0.5275521278381348
+      },
+      "val_only": {
+        "disagreement_rate": 0.18623853211009175,
+        "logit_correlation": 0.6160989569631623,
+        "ensemble_entropy": 0.5313504934310913
+      },
+      "delta": {
+        "disagreement_rate": 0.0008630648997621226,
+        "logit_correlation": -0.002561817507211517,
+        "ensemble_entropy": 0.003798365592956543
+      }
+    },
+    {
+      "pool_id": "pool_a_qnli_roberta_base_local10",
+      "n_adapters": 10,
+      "n_eval": 5463,
+      "n_val_selection": 2185,
+      "full": {
+        "disagreement_rate": 0.03523094758679602,
+        "logit_correlation": 0.9836607666392176,
+        "ensemble_entropy": 0.2348659187555313
+      },
+      "val_only": {
+        "disagreement_rate": 0.03381642512077295,
+        "logit_correlation": 0.9834890311763524,
+        "ensemble_entropy": 0.23680423200130463
+      },
+      "delta": {
+        "disagreement_rate": -0.0014145224660230687,
+        "logit_correlation": -0.0001717354628651968,
+        "ensemble_entropy": 0.0019383132457733154
+      }
+    },
+    {
+      "pool_id": "pool_b_sst2_bert_local6",
+      "n_adapters": 6,
+      "n_eval": 872,
+      "n_val_selection": 348,
+      "full": {
+        "disagreement_rate": 0.027370030581039758,
+        "logit_correlation": 0.9892860858802232,
+        "ensemble_entropy": 0.1594090610742569
+      },
+      "val_only": {
+        "disagreement_rate": 0.02873563218390805,
+        "logit_correlation": 0.9883368192566709,
+        "ensemble_entropy": 0.16468292474746704
+      },
+      "delta": {
+        "disagreement_rate": 0.001365601602868291,
+        "logit_correlation": -0.000949266623552214,
+        "ensemble_entropy": 0.005273863673210144
+      }
+    },
+    {
+      "pool_id": "pool_c_mnli_roberta_base_method_mixed_local8",
+      "n_adapters": 8,
+      "n_eval": 9815,
+      "n_val_selection": 3926,
+      "full": {
+        "disagreement_rate": 0.21693472090823085,
+        "logit_correlation": 0.7190410679376107,
+        "ensemble_entropy": 0.5688019394874573
+      },
+      "val_only": {
+        "disagreement_rate": 0.2160777963758096,
+        "logit_correlation": 0.7182542664579369,
+        "ensemble_entropy": 0.5709917545318604
+      },
+      "delta": {
+        "disagreement_rate": -0.0008569245324212549,
+        "logit_correlation": -0.0007868014796738043,
+        "ensemble_entropy": 0.002189815044403076
+      }
+    }
+  ]
+}

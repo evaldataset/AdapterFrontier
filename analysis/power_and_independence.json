@@ -1,0 +1,39 @@
+{
+  "n_cells": 92,
+  "n_pools": 23,
+  "ci_half_width_pp": {
+    "mean": 1.509923188714278,
+    "median": 0.9424350483953132,
+    "max": 5.208333333333332
+  },
+  "equivalence": {
+    "0.5": {
+      "excluded": 57,
+      "pct": 62.0
+    },
+    "1.0": {
+      "excluded": 67,
+      "pct": 72.8
+    }
+  },
+  "by_test_size": {
+    "n_test >= 2000": {
+      "n": 68,
+      "median_half_width_pp": 0.9095706526830537,
+      "excl_0.5pp": 52,
+      "excl_1.0pp": 62
+    },
+    "n_test < 2000": {
+      "n": 24,
+      "median_half_width_pp": 3.854166666666667,
+      "excl_0.5pp": 5,
+      "excl_1.0pp": 5
+    }
+  },
+  "method_redundancy": {
+    "pools_with_both": 23,
+    "agree_within_0.1pp": 20,
+    "bit_identical": 10
+  },
+  "note": "The 0/92 null is only as strong as the cells are precise. Cells whose CI upper bound exceeds the equivalence margin have not ruled out a gain; we report them rather than counting them as evidence of absence. The 92 cells are 23 pools x 4 methods and two methods are near-duplicates, so they are not 92 independent tests."
+}
