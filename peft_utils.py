@@ -12,7 +12,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from peft import LoraConfig
+# peft is imported lazily inside build_lora_config: this module also provides
+# provenance(), which the statistics code and its tests need, and requiring
+# the training stack to reach it made the test suite uncollectable in the
+# lightweight verification environment the README describes.
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:  # pragma: no cover
+    from peft import LoraConfig
 
 
 def build_peft_config(
@@ -23,8 +29,9 @@ def build_peft_config(
     target_modules: list[str],
     task_type: str = "CAUSAL_LM",
     pissa_niter: int = 0,
-) -> LoraConfig:
+) -> "LoraConfig":
     """Build a LoraConfig for the given PEFT method."""
+    from peft import LoraConfig
     init_lora_weights: bool | str = True
     use_dora = False
     use_rslora = False

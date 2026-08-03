@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "analysis"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from ensemble_eval import split_indices                      # noqa: E402
+from splits import split_indices                             # noqa: E402
 from compute_match import (                                   # noqa: E402
     _ece_equal_mass, _paired_bootstrap_diff_ci, _sign_flip_pvalue, holm_correct,
 )

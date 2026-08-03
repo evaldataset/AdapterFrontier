@@ -1,0 +1,11 @@
+# Minimal environment for the no-GPU verification paths in README A and B.
+#
+# scripts/reproduce_paper_numbers.py is pure standard library and needs none of
+# this; the analysis and plotting scripts and the test suite need the four
+# packages below. The full training/serving stack (torch, vLLM, transformers,
+# peft) lives in requirements.txt and is only required for README path C.
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.6.1
+matplotlib>=3.9.0,<4.0.0
+pytest>=8.0

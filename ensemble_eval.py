@@ -68,14 +68,9 @@ TASK_CONFIGS = {
 }
 
 
-def split_indices(n: int, seed: int = 0) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Deterministic 40/20/40 split -> (val_selection, val_combine, test)."""
-    rng = np.random.RandomState(seed)
-    idx = np.arange(n)
-    rng.shuffle(idx)
-    n_sel = int(0.4 * n)
-    n_combo = int(0.2 * n)
-    return idx[:n_sel], idx[n_sel:n_sel + n_combo], idx[n_sel + n_combo:]
+# Defined in splits.py so the protocol's split can be imported -- and tested --
+# without the training stack this module needs. Re-exported unchanged.
+from splits import split_indices  # noqa: E402,F401
 
 
 @torch.no_grad()

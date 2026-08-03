@@ -12,9 +12,14 @@ This repository supports **JSON-level reproducibility** (every headline number r
 ### A. Verify all headline numbers (recommended, <30 seconds, no GPU)
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-verify.txt       # numpy/scipy/sklearn/matplotlib/pytest
 python3 scripts/reproduce_paper_numbers.py   # 145 assertions, all PASS
+python3 -m pytest tests/ -q                  # 17 tests
 ```
+
+`requirements.txt` is the full training and serving stack (torch, vLLM,
+transformers, peft) and is needed only for path C. The verification script
+itself is pure standard library.
 
 This re-derives every headline number in the paper from the released JSONs:
 corpus counts, BH-FDR cutoff (post-FDR 29.5% SUPPORTED / 16.9% REVERSED),
