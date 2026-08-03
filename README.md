@@ -13,7 +13,7 @@ This repository supports **JSON-level reproducibility** (every headline number r
 
 ```bash
 pip install -r requirements.txt
-python3 scripts/reproduce_paper_numbers.py   # 110 assertions, all PASS
+python3 scripts/reproduce_paper_numbers.py   # 145 assertions, all PASS
 ```
 
 This re-derives every headline number in the paper from the released JSONs:
@@ -58,6 +58,7 @@ python3 analysis/plot_info_mechanism.py       # appendix figure
 python3 analysis/plot_scaling_curves.py       # appendix figure
 python3 analysis/plot_verdict_landscape.py    # appendix figure
 python3 analysis/plot_two_regime.py           # appendix figure
+python3 analysis/cost_savings.py              # Table 12 (cost of blind ensembling)
 
 # Re-fit frontier regression with drop diagnostics + method-onehot ablation
 python3 analysis/frontier.py --out analysis/frontier_with_drop_audit.json

@@ -379,6 +379,32 @@ def main():
     else:
         print(f"  SKIP: {fp5} not found")
 
+    # ---- Table `tab:cost`: previously ungenerated and unasserted.
+    header("Cost of blind ensembling (Table tab:cost)")
+    fp6 = ROOT / "analysis/cost_savings.json"
+    if fp6.exists():
+        d = json.loads(fp6.read_text())
+        expected = {   # n, blind dpp, blind %REV, blind cost, routed dpp, routed %REV, routed cost
+            "Enc acc": (64, -3.3, 30, 20, +0.4, 8, 1),
+            "Dec acc": (50, +0.6, 0, 18, +0.8, 0, 15),
+            "Enc ECE": (63, +2.4, 10, 20, +3.6, 2, 20),
+            "Dec ECE": (50, +3.5, 0, 18, +3.6, 0, 18),
+            "All":     (227, +0.7, 11, 19, +2.1, 3, 17),
+        }
+        for row, (n, bd, br, bc, rd, rr, rc) in expected.items():
+            s = d[row]
+            tally(check(f"{row} n", s["n"], n))
+            tally(check(f"{row} blind mean delta pp",
+                         round(s["blind_mean_delta_pp"], 1), bd, tol=0.06))
+            tally(check(f"{row} blind % reversed", s["blind_pct_reversed"], br))
+            tally(check(f"{row} blind median cost", s["blind_median_cost"], bc))
+            tally(check(f"{row} routed mean delta pp",
+                         round(s["routed_mean_delta_pp"], 1), rd, tol=0.06))
+            tally(check(f"{row} routed % reversed", s["routed_pct_reversed"], rr))
+            tally(check(f"{row} routed median cost", s["routed_median_cost"], rc))
+    else:
+        print(f"  SKIP: {fp6} not found")
+
     header("Summary")
     total = passes + fails
     print(f"\n  PASS: {passes}/{total}")

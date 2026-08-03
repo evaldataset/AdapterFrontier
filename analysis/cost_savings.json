@@ -1,0 +1,54 @@
+{
+  "Enc acc": {
+    "n": 64,
+    "blind_mean_delta_pp": -3.3196147118882946,
+    "blind_pct_reversed": 30,
+    "blind_median_cost": 20,
+    "routed_mean_delta_pp": 0.40892011760867863,
+    "routed_pct_reversed": 8,
+    "routed_median_cost": 1
+  },
+  "Dec acc": {
+    "n": 50,
+    "blind_mean_delta_pp": 0.5988141637778558,
+    "blind_pct_reversed": 0,
+    "blind_median_cost": 18,
+    "routed_mean_delta_pp": 0.7753397399081282,
+    "routed_pct_reversed": 0,
+    "routed_median_cost": 15
+  },
+  "Enc ECE": {
+    "n": 63,
+    "blind_mean_delta_pp": 2.4382077265573603,
+    "blind_pct_reversed": 10,
+    "blind_median_cost": 20,
+    "routed_mean_delta_pp": 3.5505403993184568,
+    "routed_pct_reversed": 2,
+    "routed_median_cost": 20
+  },
+  "Dec ECE": {
+    "n": 50,
+    "blind_mean_delta_pp": 3.538649937836774,
+    "blind_pct_reversed": 0,
+    "blind_median_cost": 18,
+    "routed_mean_delta_pp": 3.554481601119244,
+    "routed_pct_reversed": 0,
+    "routed_median_cost": 18
+  },
+  "All": {
+    "n": 227,
+    "blind_mean_delta_pp": 0.6520922920396224,
+    "blind_pct_reversed": 11,
+    "blind_median_cost": 19,
+    "routed_mean_delta_pp": 2.0543876640325407,
+    "routed_pct_reversed": 3,
+    "routed_median_cost": 17
+  },
+  "_note": "Groups are (pool, baseline_kind, metric) excluding baseline_* self-comparison pools and requiring soft_vote. 'Routed' is a per-group oracle over the available rules, in-sample to the corpus the D1-D5 rules were derived from (L11). Cost is adapter forward-passes per query: N for vote-based rules, 1 for greedy_soup.",
+  "_oracle_rule_counts": {
+    "greedy_soup": 62,
+    "majority_vote": 25,
+    "logit_avg": 36,
+    "soft_vote": 104
+  }
+}
